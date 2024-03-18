@@ -243,7 +243,7 @@ type ReadCloser interface {
 }
 ```
 
-<br>
+>---
 
 #### func NopCloser
 
@@ -510,7 +510,7 @@ func main() {
 }
 ```
 
-<br>
+>---
 
 #### type PipeReader
 
@@ -532,7 +532,7 @@ func (r *PipeReader) Read(data []byte) (n int, err error)
 
 `Read` 实现了标准的 `Read` 接口：它从管道中读取数据，阻塞直到写入器到达或写入端关闭。如果写入端因错误关闭，则 `Read` 返回写入端发生的错误；否则，`err` 为 `EOF`。
 
-<br>
+>---
 
 #### type PipeWriter
 
@@ -680,7 +680,7 @@ func main() {
 }
 ```
 
-<br>
+>---
 
 #### type LimitedReader 
 
@@ -713,7 +713,7 @@ func (o *OffsetWriter) WriteAt(p []byte, off int64) (n int, err error)
 
 `OffsetWriter` 将偏移量 `base` 写入映射到底层写入器中的偏移量 `base+off`。
 
-<br>
+>---
 
 #### func NewOffsetWriter 
 
@@ -785,7 +785,7 @@ func main() {
 }
 ```
 
-<br>
+>---
 
 #### func NewSectionReader
 
