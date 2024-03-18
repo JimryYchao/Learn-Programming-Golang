@@ -1,11 +1,5 @@
 package main
 
-import (
-	"fmt"
-	"io/fs"
-	"os"
-)
-
 // type cusReadDirFile struct {
 // 	file *os.File
 // }
@@ -24,13 +18,5 @@ import (
 // }
 
 func main() {
-	var fsdir fs.ReadDirFile
-	var err error
-	if fsdir, err = os.Open("_02_Go Library/Go Library summary/io"); err == nil {
-		defer fsdir.Close()
-		entries, _ := fsdir.ReadDir(-1)
-		for _, entry := range entries {
-			fmt.Println(fs.FormatDirEntry(entry))
-		}
-	}
+
 }
