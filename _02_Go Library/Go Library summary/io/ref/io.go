@@ -17,25 +17,37 @@ var (
 	ErrUnexpectedEOF = errors.New("unexpected EOF")
 )
 
+// Readers
 type (
 	Writer interface {
 		Write(p []byte) (n int, err error)
 	}
-	Reader interface {
-		Read(p []byte) (n int, err error)
-	}
 	WriterAt interface {
 		WriteAt(p []byte, off int64) (n int, err error)
-	}
-	ReaderAt interface {
-		ReadAt(p []byte, off int64) (n int, err error)
 	}
 	WriterTo interface {
 		WriteTo(w Writer) (n int64, err error)
 	}
+	ByteWriter interface {
+		WriteByte(c byte) error
+	}
+)
+
+// Readers
+type (
+	Reader interface {
+		Read(p []byte) (n int, err error)
+	}
+	ReaderAt interface {
+		ReadAt(p []byte, off int64) (n int, err error)
+	}
 	ReaderFrom interface {
 		ReadFrom(r Reader) (n int64, err error)
 	}
+	ByteReader interface {
+		ReadByte() (byte, error)
+	}
+
 	RuneReader interface {
 		ReadRune() (r rune, size int, err error)
 	}
@@ -49,12 +61,8 @@ type (
 	Seeker interface {
 		Seek(offset int64, whence int) (int64, error)
 	}
-	ByteWriter interface {
-		WriteByte(c byte) error
-	}
-	ByteReader interface {
-		ReadByte() (byte, error)
-	}
+
+	// 组合接口
 	ByteScanner interface {
 		ByteReader
 		UnreadByte() error

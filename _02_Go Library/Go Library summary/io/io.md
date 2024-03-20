@@ -5,6 +5,85 @@
 这些接口和原语包装了低级操作，除非另有说明，否则客户端不应认为它们对并行执行是安全的。
 
 ---
+### IO 错误定义
+
+```go
+var (
+	// 当没有更多输入时，Read 返回的错误
+	EOF = errors.New("EOF")		
+	// 对封闭管道进行读或写操作的错误
+	ErrClosedPipe = errors.New("io: read/write on closed pipe")
+	// 当许多对 Read 的调用都未能返回任何数据或错误时，代表失败的标志
+    ErrNoProgress = errors.New("multiple Read calls return no data or error")
+	// 意味着读取使用的缓冲区过小
+	ErrShortBuffer = errors.New("short buffer")
+	// 表示写入接受的字节数少于请求的字节数
+	ErrShortWrite = errors.New("short write")
+	// 意味着在读取固定大小的块或数据结构时遇到错误
+	ErrUnexpectedEOF = errors.New("unexpected EOF")
+)
+```
+
+>---
+### 基础接口定义
+
+#### Writers
+
+```go
+type Writer interface {
+	Write(p []byte) (n int, err error)
+}
+var Discard Writer = discard{}  // 无作用的 Writer，调用不起作用
+```
+
+`Writer` 是包装基本 `Write` 方法的接口。`Write` 将 `len(p)` 个字节写入 `p` 的底层数据流。并返回成功写入的字节数（`n` 小于 `len(p)`，实现应返回一个非空错误）。`p` 不可修改且实现不能保留。
+
+```go
+type WriterAt interface {
+	WriteAt(p []byte, off int64) (n int, err error)
+}
+```
+
+`WriterAt` 是包装基本 `WriteAt` 方法的接口。`WriteAt` 将 `len(p)` 个字节写入 `p` 写入偏移量为 `off` 的底层数据流。它返回从 `p`（`0 <= n <= len(p)`）写入的字节数以及导致写入提前停止的任何错误。如果 `WriteAt` 返回 `n < len(p)`，则它必须返回一个非 `nil` 错误。
+
+如果 `WriteAt` 正在写入具有 *Seek* 偏移的目标，则 `WriteAt` 不应影响底层 *Seek* 偏移受到其影响。
+
+如果范围不重叠，`WriteAt` 的客户端可以在同一目标上执行并行 `WriteAt` 调用。实现不能保留 `p`。
+
+
+
+
+
+
+
+```go
+type WriterTo interface {
+	WriteTo(w Writer) (n int64, err error)
+}
+```
+
+
+```go
+type ByteWriter interface {
+	WriteByte(c byte) error
+}
+```
+
+
+#### Writers
+
+
+#### Seeker
+
+
+#### Closer
+
+```go
+type Closer interface{
+
+}
+```
+
 
 ### const SeekXXX
 
@@ -16,44 +95,9 @@ const (
 )
 ```
 
->---
-### var Err
-
-```go
-var (
-	// 当没有更多输入时，*Read* 返回的错误
-	EOF = errors.New("EOF")		
-	// 对封闭管道进行读或写操作的错误
-	ErrClosedPipe = errors.New("io: read/write on closed pipe")
-	// 当许多对 *Read* 的调用都未能返回任何数据或错误时，代表失败的标志
-    ErrNoProgress = errors.New("multiple Read calls return no data or error")
-	// 意味着读取需要比提供的缓冲区更长的缓冲区
-	ErrShortBuffer = errors.New("short buffer")
-	// 表示写入接受的字节数少于请求的字节数
-	ErrShortWrite = errors.New("short write")
-	// 意味着在读取固定大小的块或数据结构时遇到错误
-	ErrUnexpectedEOF = errors.New("unexpected EOF")
-)
-```
 
 >---
-### interface Writer
 
-```go
-type Writer interface {
-    Write(p []byte) (n int, err error)
-}
-
-var Discard Writer = discard{}
-```
-
-`Writer` 是包装基本 `Write` 方法的接口。
-
-`Write` 将 `len(p)` 个字节从 `p` 写入底层数据流。它返回从 `p`（`0 <= n <= len(p)`）写入的字节数以及导致写入提前停止的任何错误。如果 `write` 返回 `n < len(p)`，则它必须返回一个非 `nil` 错误。写入操作不得修改切片 `p` 的数据，即使是临时修改。
-
-实现不能保留 `P`。
-
-`Discard` 是一个 `Writer`，它的所有 `Write` 调用都成功，且不做任何事情。
 
 >---
 ### interface Reader
@@ -78,22 +122,7 @@ type Reader interface {
 
 `Read` 的实现实现不能保留 `P`。
 
->---
-### interface WriterAt
 
-```go
-type WriterAt interface {
-    WriteAt(p []byte, off int64) (n int, err error)
-}
-```
-
-`WriterAt` 是包装基本 `WriteAt` 方法的接口。
-
-`WriteAt` 将 `len(p)` 个字节从 `p` 写入偏移量为 `off` 的底层数据流。它返回从 `p`（`0 <= n <= len(p)`）写入的字节数以及导致写入提前停止的任何错误。如果 `WriteAt` 返回 `n < len(p)`，则它必须返回一个非 `nil` 错误。
-
-如果 `WriteAt` 正在写入具有 *Seek* 偏移的目标，则 `WriteAt` 不应影响底层 *Seek* 偏移受到其影响。
-
-如果范围不重叠，`WriteAt` 的客户端可以在同一目标上执行并行 `WriteAt` 调用。实现不能保留 `p`。
 
 >---
 ### interface ReaderAt
