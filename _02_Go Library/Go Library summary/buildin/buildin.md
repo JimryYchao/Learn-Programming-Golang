@@ -2,7 +2,7 @@
 
 内置包 `buildin` 提供了 Go 预先声明的标识符的文档。这里记录的项实际上并不是内置的，但它们的描述允许 godoc 为语言的特殊标识符提供文档。
 
----
+>---
 ### const bool
 
 ```go
@@ -36,7 +36,7 @@ const (
 ```
 
 >---
-### types
+### builtin types
 
 ```go
 // 预定义类型声明
@@ -59,7 +59,7 @@ type uint uint
 type uintptr uintptr
 type comparable interface{ comparable }
 
-// 以下是文档目的声明
+// 以下是用于文档目的声明
 type Type int
 type Type1 int
 type IntegerType int
@@ -77,7 +77,7 @@ type ComplexType complex64
 
 
 >---
-### alias
+### type alias
 
 ```go
 type byte = uint8
