@@ -1,6 +1,6 @@
 package dev
 
-import ref "ref"
+import ref "ref/v2"
 
 func init() {
 	ref.Export()
