@@ -1,0 +1,1 @@
+ [http://localhost:8080/view/ANewPage](http://localhost:8080/view/ANewPage)

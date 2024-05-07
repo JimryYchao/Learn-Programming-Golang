@@ -1,3 +1,4 @@
-module dev
+module dev/v2
 
 go 1.22.2
+

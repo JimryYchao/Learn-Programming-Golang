@@ -1,6 +1,8 @@
 package dev
 
-import ref "ref/v2"
+import (
+	ref "ref/v2"
+)
 
 func init() {
 	ref.Export()
@@ -9,4 +11,6 @@ func init() {
 func Test() {
 
 	println("Hello")
+	// myPack.Hello()
+
 }
