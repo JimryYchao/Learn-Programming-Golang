@@ -24,13 +24,14 @@
 
 ---
 <!-- 
-- [ ] 吉他 x12
-- [ ] 斧   x11
-- [ ] 法杖 x9
+- [ ] 吉他 x
+- [ ] 斧   x2
+- [ ] 法杖 x
 - [ ] 大錘 x8
-- [ ] 弓箭 x10
-- [ ] 長槍 x9
-- [ ] 劍盾 x8 -->
+- [ ] 弓箭 x7
+- [ ] 長槍 x5
+- [ ] 劍盾 x11
+-->
 
 
 <!-- http://www.nicemice.net/amc/os-prelim/summaries/intro-threads.var#:~:text=A%20thread%20is%20a%20sequential%20flow%20of%20control.,can%20be%20used%20for%20communication%20among%20the%20threads. -->

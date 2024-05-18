@@ -1,22 +1,28 @@
 package main
 
-import "fmt"
+import "runtime/debug"
 
-func sum(s []int, c chan int) {
-	sum := 0
-	for _, v := range s {
-		sum += v
+type (
+	IFace interface {
+		Fun()
 	}
-	c <- sum // 发送 sum 到 c
+
+	S1 struct{}
+	S2 struct {
+		S1
+	}
+	S3 S2
+	S4 = S1
+)
+
+func (S1) Fun() {
+	test(S3{})
+}
+
+func test(f IFace) {
+	f.Fun()
 }
 
 func main() {
-	s := []int{7, 2, 8, -9, 4, 0}
-
-	c := make(chan int)
-	go sum(s[:len(s)/2], c)
-	go sum(s[len(s)/2:], c)
-	x, y := <-c, <-c // 从 c 接收
-
-	fmt.Println(x, y, x+y)
+	debug.SetGCPercent(100)
 }
