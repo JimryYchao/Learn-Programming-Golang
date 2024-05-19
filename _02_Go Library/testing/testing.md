@@ -1,4 +1,4 @@
-## [Go testing](https://pkg.go.dev/testing)
+## [Go testing](https://pkg.go.dev/testing)<a id="TOP"></a>
 
 包 `testing` 为 Go 包的自动化测试提供了支持，它与 [`go test`](https://pkg.go.dev/cmd/go#hdr-Test_packages) 命令一起使用。
 
@@ -647,3 +647,9 @@ func TestTesting(t *testing.T) {
 ---
 
 ---
+
+
+<div id="to-top">
+	<a href="#TOP" ><img id="img-top" src="../rsc/to-top.drawio.png"></img></a>
+	<a href="..\README.md"><img id="img-back" src="../rsc/back.drawio.png"></img></a>
+</div>
