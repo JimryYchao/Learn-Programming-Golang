@@ -7,6 +7,22 @@ import (
 	"unicode/utf8"
 )
 
+var Identifier string = "Hello World"
+
+type T string
+
+func (t T) M() {
+	fmt.Println(t)
+}
+
+func F() string {
+	return Identifier
+}
+
+var M = map[int]string{
+	1: "a", 2: "b", 3: "c", 4: "d",
+}
+
 func Abs(i int) int {
 	if i < 0 {
 		i = -i
@@ -30,12 +46,8 @@ func NewBig() Big {
 	return Big{r: 10086}
 }
 
-func Println(s string) {
-	fmt.Println(s)
-}
-
-var M = map[int]string{
-	1: "a", 2: "b", 3: "c", 4: "d",
+func Println(s ...any) {
+	fmt.Println(s...)
 }
 
 func Perm(n int) []int {
@@ -47,12 +59,6 @@ func Perm(n int) []int {
 		s[i] = i
 	}
 	return s
-}
-
-type T string
-
-func (t T) Fun() {
-	fmt.Println(t)
 }
 
 func Reverse(s string) (string, error) {
