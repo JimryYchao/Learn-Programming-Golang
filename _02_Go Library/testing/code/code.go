@@ -1,4 +1,4 @@
-package gostd_testing
+package gostd
 
 import (
 	"errors"

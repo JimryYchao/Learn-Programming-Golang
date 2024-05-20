@@ -1,11 +1,11 @@
 <div id="top" style="z-index:99999999;position:fixed;bottom:35px;right:50px;float:right">
-	<a href="./gostd_testing/testing_test.go" target="_blank"><img id="img-code" src="../rsc/to-code.drawio.png" ></img></a>
-	<a href="#TOP" ><img id="img-top" src="../rsc/to-top.drawio.png" ></img></a>
-	<a href="..\README.md"><img id="img-back" src="../rsc/back.drawio.png"></img></a>
+	<a href="./code/testing_test.go" target="_blank"><img id="img-code" src="../_rsc/to-code.drawio.png" ></img></a>
+	<a href="#TOP" ><img id="img-top" src="../_rsc/to-top.drawio.png" ></img></a>
+	<a href="..\README.md"><img id="img-back" src="../_rsc/back.drawio.png"></img></a>
 </div>
 <a id="TOP"></a>
 
-## [Go testing](https://pkg.go.dev/testing)
+## Package [testing](https://pkg.go.dev/testing)
 
 包 `testing` 为 Go 包的自动化测试提供了支持，它与 [`go test`](https://pkg.go.dev/cmd/go#hdr-Test_packages) 命令一起使用。
 
@@ -16,7 +16,7 @@ go test [build/test flags] [packages] [build/test flags & test binary flags]
 `go test` 命令期望在测试文件中找到与被测包对应的测试（`TextXxx`）、基准（`BenchmarkXxx`）、模糊测试（`FuzzXxx`）和示例（`ExampleXxx`）函数。
 
 ```go
-func TestXxx(t *testing.T)          // 测试  `go test`
+func TestXxx(t *testing.T)          // 测试  `go test -run=^Test`
 func BenchmarkXxx(b *testing.B)     // 基准测试 `go test -run=NONE -bench=Benchmark`
 func FuzzXxx(f *testing.F)          // 模糊测试 `go test -run=NONE -fuzz=Fuzz`
 func ExampleXxx()                   // 示例  `go test -run=Example`

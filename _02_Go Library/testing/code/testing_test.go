@@ -1,4 +1,6 @@
-package gostd_testing
+package gostd
+
+// 包 testing 为 Go 包的自动化测试提供了支持
 
 import (
 	"flag"
@@ -158,7 +160,6 @@ func TestTesting(t *testing.T) {
 ! Init 初始化注册测试标志，通常由 “go test” 命令自动注册。不使用指令单独调用 Benchmark 等函数时才需要 Init。
 ! Benchmark 基准测试对单个函数进行基准测试（不依赖 `go test`）。
 ! BenchmarkResult 包含基准测试运行的结果。
-
 	AllocedBytesPerOp	返回 B/op 指标，其计算公式为 r.MemBytes/r.N
 	AllocsPerOp			返回 allocs/op 指标，计算公式为 r.MemAllocs/r.N
 	MemString			以与 `go test` 相同的格式返回 r.AllocedBytesPerOp 和 r.AllocsPerOp

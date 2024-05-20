@@ -1,10 +1,23 @@
-## Package io
+<div id="top" style="z-index:99999999;position:fixed;bottom:35px;right:50px;float:right">
+	<a href="./code/io_test.go" target="_blank"><img id="img-code" src="../_rsc/to-code.drawio.png" ></img></a>
+	<a href="#TOP" ><img id="img-top" src="../_rsc/to-top.drawio.png" ></img></a>
+	<a href="..\README.md"><img id="img-back" src="../_rsc/back.drawio.png"></img></a>
+</div>
+<a id="TOP"></a>
+
+## Package [io](https://pkg.go.dev/io)
 
 包 `io` 提供 I/O 原语的基本接口。它的主要工作是将这些原语的现有实现（如包操作系统中的原语）包装到共享的公共接口中，这些公共接口抽象了功能，并加上一些其他相关的原语。
 
-这些接口和原语包装了低级操作，除非另有说明，否则客户端不应认为它们对并行执行是安全的。
-
 ---
+### Readers
+
+#### io.Reader 
+
+
+
+
+
 ### IO 错误定义
 
 ```go
