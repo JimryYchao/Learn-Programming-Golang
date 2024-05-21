@@ -11,23 +11,6 @@ import (
 	"time"
 )
 
-type Buffer struct {
-	bytes.Buffer
-	io.ReaderFrom
-	io.WriterTo
-}
-
-func beforeTest[TBF testing.TB](t TBF) {
-	clear(buf)
-	if !testing.Verbose() {
-		return
-	}
-	fmt.Printf(EnterTest, t.Name())
-	t.Cleanup(func() {
-		fmt.Printf(EndTest, t.Name())
-	})
-}
-
 var (
 	buf         = make([]byte, 512)
 	hello       = "Hello World"
@@ -39,22 +22,25 @@ var (
 	content     = "some io.Reader stream to be read"
 )
 
-type _error *error
-
+func beforeTest[TBF testing.TB](t TBF) {
+	clear(buf)
+	if !testing.Verbose() {
+		return
+	}
+	fmt.Printf(EnterTest, t.Name())
+	t.Cleanup(func() {
+		fmt.Printf(EndTest, t.Name())
+	})
+}
 func readToStdout(r io.Reader) {
 	_, err := io.Copy(os.Stdout, r)
 	println()
-	CheckErr(err)
+	checkErr(err)
 }
-
-func writeToStdout(r *bytes.Buffer) {
-	logf("%s", r.Bytes())
-}
-
 func logf(format string, args ...any) {
 	fmt.Printf(format+"\n", args...)
 }
-func CheckErr(err error) {
+func checkErr(err error) {
 	if err == nil {
 		return
 	}
@@ -62,9 +48,6 @@ func CheckErr(err error) {
 }
 func newReader(s string) io.Reader {
 	return strings.NewReader(s)
-}
-func newWriter(n int) io.Writer {
-	return newBytesBuffer(n)
 }
 func newBytesBuffer(n int) *bytes.Buffer {
 	return bytes.NewBuffer(make([]byte, n))
@@ -145,7 +128,7 @@ func TestWriter(t *testing.T) {
 		//? bytes.Buffer
 		var bw *bytes.Buffer = newBytesBuffer(128)
 		c, err := bw.Write([]byte("Writing to bytes.Buffer"))
-		CheckErr(err)
+		checkErr(err)
 		logf(WRITE_BYTES, c, bw.Bytes())
 
 		// output:
@@ -173,13 +156,37 @@ func TestWriter(t *testing.T) {
 	})
 }
 
-// ! Closer 包装基本的 Close 方法。
 /*
+! Closer 包装基本的 Close 方法。
 ! Seeker 包装基本的 Seek 方法；Seek 将下一次读取或写入的偏移量依照 `whence` 设置为 `offset`; `whence` 解释为：
 		SeekStart		相对于开始
 		SeekEnd 		相对于末尾
 		SeekCurrent 	相对于当前偏移量
 */
+//? go test -v -run=^$
+func TestSeek(t *testing.T) {
+	beforeTest(t)
+	file, err := os.OpenFile("./seek.file", os.O_CREATE, 0644)
+	if err != nil {
+		t.Fatal(err)
+	}
+	file.Write([]byte(content + "\n"))
+	t.Cleanup(func() {
+		file.Close()
+		os.Remove("./seek.file")
+	})
+	readFile("./seek.file") // 更改之前的文件内容
+
+	file.Seek(8, io.SeekStart) // 跳转至开头的 +8 offset
+	file.WriteString("Writer")
+
+	readFile("./seek.file") // 检查更改后的内容
+
+	file.Seek(-5, io.SeekEnd) // 跳转至末尾的 -5 offset
+	file.WriteString("write\n")
+
+	readFile("./seek.file") // 检查更改后的内容
+}
 
 // ! Copy 将副本从 `src` 复制到 `dst`。它返回复制的字节数和第一个错误（如果有）。
 // ! CopyBuffer 等效于 Copy。不能提供 0 长度的 `buf`，传递 `nil` 时将内部创建一个 `buf`。
@@ -235,6 +242,7 @@ func TestCopyFunctions(t *testing.T) {
 	})
 
 	t.Run("CopyN", func(t *testing.T) {
+		beforeTest(t)
 		//? CopyN with small N
 		wb.Reset() // len(hello) > 5, 返回 (5, nil)
 		if c, err := io.CopyN(wb, newReader(hello), 5); err != nil && err != io.EOF {
@@ -255,7 +263,7 @@ func TestCopyFunctions(t *testing.T) {
 		wb.Reset() // len(hello) < 100, (len(hello), io.EOF)
 		if c, err = io.CopyN(wb, newReader(hello), 100); err != nil {
 			if err == io.EOF {
-				CheckErr(err)
+				checkErr(err)
 			} else {
 				t.Fatal(err)
 			}
@@ -305,7 +313,7 @@ func TestPipe(t *testing.T) {
 						logf(READ_BYTES, n, buf)
 					}
 				} else {
-					CheckErr(err) // EOF
+					checkErr(err) // EOF
 					break
 				}
 			}
@@ -330,7 +338,7 @@ func TestPipe(t *testing.T) {
 				if _, err := pw.Write([]byte(hello)); err == nil {
 					time.Sleep(500 * time.Millisecond)
 				} else {
-					CheckErr(err)
+					checkErr(err)
 					break
 				}
 			}
@@ -346,7 +354,7 @@ func TestPipe(t *testing.T) {
 			pw.CloseWithError(uerr)
 		}()
 		if _, err := pr.Read(buf); err != nil {
-			CheckErr(err)
+			checkErr(err)
 		}
 	})
 }
@@ -369,7 +377,7 @@ func TestReadAt(t *testing.T) {
 			n, err := ra.ReadAt(buf, offset)
 			logf("case : %s", _case)
 			logf(READ_BYTES, n, buf)
-			CheckErr(err)
+			checkErr(err)
 		}
 		readAt("lenbuf(50) > len(content) - offset(10)", 50, 10)   // ok, EOF
 		readAt("len(content) - offset(10) > len(content)", 15, 10) // ok
@@ -393,28 +401,64 @@ func TestReadAt(t *testing.T) {
 	})
 }
 
+func readFile(fname string) {
+	if f, err := os.Open(fname); err == nil {
+		io.Copy(os.Stdout, f)
+		f.Close()
+	}
+}
+
 /*
-! WriterAt 包装 `WriteAt` 方法。
+! WriterAt 包装 `WriteAt` 方法。`WriteAt` 将 `len(p)` 个字节从 `p` 写入偏移量为 `off` 的底层数据流。
 ! OffsetWriter 将基础偏移量处的写入映射到基础写入器中的偏移量 base+off。
 	io.NewOffsetWriter 		返回一个 `OffsetWriter`，它从 `off` 偏移开始 `WriterAt` 写入。
 */
 // ? go test -v -run=^TestWriteAt$
 func TestWriteAt(t *testing.T) {
 	t.Helper()
+	fname := "./hello.file"
+	if f, err := os.Open(fname); err == nil {
+		f.Close()
+		os.Remove(fname)
+	}
+	t.Cleanup(func() {
+		os.Remove(fname)
+	})
+
+	f, _ := os.Create(fname)
+	f.WriteString(content + "\n")
+	f.Close()
 
 	t.Run("WriteAt", func(t *testing.T) {
-		// var wa io.WriterAt =
-		// // readAt := func(_case string, lenbuf int64, offset int64) {
-		// 	buf := make([]byte, lenbuf)
-		// 	n, err := ra.ReadAt(buf, offset)
-		// 	logf("case : %s", _case)
-		// 	logf(READ_BYTES, n, buf)
-		// 	CheckErr(err)
-		// }
-		// readAt("lenbuf(50) > len(content) - offset(10)", 50, 10)   // ok, EOF
-		// readAt("len(content) - offset(10) > len(content)", 15, 10) // ok
-		// readAt("offset(40) > len(content)", 10, 50)                // read 0, EOF
-		// readAt("negative offset(-1)", 10, -1)                      // read 0, Err : negative offset
+		beforeTest(t)
+		if fwrAt, err := os.OpenFile(fname, os.O_RDWR, 0644); err != nil {
+			t.Fatal(err)
+		} else {
+			io.Copy(os.Stdout, fwrAt)
+			// read file: some io.Reader stream to be read
+			fwrAt.WriteAt([]byte(hello), 10)
+			fwrAt.Close()
+			readFile(fname)
+			// read again: some io.ReHello World to be read
+		}
+	})
+
+	t.Run("OffsetWriter", func(t *testing.T) {
+		beforeTest(t)
+		if f, err := os.OpenFile(fname, os.O_RDWR, 0644); err != nil {
+			t.Fatal(err)
+		} else {
+			offwr := io.NewOffsetWriter(f, 10)
+			// before: some io.ReHello World to be read
+			_, err := offwr.WriteAt([]byte("ader stream"), 0)
+			// now: some io.Reader stream to be read
+			checkErr(err)
+			if _, err := offwr.Seek(5, io.SeekStart); err == nil { // 移动到末尾，在换行符之前
+				offwr.Write([]byte("STREAM")) // expect: some io.Reader STREAM to be read
+			}
+			f.Close()
+			readFile(fname)
+		}
 	})
 }
 
@@ -422,17 +466,77 @@ func TestWriteAt(t *testing.T) {
 ! ReaderFrom 包装 `ReadFrom` 方法。`ReadFrom` 从 `r` 读取数据并返回值读取的字节数 `n`。
 ! WriterTo 包装 `WriteTo` 方法。`WriteTo` 将数据写入 `Writer`。
 */
+//? go test -v -run=^TestReadFromAndWriteTo$
+func TestReadFromAndWriteTo(t *testing.T) {
+	beforeTest(t)
+	file, err := os.OpenFile("./writeTo.file", os.O_CREATE, 0644)
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(func() {
+		file.Close()
+		os.Remove("./writeTo.file")
+	})
+
+	writeTo := func(wt io.WriterTo) {
+		wt.WriteTo(file)
+	}
+
+	rf := newBytesBuffer(16)
+	for i := range 5 {
+		rf.ReadFrom(strings.NewReader(fmt.Sprintf("line%d : %s\n", i+1, content)))
+		writeTo(rf)
+	}
+	readFile("./writeTo.file") // content
+}
 
 /* Bytes Readers & Writers
 ! ByteReader 包装 `ReadByte` 方法。`ReadByte` 读取并返回输入中的下一个字节或错误。
-! ByteScanner 将 `UnreadByte` 方法添加到 `ByteReader`。`UnreadByte` 导致下一次调用 `ReadByte` 返回最后读取的字节。
-! ByteWriter 包装 `WriteByte` 方法。`WriteAt` 将 `len(p)` 个字节从 `p` 写入偏移量为 `off` 的底层数据流。
+! ByteScanner 将 `UnreadByte` 方法添加到 `ByteReader`。它导致下次调用 `ReadByte` 将返回最后读取的字节。
+! ByteWriter 包装 `WriteByte` 方法。
 */
+//? go test -v -run=^TestBytesReadWriter$
+func TestBytesReadWriter(t *testing.T) {
+	beforeTest(t)
+	brw := bytes.NewBuffer([]byte(hello))
+	// read bytes
+	for {
+		if b, err := brw.ReadByte(); err != nil {
+			if err == io.EOF {
+				logf("Read EOF")
+				brw.UnreadByte() // 对 brw 的下次 `ReadByte` 将返回 b
+				logf("Last byte in buf is %#v %c", b, b)
+				err = nil
+				break // 忽略 EOF 并停止读取字节
+			}
+			t.Fatal(err)
+		} else {
+			logf("Read byte : %#v %c", b, b)
+		}
+	}
 
-/* Other Readers & Writers
+	// write bytes
+	brw.Reset() // 清空 buf
+	sr := strings.NewReader(content)
+	for b, err := sr.ReadByte(); err == nil; b, err = sr.ReadByte() {
+		brw.WriteByte(b)
+		logf("Write byte : %#v %c", b, b)
+	}
+	readToStdout(brw) // some io.Reader stream to be read
+}
+
+/* Rune Reader
 ! RuneReader 包装 `ReadRune` 方法。`ReadRune` 读取单个编码的 Unicode 字符，并返回该字符及其字节大小。
 ! RuneScanner 将 `UnreadRune` 方法添加到 `RuneReader`。`UnreadRune` 导致下一次调用 `ReadRune` 返回最后读取的字符。
 */
+//? go test -v -run=^TestRuneRead$
+func TestRuneRead(t *testing.T) {
+	beforeTest(t)
+	sr := strings.NewReader("Hello, 你好")
+	for r, size, err := sr.ReadRune(); err == nil; r, size, err = sr.ReadRune() {
+		logf("Read rune : %c of %d bytes", r, size)
+	}
+}
 
 /*
 ! StringWriter 包装 `WriteString` 方法。
@@ -459,7 +563,7 @@ func TestReadFunctions(t *testing.T) {
 		} else {
 			logf(READ_BYTES, n, buf)
 		}
-		CheckErr(err)
+		checkErr(err)
 	}
 
 	t.Run("ReadAll", func(t *testing.T) {
@@ -487,6 +591,7 @@ func TestReadFunctions(t *testing.T) {
 	})
 
 	t.Run("ReadFull", func(t *testing.T) {
+		beforeTest(t)
 		readFull := func(_case string, lenbuf int) {
 			buff := make([]byte, lenbuf)
 			logf("case : %s", _case)
@@ -498,57 +603,3 @@ func TestReadFunctions(t *testing.T) {
 		readFull("lenbuf = len(content)", len(content))
 	})
 }
-
-// var Discard Writer
-
-// func MultiWriter(writers ...Writer) Writer
-// func MultiReader(readers ...Reader) Reader
-// func TeeReader(r Reader, w Writer) Reader
-// func NopCloser(r Reader) ReadCloser
-
-// func Copy(dst Writer, src Reader) (written int64, err error)
-// func CopyBuffer(dst Writer, src Reader, buf []byte) (written int64, err error)
-// func CopyN(dst Writer, src Reader, n int64) (written int64, err error)
-// func ReadAll(r Reader) ([]byte, error)
-// func ReadAtLeast(r Reader, buf []byte, min int) (n int, err error)
-// func ReadFull(r Reader, buf []byte) (n int, err error)
-// func WriteString(w Writer, s string) (n int, err error)
-
-// func Pipe() (*PipeReader, *PipeWriter)
-
-// type PipeReader struct{}
-
-// func (r *PipeReader) Close() error
-// func (r *PipeReader) CloseWithError(err error) error
-// func (r *PipeReader) Read(data []byte) (n int, err error)
-
-// type PipeWriter struct{}
-
-// func (w *PipeWriter) Close() error
-// func (w *PipeWriter) CloseWithError(err error) error
-// func (w *PipeWriter) Write(data []byte) (n int, err error)
-
-// type LimitedReader struct {
-// 	R Reader
-// 	N int64
-// }
-
-// func LimitReader(r Reader, n int64) Reader
-
-// func (l *LimitedReader) Read(p []byte) (n int, err error)
-
-// type OffsetWriter struct{}
-
-// func NewOffsetWriter(w WriterAt, off int64) *OffsetWriter
-// func (o *OffsetWriter) Seek(offset int64, whence int) (int64, error)
-// func (o *OffsetWriter) Write(p []byte) (n int, err error)
-// func (o *OffsetWriter) WriteAt(p []byte, off int64) (n int, err error)
-
-// type SectionReader struct{}
-
-// func NewSectionReader(r ReaderAt, off int64, n int64) *SectionReader
-// func (s *SectionReader) Outer() (r ReaderAt, off int64, n int64)
-// func (s *SectionReader) Read(p []byte) (n int, err error)
-// func (s *SectionReader) ReadAt(p []byte, off int64) (n int, err error)
-// func (s *SectionReader) Seek(offset int64, whence int) (int64, error)
-// func (s *SectionReader) Size() int64

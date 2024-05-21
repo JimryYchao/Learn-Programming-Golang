@@ -283,7 +283,7 @@ func TestMain(m *testing.M) {
 ---
 ### Interface TB
 
-`TB` 是 `T`、`B` 和 `F` 的公共接口。
+- `TB` 是 `T`、`B` 和 `F` 的公共接口。
 
 ```go
 type TB interface {
@@ -313,12 +313,13 @@ type TB interface {
 ```
 
 >---
-#### PB.Functions
+#### TB.Functions
+
+- `TB` 是 `T`、`B` 和 `F` 的公共接口。
 
 ```go
-// ! TB 是 `T`、`B` 和 `F` 的公共接口
+//? go test -v -run=^TestTB_Functions$
 func TestTB_Functions(t *testing.T) {
-	//? go test -v -run=^TestTB_Functions$
 	t.Helper()
 	beforeTest := func(t *testing.T) {
 		t.Logf("Testing >>> %s", t.Name())
@@ -352,13 +353,13 @@ func TestTB_Functions(t *testing.T) {
 ```
 
 >---
-#### PB.Setenv
+#### TB.Setenv
 
-`TB.Setenv` 调用 `os.Setenv`，并在测试完成后使用 `Cleanup` 进行还原。它不能在并行测试中使用。
+- `TB.Setenv` 调用 `os.Setenv`，并在测试完成后使用 `Cleanup` 进行还原。它不能在并行测试中使用。
 
 ```go
+//? go test -v -run=^TestTB_Setenv&
 func TestTB_Setenv(t *testing.T) {
-	//? go test -v -run=^TestTB_Setenv&
 	env := struct {
 		key string
 		val string
@@ -414,14 +415,13 @@ func TestTB_Setenv(t *testing.T) {
 ```
 
 >---
-#### PB.TempDir
+#### TB.TempDir
 
-`TB.TempDir` 返回一个临时目录供测试使用。当（子）测试完成时自动删除。
+- `TB.TempDir` 返回一个临时目录供测试使用。当（子）测试完成时自动删除。
 
 ```go
+//? go test -v -run=^TestTB_TempDir$
 func TestTB_TempDir(t *testing.T) {
-	//? go test -v -run=^TestTB_TempDir$
-
 	var dir string
 	fn_checkDir := func(dir string) {
 		fi, err := os.Stat(dir)
@@ -480,15 +480,11 @@ func TestTB_TempDir(t *testing.T) {
 ---
 ### Type T
 
-```go
-/*
-! T.non-common Functions
-	Deadline	报告测试的二进制文件的运行时间将超过 `-timeout` 指定的时间 (默认为 10m);
-				`-timeout=0s` 表示无超时，`ok` 始终返回 false
-	Parallel	标记并行信号，表示此测试将与其他的具有并行信号的测试并行运行
-	Run			在一个单独的 goroutine 中运行子测试 f(t *T)
-*/
-```
+- `T`.non-common Functions
+  + `Deadline` 报告测试的二进制文件的运行时间将超过 `-timeout` 指定的时间 (默认为 10m); `-timeout=0s` 表示无超时，`ok` 始终返回 `false`。
+  + `Parallel` 标记并行信号，表示此测试将与其他的具有并行信号的测试并行运行。
+  + `Run` 在一个单独的 goroutine 中运行子测试 `f(t *T)`。
+
 ```go
 //? go test -v -run=^TestT_Functions$ [-timeout=0s]
 func TestT_Functions(t *testing.T) {
@@ -553,34 +549,25 @@ func TestT_Functions(t *testing.T) {
 ---
 ### Type B
 
-```go
-/*
-! B.non-common Functions
-	Elapsed			返回基准测试的目前的运行时间
-	StartTimer		开始计时测试。此函数在基准测试开始之前自动调用，但也可用于在调用 B.StopTimer 之后恢复计时
-	StopTimer		停止测试计时。例如在执行部分无需测量的复杂初始化时，暂停计时器
-	ResetTimer		将基准运行时间和内存分配计数器归零，并删除用户报告的度量。它不会影响计时器是否正在运行
+- `B`.non-common Functions
+  - `Elapsed` 返回基准测试的目前的运行时间。
+  - `StartTimer` 开始计时测试。此函数在基准测试开始之前自动调用，但也可用于在调用 `B.StopTimer` 之后恢复计时。
+  - `StopTimer`	停止测试计时。例如在执行部分无需测量的复杂初始化时，暂停计时器。
+  - `ResetTimer` 将基准运行时间和内存分配计数器归零，并删除用户报告的度量。它不会影响计时器是否正在运行。
+  - `Run` 运行基准测试 `f` 子基准测试。
+  - `RunParallel` 并行运行基准测试。它创建多个 goroutine 并在它们之间分配 `b.N` 迭代。
+    - `PB.Next`: `PB` 由 `RunParallel` 用于运行并行基准测试。`Next` 报告是否有更多的迭代要执行。
+  - `SetMaxelism` 将 `B.RunParallel` 使用的 goroutine 数量设置为 `p * GOMAXPROCS`。对于 CPU 限制的基准测试，通常不需要调用 `SetValuelism`。
+  - `SetData` 记录单个操作中处理的字节数。如果调用此函数，基准测试将报告 ns/op 和 MB/s。
+  - `ReportAllocs` 为此基准测试启用 malloc 统计信息。它等效于设置 `-test.benchmem`，但它只影响调用 `ReportAllocs` 的基准函数。
+  - `ReportMetric` 将用户基准测试度量标准 “n 单位” 添加到报告的基准测试结果中。
+    - 如果度量是 per/op，调用者应该除以 b.N；如果度量是 per/ns，应除以 `b.Elapsed`；
+    - `ReportMetric` 覆盖同一单位以前报告的任何值。如果 unit 为空字符串或 unit 包含任何空格，`ReportMetric` 将 panic。
+	- 如果 unit 是一个通常由基准框架本身报告的单位（例如 “allocs/op”），`ReportMetric` 将覆盖该度量。将 “ns/op” 设置为 0 将抑制该内置度量。
 
-	Run				运行基准测试 f 子基准测试
-	RunParallel		并行运行基准测试。它创建多个 goroutine 并在它们之间分配 b.N 迭代
-!   PB.Next			PB 由 RunParallel 用于运行并行基准测试。Next 报告是否有更多的迭代要执行。
-	SetMaxelism 	将 B.RunParallel 使用的 goroutine 数量设置为 p * GOMAXPROCS。对于 CPU 限制的基准测试，通常不需要调用 SetValuelism
-
-	SetData			记录单个操作中处理的字节数。如果调用此函数，基准测试将报告 ns/op 和 MB/s
-	ReportAllocs	为此基准测试启用 malloc 统计信息。它等效于设置 `-test.benchmem`，但它只影响调用 ReportAllocs 的基准函数
-
-	ReportMetric	将用户基准测试度量标准 “n 单位” 添加到报告的基准测试结果中。
-					如果度量是 per/op，调用者应该除以 b.N；如果度量是 per/ns，应除以 b.Elapsed；
-					ReportMetric 覆盖同一单位以前报告的任何值。如果 unit 为空字符串或 unit 包含任何空格，ReportMetric 将 panic。
-					如果 unit 是一个通常由基准框架本身报告的单位（例如 “allocs/op”），ReportMetric 将覆盖该度量。
-					将 “ns/op” 设置为 0 将抑制该内置度量。
-*/
-```
 ```go
 //? go test -v -run=NONE -bench=^Benchmark_Functions$ [-cpu='1,2,4,8']
 func Benchmark_Functions(b *testing.B) {
-	b.Helper()
-
 	b.Run("BenchmarkTimer", func(b *testing.B) {
 		// Benchmark sleeps for 1 seconds
 		time.Sleep(1 * time.Second)
@@ -668,15 +655,12 @@ func Benchmark_Functions(b *testing.B) {
 ---
 ### Type F
 
-```go
-/*
-! F.non-common Functions
-	Add			将把参数添加到模糊测试的种子语料库中。args 必须匹配 Fuzz 目标的参数
-	Fuzz   		运行模糊目标函数 ff 进行开始模糊测试。如果 ff 对一组模糊参数失败，这些参数将被添加到种子语料库；
-				ff 不能调用任何 *F 方法，例如 (*F).Log、(*F).Error、(*F).Skip。使用相应的 *T 方法。
-				在 ff 中允许的唯一 *F 方法是 (*F).Failed 和（*F).Name
-*/
-```
+- `F`.non-common Functions
+  - `Add` 将把参数添加到模糊测试的种子语料库中。`args` 必须匹配 `Fuzz` 目标的参数
+  - `Fuzz` 运行模糊目标函数 `ff` 进行开始模糊测试。如果 `ff` 对一组模糊参数失败，这些参数将被添加到种子语料库；
+	- `ff` 不能调用任何 `*F` 方法，例如 `(*F).Log`、`(*F).Error`、`(*F).Skip`。使用相应的 `*T` 方法。
+	- 在 `ff` 中允许的唯一 `*F` 方法是 `(*F).Failed` 和 `(*F).Name`。
+
 ```go
 //? go test -v -run=NONE -fuzz=^Fuzz_Functions$ [-fuzztime=3s] [-parallel=8] [-short]
 func Fuzz_Functions(f *testing.F) {
@@ -706,11 +690,11 @@ func Fuzz_Functions(f *testing.F) {
 ---
 ### AllocsPerRun 
 
-`AllocsPerRun` 函数返回调用 `f` 期间分配的平均次数 (allocs/op)。
+- `AllocsPerRun` 函数返回调用 `f` 期间分配的平均次数 (allocs/op)。
 
 ```go
+//? go test -v -run=^TestAllocsPerRun$
 func TestAllocsPerRun(t *testing.T) {
-	//? go test -v -run=^TestAllocsPerRun$
 	var allocsPerRunTests = []struct {
 		name   string
 		fn     func(temp *any)
@@ -734,13 +718,13 @@ func TestAllocsPerRun(t *testing.T) {
 ---
 ### CoverMode, Coverage
 
-`CoverMode` 报告在测试的覆盖模式: `set`, `count` or `atomic`。
-`Coverage` 报告当前代码的覆盖率, 它不能替代 `go test -cover` 和 `go tool cover` 生成的报告。
+- `CoverMode` 报告在测试的覆盖模式: `set`, `count` or `atomic`。
++ `Coverage` 报告当前代码的覆盖率, 它不能替代 `go test -cover` 和 `go tool cover` 生成的报告。
 
 ```go
+//? go test -v -cover -run=^TestCoverage$ [-coverprofile='coverage.out']
+//? go tool cover -html='coverage.out'
 func TestCoverage(t *testing.T) {
-	//? go test -v -cover -run=^TestCoverage$ [-coverprofile='coverage.out']
-	//? go tool cover -html='coverage.out'
 	t.Cleanup(func() {
 		// 标志 -cover 启用代码覆盖率分析, 默认为 set 模式
 		coverMode := testing.CoverMode() // 未设置时返回 ""
@@ -758,9 +742,9 @@ func TestCoverage(t *testing.T) {
 >---
 ### Short, Verbose, Testing
 
- `Short` 报告在测试中是否启用 `-test.short`。
- `Verbose` 报告在测试中是否启用 `-test.v`。
- `Testing` 报告当前代码是否在测试中运行。
+- `Short` 报告在测试中是否启用 `-test.short`。
++ `Verbose` 报告在测试中是否启用 `-test.v`。
+- `Testing` 报告当前代码是否在测试中运行。
 
 ```go
 func TestTesting(t *testing.T) {
@@ -780,9 +764,16 @@ func TestTesting(t *testing.T) {
 ---
 ### Init, Benchmark, BenchmarkResult
 
-`Init` 初始化注册测试标志，通常由 `go test` 命令自动注册。不使用指令单独调用 `Benchmark` 等函数时才需要 `Init`。
-`Benchmark` 基准测试对单个函数进行基准测试（不依赖 `go test`）。
-`BenchmarkResult` 包含基准测试运行的结果。
+- `Init` 初始化注册测试标志，通常由 `go test` 命令自动注册。不使用指令单独调用 `Benchmark` 等函数时才需要 `Init`。
++ `Benchmark` 基准测试对单个函数进行基准测试（不依赖 `go test`）。
+- `BenchmarkResult` 包含基准测试运行的结果。
+  - `AllocedBytesPerOp`	返回 B/op 指标，其计算公式为 `r.MemBytes/r.N`。
+  - `AllocsPerOp` 返回 allocs/op 指标，计算公式为 `r.MemAllocs/r.N`。
+  - `MemString` 以与 `go test` 相同的格式返回 `r.AllocedBytesPerOp` 和 `r.AllocsPerOp`。
+  - `NsPerOp` 返回 ns/op 度量。
+  - `String` 返回基准测试结果的摘要。额外指标覆盖相同名称的内置指标; `String` 不包括 allocs/op 或 B/op。
+*/
+
 
 ```go
 type BenchmarkResult struct {
@@ -794,14 +785,7 @@ type BenchmarkResult struct {
  
 	Extra map[string]float64   // 记录由 ReportMetric 添加的用户度量标准
 }
-/* BenchmarkResult Functions 
-	AllocedBytesPerOp	返回 B/op 指标，其计算公式为 r.MemBytes/r.N
-	AllocsPerOp			返回 allocs/op 指标，计算公式为 r.MemAllocs /r.N
-	MemString			以与 `go test` 相同的格式返回 r.AllocedBytesPerOp 和 r.AllocsPerOp
-	NsPerOp				返回 ns/op 度量
-	String				返回基准测试结果的摘要。额外指标覆盖相同名称的内置指标;
-						String 不包括 allocs/op 或 B/op
-*/
+
 ```
 ```go
 //? go test -v -run=^TestBenchmark$

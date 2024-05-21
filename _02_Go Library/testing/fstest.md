@@ -10,12 +10,3 @@
 包 `fstest` 实现了对测试实现和文件系统用户的支持。
 
 ---
-### MapFS
-
-`MapFS` 是一个简单的内存中文件系统，用于测试，表示为从路径名（`MapFS.Open` 的参数）到它们所表示的文件或目录信息的映射。 
-
-
-```go
-type MapFS map[string]*MapFile
-
-```
