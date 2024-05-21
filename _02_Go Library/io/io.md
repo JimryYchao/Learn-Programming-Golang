@@ -10,35 +10,42 @@
 包 `io` 提供 I/O 原语的基本接口。它的主要工作是将这些原语的现有实现（如包操作系统中的原语）包装到共享的公共接口中，这些公共接口抽象了功能，并加上一些其他相关的原语。
 
 ---
-### io.Reader 
+### io.Reader, LimitReader, MultiReader, TeeReader
 
 - `Reader` 包装基本的 `Read` 方法；`Read` 返回读取的字节数。
-  - `io.LimitReader` 包装一个限制读取字节数的 Reader `*LimitedReader`。
-  - `io.MultiReader` 串联一组 Readers，这些 Readers 在内部按顺序 `Read`。
-  - `io.TeeReader` 返回一个关联 `w` 和 `r` 的 `Reader`，从 `r` 读取的内容会相应的写入 `w`。
 
 ```go
-//? go test -v -run=^TestReader$
+// ? go test -v -run=^TestReader$
 func TestReader(t *testing.T) {
-	t.Run("Reader.Read", func(t *testing.T) {
-		r := newReader("some io.Reader stream to be read")
-		if c, err := r.Read(buf); err == nil && c > 0 {
-			logf(READ_BYTES, c, buf)
-		} else {
-			// handle error
-		}
-		// output: some io.Reader stream to be read
-	})
+	r := newReader("some io.Reader stream to be read")
+	if c, err := r.Read(buf); err == nil && c > 0 {
+		logf(READ_BYTES, c, buf)
+	} else {
+		// handle error
+	}
+	// output: some io.Reader stream to be read
+}
+```
 
-	t.Run("LimitReader", func(t *testing.T) {
-		lr := io.LimitReader(newReader("some io.Reader stream to be read"), 4) // 限制读取字节数
-		readToStdout(lr)
++ `io.LimitReader` 包装一个限制读取字节数的 Reader `*LimitedReader`。
 
-		lr2 := io.LimitReader(newReader(hello), -1)
-		readToStdout(lr2) // N < 0, lr2.Read return EOF
-		// output: some
-	})
+```go
+// ? go test -v -run=^TestLimitReader$
+func TestLimitReader(t *testing.T) {
+	lr := io.LimitReader(newReader("some io.Reader stream to be read"), 4) // 限制读取字节数
+	readToStdout(lr)
+	lr2 := io.LimitReader(newReader(hello), -1)
+	readToStdout(lr2) // N < 0, lr2.Read return EOF
+	// output: some
+}
+```
 
+- `io.MultiReader` 串联一组 Readers，这些 Readers 在内部按顺序 `Read`。
+
+```go
+// ? go test -v -run=^TestMultiReader&
+func TestMultiReader(t *testing.T) {
+	t.Helper()
 	t.Run("MultiReader", func(t *testing.T) {
 		r1 := newReader("first reader ")
 		r2 := newReader("second reader ")
@@ -48,8 +55,25 @@ func TestReader(t *testing.T) {
 		readToStdout(mr)
 		// output: first reader second reader third reader
 	})
+	t.Run("MultiReaderAsWriterTo", func(t *testing.T) {
+		mr := io.MultiReader(strings.NewReader("Hello "),
+			io.MultiReader(strings.NewReader(""),
+				strings.NewReader("World")))
+		// MultiReader 内部构造一个 multiReader, 并实现了 io.WriterTo
+		if mrAsWriterTo, ok := mr.(io.WriterTo); ok {
+			mrAsWriterTo.WriteTo(os.Stdout) // Hello World
+		}
+	})
+}
+```
 
-	t.Run("TeeReader", func(t *testing.T) {
++ `io.TeeReader` 返回一个关联 `w` 和 `r` 的 `Reader`，从 `r` 读取的内容会相应的写入 `w`。
+
+```go
+// ? go test -v -run=^TestTeeReader$
+func TestTeeReader(t *testing.T) {
+	t.Helper()
+	t.Run("TestTeeReader", func(t *testing.T) {
 		r := newReader("some io.Reader stream to be read\n")
 		tr := io.TeeReader(r, os.Stdout) // 关联 tr 到 Stdout
 
@@ -62,30 +86,34 @@ func TestReader(t *testing.T) {
 ```
 
 ---
-### io.Writer
+### io.Writer, MultiWriter
 
 - `Writer` 包装基本的 `Write` 方法；`Write` 将最多 `len(p)` 字节写入到底层数据流。
-  - `io.MultiWriter` 串联一组 `Writer`，这些 Writers 在内部按顺序 `Write`。
 
 ```go
 //? go test -v -run=^TestWriter$
 func TestWriter(t *testing.T) {
-	t.Run("Writer.Write", func(t *testing.T) {
-		//? os.Stdout
-		var w io.Writer = newStdoutWriter()
-		w.Write([]byte("Writing to os.Stdout\n"))
+	//? os.Stdout
+	var w io.Writer = newStdoutWriter()
+	w.Write([]byte("Writing to os.Stdout\n"))
 
-		//? bytes.Buffer
-		var bw *bytes.Buffer = newBytesBuffer(128)
-		c, err := bw.Write([]byte("Writing to bytes.Buffer"))
-		checkErr(err)
-		logf(WRITE_BYTES, c, bw.Bytes())
+	//? bytes.Buffer
+	var bw *bytes.Buffer = newBytesBuffer(128)
+	c, err := bw.Write([]byte("Writing to bytes.Buffer"))
+	checkErr(err)
+	logf(WRITE_BYTES, c, bw.Bytes())
 
-		// output:
-		// `Writing to os.Stdout`
-		// `Writing to bytes.Buffer`
-	})
+	// output:
+	// `Writing to os.Stdout`
+	// `Writing to bytes.Buffer`
+}
+```
 
++ `io.MultiWriter` 串联一组 `Writer`，这些 Writers 在内部按顺序 `Write`。
+
+```go
+// ? go test -v -run=^TestMultiWriter$
+func TestMultiWriter(t *testing.T) {
 	t.Run("MultiWriter", func(t *testing.T) {
 		w1 := newBytesBuffer(5)
 		w2 := &strings.Builder{}
@@ -102,21 +130,67 @@ func TestWriter(t *testing.T) {
 		// bytes.Buffer : Hello World
 		// strings.Builder : Hello World
 	})
+	t.Run("MultiWriterAsStringWriter", func(t *testing.T) {
+		w1 := newBytesBuffer(5)
+		w2 := &strings.Builder{}
+		w3 := os.Stdout
+
+		if sw, ok := io.MultiWriter(w1, w2, w3).(io.StringWriter); ok {
+			sw.WriteString(hello)
+		}
+		logf("\nbytes.Buffer : %s", w1.Bytes())
+		logf("strings.Builder : %s", w2.String())
+
+		// output:
+		// Hello World
+		// bytes.Buffer : Hello World
+		// strings.Builder : Hello World
+	})
 }
 ```
 
+---
+### io.Closer, NopCloser
+
+- `Closer` 包装基本的 `Close` 方法。首次调用后的 `Close()` 行为未定义。特定的实现可以记录它们自己的行为。
+
++ `NopCloser` 返回一个 `ReadCloser`，它带有一个无操作的 `Close` 方法，包装了提供的 `Reader r`。如果 `r` 实现了 `WriterTo`，则返回的 `ReadCloser` 将通过转发对 `r` 的调用来实现 `WriterTo`。
+
+```go
+//? go test -v -run=^TestCloser$
+func TestCloser(t *testing.T) {
+	t.Helper()
+	t.Run("Close", func(t *testing.T) {
+		beforeTest(t)
+		tmpfile, err := os.CreateTemp(t.TempDir(), "tmpFile")
+		if err != nil || tmpfile == nil {
+			t.Fatalf("CreateTemp(%s) failed: %v", "tmpFile", err)
+		}
+		defer func() {
+			checkErr(tmpfile.Close()) // 在首次调用 Close 之后都会返回 err 或其他实现定义的行为
+		}()
+		tmpfile.Close() // 首次调用
+	})
+
+	t.Run("NopCloser", func(t *testing.T) {
+		tmpfile, _ := os.CreateTemp(t.TempDir(), "tmpFile")
+		readCloser := io.NopCloser(tmpfile)
+		checkErr(tmpfile.Close())    // Closer 正常关闭
+		checkErr(readCloser.Close()) // 转发一个无操作的 Closer, 永远不会发生 err
+	})
+}
+```
 
 ---
-### io.Seeker, io.Closer
+### io.Seeker
 
-- `Closer` 包装基本的 `Close` 方法。
 + `Seeker` 包装基本的 `Seek` 方法；`Seek` 将下一次读取或写入的偏移量依照 `whence` 设置为 `offset`; `whence` 解释为：
 	- `SeekStart` 相对于开始。
 	- `SeekEnd` 相对于末尾。
 	- `SeekCurrent`	相对于当前偏移量。
 
 ```go
-//? go test -v -run=^$
+//? go test -v -run=^TestSeek$
 func TestSeek(t *testing.T) {
 	file, err := os.OpenFile("./seek.file", os.O_CREATE, 0644)
 	if err != nil {
@@ -138,11 +212,16 @@ func TestSeek(t *testing.T) {
 	file.WriteString("write\n")
 
 	readFile("./seek.file") // 检查更改后的内容
+
+	// output:
+	// some io.Reader stream to be read
+	// some io.Writer stream to be read
+	// some io.Writer stream to be write
 }
 ```
 
 ---
-### Copy
+### Copy, CopyBuffer, CopyN
 
 `Copy` 将副本从 `src` 复制到 `dst`。它返回复制的字节数和第一个错误（如果有）。
 `CopyBuffer` 等效于 `Copy`。不能提供 0 长度的 `buf`，传递 `nil` 时将内部创建一个 `buf`。
@@ -160,17 +239,13 @@ func TestCopyFunctions(t *testing.T) {
 		if c, err := io.Copy(wb, newReader(hello)); err != nil {
 			t.Fatal(err)
 		} else if c > 0 {
-			logf(READ_BYTES, c, wb.Bytes())
+			logf(READ_BYTES, c, wb.Bytes())		// `Hello World`
 		}
 
 		//? Copy with negative LimitedReader
 		wb.Reset() // N < 0, 将返回 ""
 		c, _ := io.Copy(wb, &io.LimitedReader{R: newReader(hello), N: -1})
-		logf(READ_BYTES, c, wb.Bytes())
-
-		// output:
-		// `Hello World`
-		// ``
+		logf(READ_BYTES, c, wb.Bytes())			// ``
 	})
 
 	t.Run("CopyBuffer", func(t *testing.T) {
@@ -179,62 +254,41 @@ func TestCopyFunctions(t *testing.T) {
 		if c, err := io.CopyBuffer(wb, newReader(hello), buf); err != nil {
 			t.Fatal(err)
 		} else {
-			logf(READ_BYTES, c, wb.Bytes())
+			logf(READ_BYTES, c, wb.Bytes())		// `Hello World`
 		}
 
 		//? CopyBuffer with empty buffer
 		defer func() {
 			if err := recover(); err != nil {
-				logf("Panicking : %s", err)
+				logf("Panicking : %s", err)		// Panicking : empty buffer in CopyBuffer
 			}
 		}()
 		wb.Reset() // panicking with empty buf
 		io.CopyBuffer(wb, newReader(hello), []byte{})
-
+		
 		// output:
 		// `Hello World`
 		// Panicking : empty buffer in CopyBuffer
 	})
 
 	t.Run("CopyN", func(t *testing.T) {
-		//? CopyN with small N
-		wb.Reset() // len(hello) > 5, 返回 (5, nil)
-		if c, err := io.CopyN(wb, newReader(hello), 5); err != nil && err != io.EOF {
-			t.Fatal(err)
-		} else {
+		copyN := func(_case string, n int64) {
+			wb.Reset()
+			c, err := io.CopyN(wb, newReader(hello), n)
+			logCase(_case)
+			checkErr(err)
 			logf(READ_BYTES, c, wb.Bytes())
 		}
 
-		//? CopyN with negative N
-		wb.Reset() // N < 0, 返回 (0, nil)
-		c, err := io.CopyN(wb, newReader(hello), -1)
-		if err != nil {
-			logf(io.EOF.Error())
-		}
-		logf(READ_BYTES, c, wb.Bytes())
-
-		//? CopyN with large N
-		wb.Reset() // len(hello) < 100, (len(hello), io.EOF)
-		if c, err = io.CopyN(wb, newReader(hello), 100); err != nil {
-			if err == io.EOF {
-				checkErr(err)
-			} else {
-				t.Fatal(err)
-			}
-		}
-		logf(READ_BYTES, c, wb.Bytes())
-
-		// output:
-		// `Hello`
-		// ``
-		// EOF
-		// `Hello World`
+		copyN("CopyN with small N: len(hello) > 5, return (5, nil)", 5)                 // `Hello`
+		copyN("CopyN with negative N: N < 0, return (0, nil)", -1)                      // ``
+		copyN("CopyN with large N: len(hello) < 100, return (len(hello), io.EOF)", 100) // `Hello World`, EOF
 	})
 }
 ```
 
 ---
-### Pipe
+### Pipe, PipeReader, PipeWriter
 
 - `Pipe` 创建一组同步内存管道。它用于连接一组 `io.Reader` 和 `io. Writer`。管道上的读取和写入是一（多）对一匹配的。
 
@@ -251,58 +305,55 @@ func TestCopyFunctions(t *testing.T) {
 ```go
 //? go test -v -run=^TestPipe$
 func TestPipe(t *testing.T) {
-	t.Run("Pipe", func(t *testing.T) {
-		t.Run("CloseWriter", func(t *testing.T) {
-			pr, pw := io.Pipe()
-			// PipeWriter
-			go func() {
-				defer pw.Close() // 后续返回 EOF
-				for range 3 {
-					pw.Write([]byte(hello))
-					time.Sleep(500 * time.Millisecond)
-				}
-			}()
-			// PipeReader
-			defer pr.Close()
-			for {
-				if n, err := pr.Read(buf); err == nil {
-					if n != 0 {
-						logf(READ_BYTES, n, buf)
-					}
-				} else {
-					checkErr(err) // EOF
-					break
-				}
+	t.Run("CloseWriter", func(t *testing.T) {
+		pr, pw := io.Pipe()
+		// PipeWriter
+		go func() {
+			defer pw.Close() // 后续返回 EOF
+			for range 3 {
+				pw.Write([]byte(hello))
+				time.Sleep(500 * time.Millisecond)
 			}
-		})
-
-		t.Run("CloseReader", func(t *testing.T) {
-			pr, pw := io.Pipe()
-			// PipeReader
-			go func() {
-				defer pr.Close()
-				for range 3 {
-					if n, _ := pr.Read(buf); n > 0 {
-						logf(READ_BYTES, n, buf)
-					}
-					time.Sleep(500 * time.Millisecond)
+		}()
+		// PipeReader
+		defer pr.Close()
+		for {
+			if n, err := pr.Read(buf); err == nil {
+				if n != 0 {
+					logf(READ_BYTES, n, buf)
 				}
-			}()
-			// PipeWriter
-			defer pw.Close()
-			for {
-				if _, err := pw.Write([]byte(hello)); err == nil {
-					time.Sleep(500 * time.Millisecond)
-				} else {
-					checkErr(err)
-					break
-				}
+			} else {
+				checkErr(err) // EOF
+				break
 			}
-		})
-
+		}
 	})
 
-	t.Run("Pipe CloseWithError", func(t *testing.T) {
+	t.Run("CloseReader", func(t *testing.T) {
+		pr, pw := io.Pipe()
+		// PipeReader
+		go func() {
+			defer pr.Close()
+			for range 3 {
+				if n, _ := pr.Read(buf); n > 0 {
+					logf(READ_BYTES, n, buf)
+				}
+				time.Sleep(500 * time.Millisecond)
+			}
+		}()
+		// PipeWriter
+		defer pw.Close()
+		for {
+			if _, err := pw.Write([]byte(hello)); err == nil {
+				time.Sleep(500 * time.Millisecond)
+			} else {
+				checkErr(err)
+				break
+			}
+		}
+	})
+
+	t.Run("CloseWithError", func(t *testing.T) {
 		pr, pw := io.Pipe()
 		var uerr = errors.New("user error")
 		go func() {
@@ -316,7 +367,7 @@ func TestPipe(t *testing.T) {
 ```
 
 ---
-### io.ReaderAt
+### io.ReaderAt, io.SectionReader
 
 - `ReaderAt` 包装 `ReadAt` 方法。`ReadAt` 从底层输入源中的偏移 `off` 开始将最多 `len(p)` 字节读入 `p`。
 
@@ -367,7 +418,7 @@ func readFile(fname string) {
 ```
 
 ---
-### io.WriterAt
+### io.WriterAt, io.OffsetWriter
 
 - `WriterAt` 包装 `WriteAt` 方法。`WriteAt` 将 `len(p)` 个字节从 `p` 写入偏移量为 `off` 的底层数据流。
 
@@ -524,7 +575,7 @@ func TestStringWriter(t *testing.T) {
 ```
 
 ---
-### Read Functions
+### ReadAll, ReadAtLeast, ReadFull
 
 - `ReadAll` 从 `Reader` 开始读取并返回读取的数据，直到出现错误或 EOF。
 + `ReadAtLeast` 从 `Reader` 读取到 `buf`，直到它至少读取了 `min` 字节。
@@ -557,6 +608,7 @@ func TestReadFunctions(t *testing.T) {
 			n, err := io.ReadAtLeast(newReader(content), buff, min)
 			logBuf(buff, err, n)
 		}
+		
 		readAtLeast("min(10) < len(content) < lenbuf(60))", 10, 60)
 		readAtLeast("min(10) < lenbuf(15) < len(content)", 10, 15)
 		readAtLeast("len(content) < min(50) < lenbuf(60)", 50, 60)

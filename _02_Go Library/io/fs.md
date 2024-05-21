@@ -7,9 +7,6 @@
 
 ## Package [io/fs](https://pkg.go.dev/io/fs)
 
-
-## Package io/fs
-
 包 `os/fs` 定义了文件系统的基本接口。文件系统可以由主机操作系统提供，也可以由其他包提供。
 
 ---

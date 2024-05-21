@@ -281,7 +281,7 @@ func TestMain(m *testing.M) {
 ```
 
 ---
-### Interface TB
+### testing.TB
 
 - `TB` 是 `T`、`B` 和 `F` 的公共接口。
 
@@ -478,7 +478,7 @@ func TestTB_TempDir(t *testing.T) {
 ```
   
 ---
-### Type T
+### testing.T
 
 - `T`.non-common Functions
   + `Deadline` 报告测试的二进制文件的运行时间将超过 `-timeout` 指定的时间 (默认为 10m); `-timeout=0s` 表示无超时，`ok` 始终返回 `false`。
@@ -547,7 +547,7 @@ func TestT_Functions(t *testing.T) {
 ```
 
 ---
-### Type B
+### testing.B
 
 - `B`.non-common Functions
   - `Elapsed` 返回基准测试的目前的运行时间。
@@ -653,7 +653,7 @@ func Benchmark_Functions(b *testing.B) {
 ```
 
 ---
-### Type F
+### testing.F
 
 - `F`.non-common Functions
   - `Add` 将把参数添加到模糊测试的种子语料库中。`args` 必须匹配 `Fuzz` 目标的参数
@@ -815,7 +815,7 @@ func testBenchmark() {
 ```
 
 ---
-### go test flags
+### `go test` flags
 
 `go test` 命令同时接受应用于 `go test` 本身的标志和应用于结果测试二进制文件的标志<sup>[[↗]](https://pkg.go.dev/cmd/go#hdr-Testing_flags)</sup>。有几个标志控制分析并编写适合 `go tool pprof` 的执行配置文件。
 
