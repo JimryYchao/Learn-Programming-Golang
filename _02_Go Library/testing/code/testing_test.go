@@ -160,12 +160,18 @@ func TestTesting(t *testing.T) {
 ! Init 初始化注册测试标志，通常由 “go test” 命令自动注册。不使用指令单独调用 Benchmark 等函数时才需要 Init。
 ! Benchmark 基准测试对单个函数进行基准测试（不依赖 `go test`）。
 ! BenchmarkResult 包含基准测试运行的结果。
+	N          			迭代总次数
+	T          			运行基准测试的总时间
+	Bytes      			单次迭代处理的字节数
+	MemAllocs  			内存分配总次数
+	MemBytes   			分配的总字节数
+	Extra   			记录由 ReportMetric 添加的用户度量标准
+
 	AllocedBytesPerOp	返回 B/op 指标，其计算公式为 r.MemBytes/r.N
 	AllocsPerOp			返回 allocs/op 指标，计算公式为 r.MemAllocs/r.N
 	MemString			以与 `go test` 相同的格式返回 r.AllocedBytesPerOp 和 r.AllocsPerOp
 	NsPerOp				返回 ns/op 度量
-	String				返回基准测试结果的摘要。额外指标覆盖相同名称的内置指标;
-						String 不包括 allocs/op 或 B/op
+	String				返回基准测试结果的摘要。额外指标覆盖相同名称的内置指标; String 不包括 allocs/op 或 B/op
 */
 //? go test -v -run=^TestBenchmark$
 func TestBenchmark(t *testing.T) {
@@ -192,11 +198,33 @@ func testBenchmark() {
 	fmt.Println("testBenchmark\t" + br.String() + "\t" + br.MemString())
 }
 
-// ! TB 是 `T`、`B` 和 `F` 的公共接口
-// ? go test -v -run=^TestTB$
-func TestTB_Functions(t *testing.T) {
-	t.Helper()
+/*
+! testing.TB 是 `testing.T`、`testing.B` 和 `testing.F` 的公共接口
+	Log         Println；对于测试，仅当测试失败或设置了 `—test. v` 标志时，才会打印文本。对于基准测试，总是打印文本
+	Logf   		Printf，自动换行
+	Fail		将函数标记为失败，但继续执行
+	Error		相当于Log + Fail
+	Errorf		相当于 Logf + Fail
+	FailNow		将函数标记为失败，并停止其执行
+	Fatal       相当于 Log + FailNow
+	Fatalf		相当于 Logf + FailNow
+	Failed		报告函数是否失败
+
+	SkipNow		将测试函数标记为已跳过，并停止其执行
+	Skip		相当于 Log + SkipNow
+	Skipf		相当于 Logf + SkipNow
+	Skipped     报告是否跳过测试
+
+	Cleanup		注册一个在（子）测试完成后要调用的函数。测试结束时，函数按注册逆序调用
+	Helper 		将调用方标记为测试帮助函数。当打印文件和行信息时，该函数将被跳过
+	Name		返回正在运行的（子）测试或基准的名称
+	Setenv		调用 os.Setenv(key，value)，并在测试后使用 Cleanup 还原。不能用于并行测试
+	TempDir		返回一个临时目录供测试使用。（子）测试完成后自动删除
+*/
+// ? go test -v -run=^TestTBFCommonFunctions$
+func TestTBFCommonFunctions(t *testing.T) {
 	beforeTest := func(t *testing.T) {
+		t.Helper() // 标记测试帮助函数
 		t.Logf("Testing >>> %s", t.Name())
 		// 测试结束时按注册逆序依次调用
 		t.Cleanup(func() {
@@ -226,7 +254,6 @@ func TestTB_Functions(t *testing.T) {
 	})
 }
 
-// ! TB.Setenv 函数调用 os.Setenv, 并在测试完成后使用 `Cleanup` 进行还原。它不能在并行测试中使用。
 // ? go test -v -run=^TestTBSetenv&
 func TestTB_Setenv(t *testing.T) {
 	env := struct {
@@ -282,10 +309,8 @@ func TestTB_Setenv(t *testing.T) {
 	})
 }
 
-// ! TB.TempDir 返回一个临时目录供测试使用。当（子）测试完成时自动删除。
 // ? go test -v -run=^TestTBTempDir$
 func TestTB_TempDir(t *testing.T) {
-
 	var dir string
 	fn_checkDir := func(dir string) {
 		fi, err := os.Stat(dir)
