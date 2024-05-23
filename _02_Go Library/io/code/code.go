@@ -30,11 +30,6 @@ func beforeTest[TBF testing.TB](t TBF) {
 		fmt.Printf(EndTest, t.Name())
 	})
 }
-func readToStdout(r io.Reader) {
-	_, err := io.Copy(os.Stdout, r)
-	println()
-	checkErr(err)
-}
 func logCase(_case string) {
 	logf("case : %s", _case)
 }
@@ -46,6 +41,12 @@ func checkErr(err error) {
 		return
 	}
 	logf("ERROR : %s", err)
+}
+
+func readToStdout(r io.Reader) {
+	_, err := io.Copy(os.Stdout, r)
+	println()
+	checkErr(err)
 }
 func newReader(s string) io.Reader {
 	return strings.NewReader(s)

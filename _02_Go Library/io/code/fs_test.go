@@ -12,17 +12,8 @@ import (
 
 var (
 	dirPath  = "."
-	filePath = "./fs_testing.file"
 	fileName = "fs_testing.file"
 )
-
-func getCurDirFS() fs.FS {
-	return os.DirFS(".")
-}
-
-func readFsFile(f fs.File) {
-	readToStdout(f)
-}
 
 /*
 ! fs.FS 提供对分层文件系统的访问。`FS` 接口是文件系统所需的最低实现。
