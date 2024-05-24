@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func logCase(_case string) {
-	logfln("case : %s", _case)
+func _logCase(_case string) {
+	_logfln("case : %s", _case)
 }
 
 var EnterTest = ">>> Enter %s :\n"
@@ -28,10 +28,10 @@ func checkErr(err error) {
 	fmt.Printf("LOG ERROR: \n%s", err)
 }
 
-func log(s any) {
+func _log(s any) {
 	fmt.Println(s)
 }
-func logfln(format string, args ...any) {
+func _logfln(format string, args ...any) {
 	fmt.Printf(format+"\n", args...)
 
 }

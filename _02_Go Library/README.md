@@ -33,10 +33,9 @@
   id="code"/></a><a href="./io/code/fs_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-- [ ] log : 实现了一个简单的日志记录包。       <a href="https://pkg.go.dev/log"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#"   ><img src="./_rsc/link-exam.drawio.png"
+- [x] log : 实现了一个简单的日志记录包。       <a href="https://pkg.go.dev/log"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./log/code/log_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="./log/log.md#exam.md"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
 
@@ -53,7 +52,7 @@
 - [ ]  :  XXXXXXXX。       <a href="https://pkg.go.dev/#"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#"   ><img src="./_rsc/link-exam.drawio.png"
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
 -->
