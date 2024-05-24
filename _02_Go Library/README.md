@@ -18,10 +18,9 @@
   /></a>
 
 
-- [ ] fmt : 使用类 C 的 `printf` 和 `scanf` 的函数实现格式化 I/O。“*verbs*” 格式从 C 派生的。       <a href="https://pkg.go.dev/#"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#"   ><img src="./_rsc/link-exam.drawio.png"
+- [x] fmt : 使用类 C 的 `printf` 和 `scanf` 的函数实现格式化 I/O。“*verbs*” 格式从 C 派生的。       <a href="https://pkg.go.dev/"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./fmt/fmt.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./fmt/code/fmt_test.go"><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
 
@@ -34,6 +33,11 @@
   id="code"/></a><a href="./io/code/fs_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [ ] log : 实现了一个简单的日志记录包。       <a href="https://pkg.go.dev/log"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
 
 
 - [x] testing : 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing"><img src="./_rsc/link-src.drawio.png" 
