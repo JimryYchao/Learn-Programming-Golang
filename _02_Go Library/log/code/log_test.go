@@ -43,26 +43,21 @@ func TestStdLogger(t *testing.T) {
 			log.SetOutput(os.Stdout)
 			log.SetPrefix("")
 		})
-
 		log.Print("hello", "World")
 		log.Print("hello", 1, 2, 3, "World")
 		log.Println("hello", 1, 2, 3, "World")
 
 		stdlogger := log.Default()
+		fmt.Printf("LOG Prefix is `%s`\n", stdlogger.Prefix())
 
-		fmt.Printf("LOG Prefix is `%s`\n", log.Prefix())
-		log.SetPrefix("LOG_TEST: ") // 设置日志输出的前缀
-		stdlogger.Print(time.Now())
+		stdlogger.SetPrefix("LOG_TEST: ") // 设置日志输出的前缀
+		log.Print(time.Now())             // == stdlogger.Print
 
-		tmpf, _ := os.CreateTemp(t.TempDir(), "tmplogs")
-		defer tmpf.Close()
+		log.SetFlags(log.LstdFlags | log.Lmicroseconds | log.Lmsgprefix) // == stdlogger.SetFlogs
+		log.Print("Hello, 世界")
 
-		log.SetOutput(tmpf)
-		log.SetFlags(log.LstdFlags | log.Lmicroseconds | log.Lmsgprefix)
+		log.Output(-100, "print")
 
-		stdlogger.Print("Hello, 世界")
-		tmpf.Seek(0, io.SeekStart) // 移动文件位置指示器至开头
-		io.Copy(os.Stdout, tmpf)
 	})
 
 	t.Run("parallel logger", func(t *testing.T) {
@@ -73,7 +68,7 @@ func TestStdLogger(t *testing.T) {
 			ngorte.Add(1)
 			for i := range n {
 				logger.Printf("line %d", i)
-				time.Sleep(1 * time.Second)
+				time.Sleep(200 * time.Millisecond)
 			}
 			compCh <- true
 		}
@@ -91,4 +86,32 @@ func TestStdLogger(t *testing.T) {
 			}
 		}
 	})
+}
+
+// ? go test -v -run=^TestLogToFile$
+func TestLogToFile(t *testing.T) {
+	beforeTest(t)
+	lf, err := os.OpenFile("files/logfile", os.O_CREATE|os.O_RDWR, 0777)
+	if err != nil {
+		checkErr(err)
+		return
+	}
+	lf.Seek(0, io.SeekEnd)
+	defer lf.Close()
+	// 设置 logger 的 log 格式
+	setlogfmt := func(lgr *log.Logger) {
+		lgr.SetFlags(log.LstdFlags | log.Lmsgprefix)
+		lgr.SetPrefix("[MESS] ")
+	}
+
+	// 关联 lfw 和 default logger
+	lfwr := log.New(lf, "", 0)
+	setlogfmt(lfwr)
+	setlogfmt(log.Default())
+	mulwr := io.MultiWriter(lfwr.Writer(), log.Default().Writer())
+	log.SetOutput(mulwr)
+
+	// 测试整合后的 log.Default
+	log.Print("Hello World")
+	// log.Panic("PANICKING")
 }

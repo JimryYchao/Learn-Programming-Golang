@@ -21,7 +21,7 @@ func TestFormatVerbs(t *testing.T) {
 	go h.checkVerbs(t, false, "escape character", compCh, []any{"\a\b\f\b\r\t\v\"\\", "\U0010ffff", string(rune(0x110000)), ""}, "%v", "%#v", "%s", "%x", "%q", "%+q", "%#q", "%#+q")
 
 	// "a", []byte("a"), [1]byte{'a'}, &[1]byte{'a'} 在字符串格式化上等效
-	go h.checkVerbs(t, false, "string", compCh, []any{"我a\xffz☺", S("hello"), I(23), IwithString(23), "a", []byte("a"), [1]byte{'a'}, &[1]byte{'a'}},
+	go h.checkVerbs(t, false, "string", compCh, []any{"你a\xffz☺", S("hello"), I(23), IwithString(23), "a", []byte("a"), [1]byte{'a'}, &[1]byte{'a'}},
 		"%v", "%#v", "%s", "%2s", "%.2s", "%25s", "%-25s", "%025s", "%25.2s", "%025.2s", "%-25.2s", "%+25.2s",
 		"%q", "% q", "%#q", "%+q", "%+#q", "%25q", "%+25q", "%-25q", "%+-25q", "%025q", "%+025q", "%-025q", "%+-025q", "%.4q", "%25.4q", "%025.4q", "%-25.4q",
 		"%x", "% x", "%#x", "%.4x", "%.1x", "%25x", "%025x", "%+25x", "%-25x", "% 25.1x", "% X", "% 25.4X")

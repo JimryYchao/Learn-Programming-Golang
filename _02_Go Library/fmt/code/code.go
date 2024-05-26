@@ -119,7 +119,7 @@ func newCheckVerbs(t *testing.T, ch chan C) *nhelper {
 
 func (helper *nhelper) writer(t *testing.T, file string, stdout bool) io.Writer {
 	if !stdout {
-		f, err := os.OpenFile("fmt verbs results\\"+file, os.O_CREATE|os.O_WRONLY, 0777)
+		f, err := os.OpenFile("files\\"+file, os.O_CREATE|os.O_WRONLY, 0777)
 		if err != nil || f == nil {
 			return nil
 		}

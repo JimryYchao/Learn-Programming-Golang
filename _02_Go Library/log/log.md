@@ -15,7 +15,3 @@
 
 
 ---
-<a id="exam" ><a>
-### Examples
-
-- 
