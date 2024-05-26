@@ -81,4 +81,5 @@ lgr.Error("with attrs", slog.Group("G", slog.String("k1", "v1"), slog.String("k2
 
 - [LevelVarSLogger](./examples/LevelVarSLogger.go)
 
+- [slog-handler-guide](./examples/slog-handler-guide/README.md) <a href="https://github.com/golang/example/blob/master/slog-handler-guide/README.md"><img src="../_rsc/link-src.drawio.png" id="other"/>
 ---
