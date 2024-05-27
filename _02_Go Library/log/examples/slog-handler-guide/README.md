@@ -51,8 +51,7 @@ The `WithGroup` method is used to avoid key collisions in large programs by esta
 
     logger = logger.WithGroup("g")
 
-All subsequent keys for `logger` will be qualified by the group name "g". Exactly what "qualified" means depends on how the logger's handler formats the output. The built-in `TextHandler` treats the group as a prefix to the key, separated by
-a dot: `g.k` for a key `k`, for example. The built-in `JSONHandler` uses the group as a key for a nested JSON object:
+All subsequent keys for `logger` will be qualified by the group name "g". Exactly what "qualified" means depends on how the logger's handler formats the output. The built-in `TextHandler` treats the group as a prefix to the key, separated by a dot: `g.k` for a key `k`, for example. The built-in `JSONHandler` uses the group as a key for a nested JSON object:
 
     {"g": {"k": v}}
 
@@ -240,7 +239,7 @@ Next, it follows the handler rule that says that empty attributes should be igno
 
 Then it switches on the attribute kind to determine what format to use. For most kinds (the default case of the switch), it relies on `slog.Value`'s `String` method to produce something reasonable. It handles strings and times specially: strings by quoting them, and times by formatting them in a standard way.
 
-When `appendAttr` sees a `Group`, it calls itself recursively on the group's attributes, after applying two more handler rules. First, a group with no attributes is ignored&mdash;not even its key is displayed. Second, a group with an empty key is inlined: the group boundary isn't marked in ny way. In our case, that means the group's attributes aren't indented.
+When `appendAttr` sees a `Group`, it calls itself recursively on the group's attributes, after applying two more handler rules. First, a group with no attributes is ignored&mdash;not even its key is displayed. Second, a group with an empty key is inlined: the group boundary isn't marked in any way. In our case, that means the group's attributes aren't indented.
 
 ### The `WithAttrs` method
 
@@ -622,8 +621,7 @@ This `Handle` method might pass the record to more than one handler, so it shoul
 
 ### Concurrency safety
 
-A handler must work properly when a single `Logger` is shared among several goroutines. That means that mutable state must be protected with a lock or some other mechanism. In practice, this is not hard to achieve, because many handlers won't have any
-mutable state.
+A handler must work properly when a single `Logger` is shared among several goroutines. That means that mutable state must be protected with a lock or some other mechanism. In practice, this is not hard to achieve, because many handlers won't have any mutable state.
 
 - The `Enabled` method typically consults only its arguments and a configured level. The level is often either set once initially, or is held in a `LevelVar`, which is already concurrency-safe.
 
