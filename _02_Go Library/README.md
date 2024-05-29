@@ -11,6 +11,10 @@
   id="code"/></a><a href="./bufio/code/bufio_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [x] bytes 实现了操作字节切片的函数。它类似于 strings 包的功能。       <a href="https://pkg.go.dev/bytes"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./bytes/code/bytes_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
 
 
 - [x] errors 实现一些函数来处理错误。       <a href="https://pkg.go.dev/errors"><img src="./_rsc/link-src.drawio.png" 
@@ -45,7 +49,7 @@
   id="exam"/></a><a href="./log/slog.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
-- [x] strings 实现了一些函数来操作 UTF-8 编码的字符串。      <a href="https://pkg.go.dev/#"><img src="./_rsc/link-src.drawio.png" 
+- [x] strings 实现了一些函数来操作 UTF-8 编码的字符串。      <a href="https://pkg.go.dev/strings"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./strings/strings.md"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
