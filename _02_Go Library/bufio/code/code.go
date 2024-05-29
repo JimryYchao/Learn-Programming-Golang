@@ -30,14 +30,14 @@ func checkErr(err error) {
 
 func log(a any) {
 	s := fmt.Sprint(a)
-	if s[len(s)-1] != '\n' {
+	if len(s) == 0 || s[len(s)-1] != '\n' {
 		s += "\n"
 	}
 	fmt.Print(s)
 }
 func logfln(format string, args ...any) {
 	s := fmt.Sprintf(format, args...)
-	if s[len(s)-1] != '\n' {
+	if len(s) == 0 || s[len(s)-1] != '\n' {
 		s += "\n"
 	}
 	fmt.Print(s)

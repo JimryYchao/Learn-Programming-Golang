@@ -7,10 +7,8 @@
 
 ---
 
-- [ ] bufio 包装了 `io.Reader` 和 `io.Writer` 并提供了缓冲和一些文本 I/O 帮助。<a href="https://pkg.go.dev/bufio"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#"   ><img src="./_rsc/link-exam.drawio.png"
+- [x] bufio 包装了 `io.Reader` 和 `io.Writer` 并提供了缓冲和一些文本 I/O 帮助。<a href="https://pkg.go.dev/bufio"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./bufio/code/bufio_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
 - [x] errors 实现一些函数来处理错误。       <a href="https://pkg.go.dev/errors"><img src="./_rsc/link-src.drawio.png" 

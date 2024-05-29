@@ -1,27 +1,8 @@
 ### 标准 Go Library
 
-- Go Version = 1.22.1
-- ✔️ = Support in Go 1.22.1
-- ❌ = Deprecated in Go 1.22.1
-- ✖️ = May be deprecated in the future
-<!-- ✔️/✖️/❌  -->
-
->---
-|      | Name                            | Synopsis                                                    | Ref                                             |
-| :--- | :------------------------------ | :---------------------------------------------------------- | :---------------------------------------------- |
-| ✔️    | [io](./io/io.md)                | 包 `io` 提供 I/O 原语的基本接口。                           | $[[↗]](https://golang.google.cn/pkg/io/)        |
-| ✔️    | [io/fs](./io/io_fs.md)          | 包 `fs` 定义了文件系统的基本接口。                          | $[[↗]](https://golang.google.cn/pkg/io/fs/)     |
-| ❌    | [io/ioutil](./io/io_ioutil.md)  | 包 `ioutil` 实现了一些 I/O 实用程序功能。在 1.16 之后弃用。 | $[[↗]](https://golang.google.cn/pkg/io/ioutil/) |
-| ✔️    | [buildin](./buildin/buildin.md) | 包 `buildin` 提供了 Go 语言预先声明标识符的文档。           | $[[↗]](https://golang.google.cn/pkg/builtin/)   |
-|      | bufio                           |                                                             |
-
 <!--
- fmt    
-
-        
 archive/zip	
 arena
-
 bytes	
 cmd/addr2line	
 cmd/asm	
