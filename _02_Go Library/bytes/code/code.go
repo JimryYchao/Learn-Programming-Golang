@@ -25,13 +25,20 @@ func checkErr(err error) {
 	if err == nil {
 		return
 	}
-	fmt.Printf("LOG ERROR: \n%s", err)
+	fmt.Printf("LOG ERROR: %s\n", err)
 }
 
-func log(s any) {
-	fmt.Println(s)
+func log(a any) {
+	s := fmt.Sprint(a)
+	if s[len(s)-1] != '\n' {
+		s += "\n"
+	}
+	fmt.Print(s)
 }
 func logfln(format string, args ...any) {
-	fmt.Printf(format+"\n", args...)
-
+	s := fmt.Sprintf(format, args...)
+	if s[len(s)-1] != '\n' {
+		s += "\n"
+	}
+	fmt.Print(s)
 }

@@ -11,6 +11,8 @@
   id="code"/></a><a href="./bufio/code/bufio_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+
+
 - [x] errors 实现一些函数来处理错误。       <a href="https://pkg.go.dev/errors"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./errors/code/errors_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
@@ -43,7 +45,9 @@
   id="exam"/></a><a href="./log/slog.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
-
+- [x] strings 实现了一些函数来操作 UTF-8 编码的字符串。      <a href="https://pkg.go.dev/#"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./strings/strings.md"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
 
 - [x] testing 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./testing/testing.md"  ><img  src="./_rsc/link-others.drawio.png" 
