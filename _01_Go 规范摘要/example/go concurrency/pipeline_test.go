@@ -6,20 +6,20 @@ import (
 )
 
 // Pipeline
-
-func sliceToChan(nums []int) <-chan int {
+func generate(nums ...int) <-chan int {
 	out := make(chan int)
 	go func() {
-		for _, v := range nums {
-			out <- v
+		for _, n := range nums {
+			out <- n
 		}
 		close(out)
 	}()
 	return out
 }
 
+// second stage: receive & handle, and sent to downstream
 func sq(in <-chan int) <-chan int {
-	out := make(chan int, 10)
+	out := make(chan int)
 	go func() {
 		for n := range in {
 			out <- n * n
@@ -29,13 +29,10 @@ func sq(in <-chan int) <-chan int {
 	return out
 }
 
-func TestChannel(t *testing.T) {
-	nums := []int{1, 2, 3, 4, 5, 66}
-	dataChan := sliceToChan(nums)
-
-	finalChan := sq(dataChan)
-
-	for n := range finalChan {
+// last stage: consumer
+func TestPipeline(t *testing.T) {
+	upstream := generate([]int{1, 2, 3, 4, 5, 66}...)
+	for n := range sq(upstream) {
 		fmt.Println(n)
 	}
 }

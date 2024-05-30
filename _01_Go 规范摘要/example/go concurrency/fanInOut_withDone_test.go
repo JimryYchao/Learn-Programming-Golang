@@ -8,10 +8,8 @@ import (
 	"time"
 )
 
-// generator
-
 // 重复一个 fn 并持续发送数据到 chan stream
-func repeatFunc[T any, K any](done <-chan K, fn func() T) <-chan T {
+func repeatFuncWithDone[T any, K any](done <-chan K, fn func() T) <-chan T {
 	stream := make(chan T)
 	go func() {
 		defer close(stream)
@@ -27,7 +25,7 @@ func repeatFunc[T any, K any](done <-chan K, fn func() T) <-chan T {
 }
 
 // 从 chan stream 取数据
-func take[T any, K any](done <-chan K, stream <-chan T, n int) <-chan T {
+func takeWithDone[T any, K any](done <-chan K, stream <-chan T, n int) <-chan T {
 	taken := make(chan T)
 	go func() {
 		defer close(taken)
@@ -42,8 +40,8 @@ func take[T any, K any](done <-chan K, stream <-chan T, n int) <-chan T {
 	return taken
 }
 
-// 合并多个例程的 chan 通道为一个 chan
-func fanIn[T any](done <-chan int, chans ...<-chan T) <-chan T {
+// ! 合并多个例程的 chan 通道为一个 chan // or name func merge
+func fanInWithDone[T any](done <-chan int, chans ...<-chan T) <-chan T {
 	var wg sync.WaitGroup
 	fannedInStream := make(chan T)
 	transfer := func(c <-chan T) {
@@ -56,8 +54,8 @@ func fanIn[T any](done <-chan int, chans ...<-chan T) <-chan T {
 			}
 		}
 	}
+	wg.Add(len(chans))
 	for _, c := range chans {
-		wg.Add(1)
 		go transfer(c)
 	}
 
@@ -69,7 +67,7 @@ func fanIn[T any](done <-chan int, chans ...<-chan T) <-chan T {
 }
 
 // fn 测试，取素数
-func primeFinder(done <-chan int, randIntStream <-chan int) <-chan int {
+func primeFinderWithDone(done <-chan int, randIntStream <-chan int) <-chan int {
 	isPrime := func(randomInt int) bool {
 		for i := randomInt - 1; i > 1; i-- {
 			if randomInt%i == 0 {
@@ -95,7 +93,7 @@ func primeFinder(done <-chan int, randIntStream <-chan int) <-chan int {
 	return primes
 }
 
-func TestGenerator(t *testing.T) {
+func TestFanInOutWithDone(t *testing.T) {
 	done := make(chan int)
 	defer close(done)
 	numFetcher := func(start int) func() int {
@@ -106,7 +104,7 @@ func TestGenerator(t *testing.T) {
 		}
 	}
 	start := time.Now()
-	intStream := repeatFunc(done, numFetcher(10000000))
+	intStream := repeatFuncWithDone(done, numFetcher(10000000))
 
 	// ! native；单例程
 	// primeStream := primeFinder(done, intStream)
@@ -120,11 +118,11 @@ func TestGenerator(t *testing.T) {
 	count := CPUCount
 	primeFinderChans := make([]<-chan int, count)
 	for i := 0; i < count; i++ {
-		primeFinderChans[i] = primeFinder(done, intStream)
+		primeFinderChans[i] = primeFinderWithDone(done, intStream)
 	}
 	// fan in
-	fannedInStream := fanIn(done, primeFinderChans...)
-	for rando := range take(done, fannedInStream, 500) {
+	fannedInStream := fanInWithDone(done, primeFinderChans...)
+	for rando := range takeWithDone(done, fannedInStream, 500) {
 		fmt.Println(rando)
 	}
 
