@@ -21,6 +21,11 @@
   id="exam"/></a><a href="./context/context.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
+- [ ] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./embed/embed.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./embed/code/embed_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
 - [x] errors 实现一些函数来处理错误。       <a href="https://pkg.go.dev/errors"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./errors/code/errors_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
