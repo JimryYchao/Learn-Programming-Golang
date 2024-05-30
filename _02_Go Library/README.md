@@ -15,7 +15,11 @@
   id="code"/></a><a href="./bytes/code/bytes_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-
+- [x] context 定义了 Context 上下文类型，它携带 *deadlines*、*cancellation signals* 和跨 API 边界和进程之间的其他 *request-scoped  values*。       <a href="https://pkg.go.dev/context"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./context/context.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./context/code/context_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="./context/context.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
 
 - [x] errors 实现一些函数来处理错误。       <a href="https://pkg.go.dev/errors"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./errors/code/errors_test.go"   ><img src="./_rsc/link-code.drawio.png" 
@@ -57,6 +61,7 @@
   id="other"/></a><a href="./testing/testing.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./testing/code/testing_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
+
 
 
 
