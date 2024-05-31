@@ -1,4 +1,4 @@
-### Go Standard library Summary      <a href="https://pkg.go.dev/std"><img src="./_rsc/link-src.drawio.png"/></a>
+### Go Standard library Summary      <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
 
 - 官网链接 <img src="./_rsc/link-src.drawio.png"/> 
 - 补充说明  <img  src="./_rsc/link-others.drawio.png"/>
@@ -71,12 +71,12 @@
   id="code"/></a><a href="./strings/strings.md"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-- [x] testing 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing"><img src="./_rsc/link-src.drawio.png" 
+- [x] testing 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./testing/testing.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./testing/code/testing_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-- [x] time 提供测量和显示时间的功能。      <a href="https://pkg.go.dev/time"><img src="./_rsc/link-src.drawio.png" 
+- [x] time 提供测量和显示时间的功能。      <a href="https://pkg.go.dev/time" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./time/time.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./time/code/time_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   id="exam"/></a><a href="./time/time.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
@@ -86,7 +86,7 @@
 
 <!-- 
 
-- [ ]         <a href="https://pkg.go.dev/#"><img src="./_rsc/link-src.drawio.png" 
+- [ ]         <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
   id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
