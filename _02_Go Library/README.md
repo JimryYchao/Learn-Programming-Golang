@@ -58,6 +58,15 @@
   id="exam"/></a><a href="./log/slog.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
+- [x] maps 定义了各种对任何类型的映射的辅助函数。      <a href="https://pkg.go.dev/maps"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./maps/code/maps_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+- [x] slices 定义了对任何类型的切片的辅助函数。      <a href="https://pkg.go.dev/slices"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./slices/code/slices_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+
 - [x] strings 实现了一些函数来操作 UTF-8 编码的字符串。      <a href="https://pkg.go.dev/strings"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./strings/strings.md"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
