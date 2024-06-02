@@ -80,10 +80,12 @@
   id="code"/></a><a href="./math/code/cmplx_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-  - [ ] rand 提供基本常量和数学函数。        <a href="https://pkg.go.dev/math" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  - [x] rand 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./math/rand.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./math/code/rand_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+      - [x] rand/v2 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand/v2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
 - [x] slices 定义了对任何类型的切片的辅助函数。      <a href="https://pkg.go.dev/slices"  target="_blank"><img src="./_rsc/link-src.drawio.png" 
