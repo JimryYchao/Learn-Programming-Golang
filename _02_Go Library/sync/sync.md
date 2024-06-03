@@ -18,4 +18,6 @@
 
 - [SyncPool](./examples/syncPool.go)
 
+- [Wrong locker race](./examples/race_test.go)
+
 ---

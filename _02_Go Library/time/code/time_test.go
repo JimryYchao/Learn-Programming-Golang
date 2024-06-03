@@ -148,7 +148,7 @@ func TestDuration(t *testing.T) {
 
 /* Timer
 ! time.Timer 表示单个计时事件。当 Timer 超时触发时，当前时间将在 Timer.C 上发送，除非 Timer 是由 AfterFunc 创建的。必须使用 NewTimer 或 AfterFunc 创建 Timer。
-	Reset 重置计时器持续时间 d；已停止时返回 false
+	Reset 重置计时器持续时间 d；已停止时返回 false; 应始终在已停止或过期的通道上调用 Reset
 	Stop 阻止 timer 触发，成功时返回 true，它不关闭 timer.C
 ! NewTimer 创建一个新的 Timer，它将在至少持续时间 d 之后在其通道上发送当前时间。
 ! AfterFunc 等待持续时间结束，并在自己的例程中调用 f；timer.Stop 来取消调用，timer.C 不可用
@@ -166,26 +166,27 @@ func TestTimer(t *testing.T) {
 		now := time.Now()
 		timer := time.NewTimer(100 * time.Millisecond)
 
-		logfln("timer passed %d milliseconds", (<-timer.C).Sub(now).Milliseconds())
+		logfln("timer passed %d milliseconds", (<-timer.C).Sub(now).Milliseconds()) // 耗尽 timer.C
 
-		timer.Reset(10 * time.Second)
+		timer.Reset(1)
 		var wg sync.WaitGroup
 		done := make(chan bool)
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
 			select {
-			case <-timer.C:
+			case <-timer.C: // 阻塞
 				log("timer fired")
 			case <-done:
 				log("timer stopped")
 			}
 		}()
 
+		// <-time.After(10)  // 将阻塞 C
 		if !timer.Stop() {
-			<-timer.C
+			<-timer.C // 耗尽 C
 		} else {
-			done <- true
+			done <- true //
 		}
 		wg.Wait()
 	})

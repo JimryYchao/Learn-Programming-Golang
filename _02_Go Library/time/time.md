@@ -26,6 +26,52 @@ import _ "time/tzdata"
 ```
 
 ---
+### Timer
+
+`time.Timer` 注意事项：
+ - `Stop` 只有在 `New` 和 `Reset` 之后才安全。
+ - `Reset` 仅在 `Stop` 之后有效。
+ - 仅当在每个 `Stop` 之后排空通道时，接收值才有效。
+ - 当且仅当通道尚未被读取时，才应排空通道。
+ - 不能使用 `Stop` 和 `Reset` 和并发地从其他例程中接收 `timer.C` 通道的值，`C` 应该在每个 `Reset` 之前明确被排出一次。
+
+```go
+if !t.Stop() {
+	<-t.C
+}
+t.Reset(d)
+```
+
+以下是允许的转换、使用和调用计时器的流程图：
+
+![](./code/image.png)
+
+
+一个正确使用 `Timer` 的例子：
+
+```go
+func toChanTimed(t *time.Timer, ch chan int) {
+	t.Reset(1 * time.Second)
+	// No defer, as we don't know which
+	// case will be selected
+
+	select {
+	case ch <- 42:
+	case <-t.C:
+		// C is drained, early return
+		return
+	}
+
+	// We still need to check the return value
+	// of Stop, because t could have fired
+	// between the send on ch and this line.
+	if !t.Stop() {
+		<-t.C
+	}
+}
+```
+
+---
 <a id="exam" ><a>
 
 ### Examples

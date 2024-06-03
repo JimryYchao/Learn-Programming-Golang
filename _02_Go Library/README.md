@@ -110,6 +110,17 @@
   id="other"/></a><a href="./testing/testing.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./testing/code/testing_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
+  
+  - [x] fstest 实现了对测试实现和文件系统用户的支持。      <a href="https://pkg.go.dev/testing/fstest" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./testing/code/fstest_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+  
+  - [ ] iotest 实现了主要用于测试的 Readers 和 Writers。        <a href="https://pkg.go.dev/testing/iotest" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
 
 - [x] time 提供测量和显示时间的功能。      <a href="https://pkg.go.dev/time" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./time/time.md"  ><img  src="./_rsc/link-others.drawio.png" 
