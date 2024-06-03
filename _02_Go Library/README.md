@@ -97,14 +97,14 @@
   id="code"/></a><a href="./strings/strings.md"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-- [ ] sync 提供基本的同步原语。        <a href="https://pkg.go.dev/sync" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+- [x] sync 提供基本的同步原语。        <a href="https://pkg.go.dev/sync" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./sync/code/sync_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="./sync/sync.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
-
--->
-
+  - [x] atomic 提供了用于实现同步算法的低级原子内存原语。        <a href="https://pkg.go.dev/sync/atomic" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./sync/atomic.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./sync/code/atomic_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
 
 - [x] testing 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./testing/testing.md"  ><img  src="./_rsc/link-others.drawio.png" 
