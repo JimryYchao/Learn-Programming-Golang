@@ -123,6 +123,11 @@
   id="code"/></a><a href="./testing/code/quick_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+  - [x] slogtest 实现了对 `log/slog.Handler` 的测试实现的支持。       <a href="https://pkg.go.dev/testing/slogtest" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./testing/code/slogtest_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+
 - [x] time 提供测量和显示时间的功能。      <a href="https://pkg.go.dev/time" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./time/time.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./time/code/time_test.go"   ><img src="./_rsc/link-code.drawio.png" 
