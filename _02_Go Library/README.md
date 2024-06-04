@@ -30,6 +30,10 @@
   id="code"/></a><a href="./errors/code/errors_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [x] flag 实现命令行标志解析。     <a href="https://pkg.go.dev/flag" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./flag/flag.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./flag/code/flag_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
 
 - [x] fmt 使用类 C 的 `printf` 和 `scanf` 的函数实现格式化 I/O。“*verbs*” 格式从 C 派生的。       <a href="https://pkg.go.dev/" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./fmt/fmt.md"  ><img  src="./_rsc/link-others.drawio.png" 
