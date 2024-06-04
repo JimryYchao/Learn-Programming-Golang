@@ -139,6 +139,10 @@
   /></a>
 
 
+- [x] unsafe 包含绕过 Go 程序类型安全的操作。       <a href="https://pkg.go.dev/unsafe" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./unsafe/unsafe.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./unsafe/code/unsafe_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
 
 <!-- 
 
@@ -149,3 +153,4 @@
   /></a>
 
 -->
+w
