@@ -15,6 +15,12 @@
   id="code"/></a><a href="./bytes/code/bytes_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [x] cmp 提供了与比较有序值相关的类型和函数。        <a href="https://pkg.go.dev/cmp" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./cmp/cmp.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./cmp/code/cmp_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+
 - [x] context 定义了 Context 上下文类型，它携带 *deadlines*、*cancellation signals* 和跨 API 边界和进程之间的其他 *request-scoped  values*。       <a href="https://pkg.go.dev/context" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./context/context.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./context/code/context_test.go"   ><img src="./_rsc/link-code.drawio.png" 
