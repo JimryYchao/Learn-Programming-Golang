@@ -144,6 +144,22 @@
   id="code"/></a><a href="./unsafe/code/unsafe_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [x] unicode 提供一些数据和函数来测试 Unicode 码位的某些属性。      <a href="https://pkg.go.dev/unicode" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="exam"/></a><a href="./unicode/code/unicode_test.go"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+  
+  - [ ] utf8        <a href="https://pkg.go.dev/unicode" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
+  - [ ] utf16        <a href="https://pkg.go.dev/unicode" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
 <!-- 
 
 - [ ]         <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
@@ -152,5 +168,4 @@
   id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
 
--->
-w
+--> 
