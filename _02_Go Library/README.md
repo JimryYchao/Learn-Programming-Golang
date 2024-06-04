@@ -152,7 +152,7 @@
   id="code"/></a><a href="./unicode/code/utf8_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-  - [ ] utf16 实现了 UTF-16 序列的编码和解码。       <a href="https://pkg.go.dev/unicode/utf16" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] utf16 实现了 UTF-16 序列的编码和解码。       <a href="https://pkg.go.dev/unicode/utf16" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./unicode/code/utf16_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
