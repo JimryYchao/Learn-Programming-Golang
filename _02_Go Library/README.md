@@ -148,16 +148,12 @@
   id="exam"/></a><a href="./unicode/code/unicode_test.go"   ><img src="./_rsc/link-exam.drawio.png"
   /></a>
   
-  - [ ] utf8        <a href="https://pkg.go.dev/unicode" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  - [x] utf8 实现了支持以 UTF-8 编码的文本函数和常量。     <a href="https://pkg.go.dev/unicode/utf8" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./unicode/code/utf8_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
-  - [ ] utf16        <a href="https://pkg.go.dev/unicode" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  - [ ] utf16 实现了 UTF-16 序列的编码和解码。       <a href="https://pkg.go.dev/unicode/utf16" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="./unicode/code/utf16_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
 <!-- 
