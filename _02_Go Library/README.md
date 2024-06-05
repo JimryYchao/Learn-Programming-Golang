@@ -102,6 +102,18 @@
   id="code"/></a><a href="./slices/code/slices_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [x] sort 提供了用于对切片和用户定义的集合进行排序的原语。       <a href="https://pkg.go.dev/sort" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="sort/code/sort_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="sort/sort.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
+
+- [x] strconv 实现了基本数据类型的字符串表示形式之间的转换。        <a href="https://pkg.go.dev/strconv" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="./strconv/strconv.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./strconv/code/strconv_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+
 
 - [x] strings 实现了一些函数来操作 UTF-8 编码的字符串。      <a href="https://pkg.go.dev/strings "  target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./strings/strings.md"   ><img src="./_rsc/link-code.drawio.png" 
@@ -161,6 +173,8 @@
   - [x] utf16 实现了 UTF-16 序列的编码和解码。       <a href="https://pkg.go.dev/unicode/utf16" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./unicode/code/utf16_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
+
+<!-- TODO -------------------------------------------------------------------------------------------------------------------->
 
 <!-- 
 
