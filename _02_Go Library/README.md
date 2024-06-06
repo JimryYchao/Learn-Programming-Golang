@@ -1,4 +1,4 @@
-### Go Standard library Summary      <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
+### Go Standard library Directories      <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
 
 - 官网链接 <img src="./_rsc/link-src.drawio.png"/> 
 - 补充说明  <img  src="./_rsc/link-others.drawio.png"/>
@@ -127,6 +127,11 @@
   id="other"/></a><a href="./sync/atomic.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./sync/code/atomic_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
+
+- [ ] syscall 包含一个到低级操作系统原语的接口。参见 [sys](../_03_Go%20thrid-party/sys/sys.md)       <a href="https://pkg.go.dev/syscall" target="_blank"><img src="./_rsc/link-src.drawio.png" /></a>
+
+  - 
+
 
 - [x] testing 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./testing/testing.md"  ><img  src="./_rsc/link-others.drawio.png" 
