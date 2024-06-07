@@ -98,6 +98,14 @@
   id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+<!-- TODO -------------------------------------------------------------------------------------------------------------------->
+
+- [x] reflect 实现运行时反射，允许程序操作具有任意类型的对象。        <a href="https://pkg.go.dev/reflect" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="reflect/reflect.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="./reflect/code/reflect_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="reflect/reflect.md#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
 - [x] slices 定义了对任何类型的切片的辅助函数。      <a href="https://pkg.go.dev/slices"  target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./slices/code/slices_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
