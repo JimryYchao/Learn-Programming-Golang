@@ -2,7 +2,6 @@ package gostd
 
 import (
 	"gostd/reflect/helper"
-	"reflect"
 	. "reflect"
 	"testing"
 	"time"
@@ -207,16 +206,10 @@ pointer:
 */
 // ? go test -v -run=^$
 func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
-	sp0 := helper.SliceFor[int]()
-	log(sp0.ElemString()) // int
-	sp1 := helper.SliceOf(TypeFor[[]int]())
-	log(sp1.ElemString()) // []int
-	sp2, _ := helper.SliceOfType(reflect.TypeFor[[]int]())
-	log(sp2.ElemString()) // int
-	sp3, err := helper.TypeOfSlice(0)
-	log(sp3.ElemString(), err) // err: v is not a slice
-	sp4 := helper.TypeWrap(TypeOf(0))
-	log(sp4, err)
+	sp0 := helper.SliceFor[int]()           // is []int
+	log(sp0.Elem().String())                // int
+	sp1 := helper.SliceOf(TypeFor[[]int]()) // is [][]int
+	log(sp1.Elem().String())                // []int
 
 	ints := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 	if s, err := helper.SliceFrom(&ints); err == nil {
@@ -252,15 +245,4 @@ func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
 	log(helper.SliceFromValue(ValueOf(0))) // err: s is not a slice: kind=int
 
 	log(helper.SliceFromValue(ValueOf([]int{9, 8, 7, 6}))) // [9, 8, 7, 6]
-}
-
-func TestHelpers(t *testing.T) {
-
-	log(helper.TypeTo[*helper.SliceType](TypeOf(0)))
-	log(helper.TypeOf([]int{}).Type().String())
-	log(helper.TypeWrap(TypeOf(0)).Type().String())
-
-	tp := (helper.TypeFor[[]int]()).(*helper.SliceType)
-	s, _ := tp.New(10)
-	log(s)
 }

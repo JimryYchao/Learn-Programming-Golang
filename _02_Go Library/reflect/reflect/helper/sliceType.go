@@ -1,16 +1,39 @@
 package helper
 
 import (
-	"fmt"
 	r "reflect"
 )
 
 // SliceType
 var sliceSet map[string]*SliceType = make(map[string]*SliceType)
 
+type SliceType struct {
+	*typeBase
+}
+
+func (t *SliceType) typeof(tp r.Type) Type {
+	if value, ok := sliceSet[tp.String()]; ok {
+		t = value
+		return value
+	}
+	t = &SliceType{newType(tp)}
+	sliceSet[tp.String()] = t
+	return t
+}
+
+func (*SliceType) Kind() r.Kind { return r.Slice }
+
+func (t *SliceType) Elem() Type { return typeof(t.t.Elem()) }
+
+func (t *SliceType) Common() TypeCommon { return TypeCom(t) }
+
+// SliceOf
 func SliceOf(tp r.Type) *SliceType {
-	st := &SliceType{r.SliceOf(tp)}
-	sliceSet[tp.Name()] = st
+	if tp == nil {
+		return nil
+	}
+	st := &SliceType{newType(r.SliceOf(tp))}
+	sliceSet[tp.String()] = st
 	return st
 }
 
@@ -18,56 +41,19 @@ func SliceFor[T any]() *SliceType {
 	return SliceOf(r.TypeFor[T]())
 }
 
-type SliceType TypeHelper
-
-func (*SliceType) Kind() r.Kind { return r.Slice }
-
-func (t *SliceType) Type() r.Type { return t.t }
-
-func (t *SliceType) typeof(tp r.Type) Type {
-	if value, ok := sliceSet[tp.String()]; ok {
-		t = value
-		return value
-	}
-	t = &SliceType{tp}
-	sliceSet[tp.String()] = t
-	return t
-}
-
-func (t *SliceType) ElemString() string {
-	if t != nil {
-		return t.t.Elem().String()
-	}
-	return "<!t=nil>"
-}
-
-func TypeOfSlice(v any) (*SliceType, error) {
-	return SliceOfType(r.TypeOf(v))
-}
-
-func SliceOfType(tp r.Type) (*SliceType, error) {
-	if tp.Kind() != r.Slice {
-		return nil, newErr("v is not a slice")
-	}
-	if value, ok := sliceSet[tp.Elem().Name()]; ok {
-		return value, nil
-	}
-	st := &SliceType{tp.Elem()}
-	sliceSet[tp.Elem().Name()] = st
-	return st, nil
-}
-
+// New Slice
 func (t *SliceType) new(len, cap int) (*Slice, error) {
 	if len < 0 {
-		return nil, fmt.Errorf("len is a negative number")
+		return nil, newErr("len is a negative number")
 	}
 	if cap < len {
-		return nil, fmt.Errorf("cap is less than len")
+		return nil, newErr("cap is less than len")
 	}
 
 	slice := r.MakeSlice(t.t, len, cap)
 	return &Slice{&slice, nil}, nil
 }
+
 func (t *SliceType) New(len int) (*Slice, error) {
 	return t.NewC(len, len)
 }

@@ -155,18 +155,6 @@ func (s *Slice) Value() r.Value {
 	return *s.v
 }
 
-type SliceErr struct {
-	err string
-}
-
-func (e *SliceErr) Error() string {
-	return e.err
-}
-
-func newErr(s string) error {
-	return &SliceErr{s}
-}
-
 func (s *Slice) Append(x ...any) (*Slice, error) {
 	if len(x) == 0 {
 		return s, nil
