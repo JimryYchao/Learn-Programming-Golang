@@ -80,6 +80,8 @@ func typeof(tp r.Type) Type {
 		return getType[*ArrayType](tp)
 	case r.Func:
 		return getType[*FuncType](tp)
+	case r.Chan:
+		return getType[*ChanType](tp)
 	default:
 		return &typeBase{tp} // 返回常规 reflect.Type
 	}

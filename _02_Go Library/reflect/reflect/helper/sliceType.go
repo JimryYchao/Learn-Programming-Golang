@@ -21,11 +21,10 @@ func (t *SliceType) typeof(tp r.Type) Type {
 	return t
 }
 
-func (*SliceType) Kind() r.Kind { return r.Slice }
+func (*SliceType) Kind() r.Kind         { return r.Slice }
+func (t *SliceType) Common() TypeCommon { return TypeCom(t) }
 
 func (t *SliceType) Elem() Type { return typeof(t.t.Elem()) }
-
-func (t *SliceType) Common() TypeCommon { return TypeCom(t) }
 
 // SliceOf
 func SliceOf(tp r.Type) *SliceType {

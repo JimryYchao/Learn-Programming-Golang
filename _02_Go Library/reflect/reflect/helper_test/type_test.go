@@ -53,6 +53,9 @@ func TestTypeOf(t *testing.T) {
 }
 
 func testTypeCommon(t Type) {
+	if t == nil {
+		log("t is nil")
+	}
 	logf("\n>>>>>  t : %s  <<<<<", t.Name())
 	logf("Type : %s", t.Type())
 	logf("String : %s", t.String())

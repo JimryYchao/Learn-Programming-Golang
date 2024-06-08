@@ -14,15 +14,15 @@ import (
 	Align 返回该值的类型的对齐
 	Size 返回存储给定类型的值时需要的字节大小
 	String 返回类型的字符串形式（短名称）
-	Kind 返回该类型的种类；底层类型
+	Kind 返回该类型的种类
 	PkgPath 返回命名类型的包路径；T：Defined-Type
+	FieldAlign 返回该值作为结构体字段时的对齐；T：Struct.Field
 
 	Bits 返回类型的位大小；T：sized or unsized Int, Uint, Float, Complex 类型，则 panic
 	ChanDir 返回通道类型的方向；T：Chan
 	Elem 返回类型的元素类型；T：Array, Chan, Map, Pointer, Slice
-	FieldAlign 返回该值作为结构体字段时的对齐；T：Struct.Field
-	Key 返回映射的键类型；T：Map
 	Len 返回数组类型的长度；T：Array
+	Key 返回映射的键类型；T：Map
 
 	Implements 报告该类型是否实现接口 u
 	AssignableTo 报告该类型的值是否可分配给类型 u

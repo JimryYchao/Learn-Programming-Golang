@@ -10,6 +10,16 @@ type MapType struct {
 	*typeBase
 }
 
+func (t *MapType) typeof(tp r.Type) Type {
+	if value, ok := mapSet[tp.String()]; ok {
+		t = value
+		return value
+	}
+	t = &MapType{newType(tp)}
+	mapSet[tp.String()] = t
+	return t
+}
+
 func (*MapType) Kind() r.Kind         { return r.Map }
 func (t *MapType) Common() TypeCommon { return TypeCom(t) }
 
@@ -25,7 +35,7 @@ func MapOf(key r.Type, elem r.Type) *MapType {
 
 	mtp := r.MapOf(key, elem)
 	mt := &MapType{newType(mtp)}
-	mapSet[mtp.Name()] = mt
+	mapSet[mtp.String()] = mt
 	return mt
 }
 
