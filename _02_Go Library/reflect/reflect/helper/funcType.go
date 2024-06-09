@@ -22,19 +22,19 @@ func (t FuncType) typeof(tp r.Type) Type {
 // func FuncFor()
 
 func (FuncType) Kind() r.Kind         { return r.Func }
-func (t FuncType) Common() TypeCommon { return TypeCom(t) }
+func (t FuncType) Common() TypeCommon { return toTypeCom(t) }
 func (t FuncType) IsVariadic() bool   { return t.isVariadic }
 func (t FuncType) NumIn() int         { return int(t.in) }
 func (t FuncType) NumOut() int        { return int(t.out) }
 func (t FuncType) In(i uint) (Type, bool) {
 	if i < t.in && t.in > 0 {
-		return typeof(t.t.In(int(i))), true
+		return typeWrap(t.t.In(int(i))), true
 	}
 	return nil, false
 }
 func (t FuncType) Out(i uint) (Type, bool) {
 	if i < t.out && t.out > 0 {
-		return typeof(t.t.In(int(i))), true
+		return typeWrap(t.t.In(int(i))), true
 	}
 	return nil, false
 }

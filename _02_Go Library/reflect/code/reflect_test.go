@@ -10,7 +10,7 @@ import (
 //? go test -v -run=^$
 /*
 ! reflect.Type 是 Go 类型的反射；并非所有方法都适用于所有类型，需要使用 Kind 确定其种类。
-	Name 返回类型名称；匿名未定义类型返回 ""
+	Name 返回类型名称；匿名, 未定义类型返回 ""
 	Align 返回该值的类型的对齐
 	Size 返回存储给定类型的值时需要的字节大小
 	String 返回类型的字符串形式（短名称）
@@ -165,7 +165,8 @@ type getter, setter:
 	Interface, CanInterface
 checkers:
 	Comparable, Equal
-	IsNil, IsZero, IsValid, Kind
+	IsNil : Chan, Slice, Pointer, Func, Interface, Map
+	IsZero, IsValid, Kind
 slice:
 	SetLen, SetCap 设置切片的长度和容量
 	Grow 容量不足时，尽可能增加切片的容量, 以满足至少有 n+1 的富余
@@ -206,10 +207,10 @@ pointer:
 */
 // ? go test -v -run=^$
 func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
-	sp0 := helper.SliceFor[int]()              // is []int
-	log(sp0.Elem().String())                   // int
-	sp1, _ := helper.SliceOf(TypeFor[[]int]()) // is [][]int
-	log(sp1.Elem().String())                   // []int
+	sp0 := helper.SliceFor[int]()           // is []int
+	log(sp0.Elem().String())                // int
+	sp1 := helper.SliceOf(TypeFor[[]int]()) // is [][]int
+	log(sp1.Elem().String())                // []int
 
 	ints := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 	if s, err := helper.SliceFrom(&ints); err == nil {

@@ -130,7 +130,7 @@ func (t StructType) typeof(tp r.Type) Type {
 }
 
 func (StructType) Kind() r.Kind         { return r.Struct }
-func (t StructType) Common() TypeCommon { return TypeCom(t) }
+func (t StructType) Common() TypeCommon { return toTypeCom(t) }
 
 func (t StructType) NumField() int { return t.num }
 

@@ -62,7 +62,7 @@ func testTypeCommon(t Type) {
 	logf("Kind : %s", t.Kind())
 
 	if !IsNilType(t) {
-		t := TypeCom(t)
+		t, _ := TypeCom(t)
 		logf("Size : %d", t.Size())
 		logf("Align : %d", t.Align())
 		logf("PkgPath : %s", t.PkgPath())

@@ -54,7 +54,7 @@ func (c *typeBase) String() string     { return c.t.String() }
 func (c *typeBase) Kind() r.Kind       { return c.t.Kind() }
 func (c *typeBase) Type() r.Type       { return c.t }
 func (c *typeBase) Name() string       { return c.t.Name() }
-func (c *typeBase) To() toType         { return to{typeof(c.t)} }
+func (c *typeBase) To() toType         { return to{typeWrap(c.t)} }
 
 // Type 的通用方法
 type TypeCommon interface {
@@ -72,7 +72,14 @@ type typeCom struct {
 	*typeBase
 }
 
-func TypeCom(c Type) TypeCommon {
+func TypeCom(c Type) (TypeCommon, error) {
+	if !IsNilType(c) {
+		return &typeCom{&typeBase{c.Type()}}, nil
+	}
+	return nil, ErrTypeNil
+}
+
+func toTypeCom(c Type) TypeCommon {
 	if !IsNilType(c) {
 		return &typeCom{&typeBase{c.Type()}}
 	}
@@ -96,7 +103,7 @@ func getType[T Type](tp r.Type) Type {
 	return T.typeof((*new(T)), tp)
 }
 
-func typeof(tp r.Type) Type {
+func typeWrap(tp r.Type) Type {
 	if tp == nil {
 		return Nil{}
 	}
@@ -139,17 +146,17 @@ func TypeTo[T Type](i any) T {
 
 // 从类型构造一个 Type
 func TypeFor[T any]() Type {
-	return typeof(r.TypeOf((*T)(nil)).Elem())
+	return typeWrap(r.TypeOf((*T)(nil)).Elem())
 }
 
 // 从 v 提取一个 Type
 func TypeOf(i any) Type {
-	return typeof(r.TypeOf(i))
+	return typeWrap(r.TypeOf(i))
 }
 
 // 包装一个 reflect.Type
 func TypeWrap(tp r.Type) Type {
-	return typeof(tp)
+	return typeWrap(tp)
 }
 
 // 检查包装类型
@@ -209,7 +216,7 @@ func newErr(s string) error {
 	return &TypeErr{s}
 }
 
-var ErrTypeNil = newErr("reflect.Type is nil")
+var ErrTypeNil = newErr("Type is nil")
 var ErrOutOfRange = newErr("index out of range")
 var ErrChanElemSize = newErr("element size too large")
 var ErrNegative = newErr("negative argument passed to parameter")

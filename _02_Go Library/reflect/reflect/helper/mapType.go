@@ -17,11 +17,11 @@ func (t MapType) typeof(tp r.Type) Type {
 }
 
 func (MapType) Kind() r.Kind         { return r.Map }
-func (t MapType) Common() TypeCommon { return TypeCom(t) }
+func (t MapType) Common() TypeCommon { return toTypeCom(t) }
 
-func (t MapType) Elem() Type { return typeof(t.t.Elem()) }
+func (t MapType) Elem() Type { return typeWrap(t.t.Elem()) }
 
-func (t MapType) Key() Type { return typeof(t.t.Key()) }
+func (t MapType) Key() Type { return typeWrap(t.t.Key()) }
 
 // MapOf
 func MapOf(key r.Type, elem r.Type) (MapType, error) {

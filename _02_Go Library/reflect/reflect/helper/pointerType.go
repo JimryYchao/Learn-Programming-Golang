@@ -16,9 +16,9 @@ func (t PointerType) typeof(tp r.Type) Type {
 }
 
 func (PointerType) Kind() r.Kind         { return r.Pointer }
-func (t PointerType) Common() TypeCommon { return TypeCom(t) }
+func (t PointerType) Common() TypeCommon { return toTypeCom(t) }
 
-func (t PointerType) Elem() Type { return typeof(t.t.Elem()) }
+func (t PointerType) Elem() Type { return typeWrap(t.t.Elem()) }
 
 // PointerTo
 

@@ -18,11 +18,11 @@ func (t ArrayType) typeof(tp r.Type) Type {
 
 func (ArrayType) Kind() r.Kind { return r.Array }
 
-func (t ArrayType) Elem() Type { return typeof(t.t.Elem()) }
+func (t ArrayType) Elem() Type { return typeWrap(t.t.Elem()) }
 
 func (t ArrayType) Len() int { return t.len }
 
-func (t ArrayType) Common() TypeCommon { return TypeCom(t) }
+func (t ArrayType) Common() TypeCommon { return toTypeCom(t) }
 
 // ArrayOf
 func ArrayOf(length int, tp r.Type) (ArrayType, error) {

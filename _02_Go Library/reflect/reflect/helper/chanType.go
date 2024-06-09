@@ -36,9 +36,9 @@ func (t ChanType) typeof(tp r.Type) Type {
 }
 
 func (ChanType) Kind() r.Kind         { return r.Chan }
-func (t ChanType) Common() TypeCommon { return TypeCom(t) }
+func (t ChanType) Common() TypeCommon { return toTypeCom(t) }
 
-func (t ChanType) Elem() Type         { return typeof(t.t.Elem()) }
+func (t ChanType) Elem() Type         { return typeWrap(t.t.Elem()) }
 func (t ChanType) ChanDir() r.ChanDir { return t.t.ChanDir() }
 
 // ChanOf
