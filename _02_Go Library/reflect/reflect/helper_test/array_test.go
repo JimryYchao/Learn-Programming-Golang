@@ -10,17 +10,17 @@ func TestArrayType(t *testing.T) {
 	testArrayType[struct{ V int }](0)
 	testArrayType[[5]string](15)
 
-	if ArrayOf(10, nil) != nil {
+	if a, _ := ArrayOf(10, nil); a != nil {
 		t.Fatal("ArrayOf(nil) is not return nil")
 	}
 
-	log(TypeTo[*ArrayType]([20]int{}))       // []int
-	log(TypeTo[*ArrayType](nil))             // <nil>
-	log(TypeTo[*ArrayType](10))              // <nil>
-	log(TypeTo[*ArrayType]([10][][][]int{})) // [10][][][]int
+	log(TypeTo[ArrayType]([20]int{}))       // []int
+	log(TypeTo[ArrayType](nil))             // <nil>
+	log(TypeTo[ArrayType](10))              // <nil>
+	log(TypeTo[ArrayType]([10][][][]int{})) // [10][][][]int
 }
 
-func testArrayType[T any](len uint) {
+func testArrayType[T any](len int) {
 	at := ArrayFor[T](len)
 	testTypeCommon(at)
 	logf("Len: %d, Elem: %s", at.Len(), at.Elem().String())

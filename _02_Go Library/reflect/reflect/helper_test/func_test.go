@@ -15,21 +15,20 @@ func TestFuncType(t *testing.T) {
 	f := reflect.TypeFor[float64]()
 	slice := reflect.TypeFor[[]any]()
 
-	testFuncType[int]([]reflect.Type{}, []reflect.Type{b}, true)
-	testFuncType[int]([]reflect.Type{i, s}, []reflect.Type{}, false)
-	testFuncType[int]([]reflect.Type{f, s, slice}, nil, true)
-	testFuncType[int](nil, []reflect.Type{e}, true)
-	testFuncType[int](nil, nil, false)
+	testFuncType([]reflect.Type{}, []reflect.Type{b}, b)
+	testFuncType([]reflect.Type{i, s}, []reflect.Type{}, f)
+	testFuncType([]reflect.Type{f, s, slice}, nil, nil)
+	testFuncType(nil, []reflect.Type{e}, SliceFor[int]().Type())
+	testFuncType(nil, nil, nil)
 }
 
-func testFuncType[T any](in []reflect.Type, out []reflect.Type, isVar bool) {
-	var ft *FuncType
-	if isVar {
-		ft = FuncOfVar[T](in, out)
-	} else {
-		ft = FuncOf(in, out)
-	}
+func testFuncType(in []reflect.Type, out []reflect.Type, va reflect.Type) {
 
+	ft, err := FuncOf(in, out, va)
+	if err != nil {
+		log(err)
+		return
+	}
 	testTypeCommon(ft)
 	logf("IsVariadic: %t", ft.IsVariadic())
 	logf("NumIn: %d", ft.NumIn())

@@ -206,10 +206,10 @@ pointer:
 */
 // ? go test -v -run=^$
 func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
-	sp0 := helper.SliceFor[int]()           // is []int
-	log(sp0.Elem().String())                // int
-	sp1 := helper.SliceOf(TypeFor[[]int]()) // is [][]int
-	log(sp1.Elem().String())                // []int
+	sp0 := helper.SliceFor[int]()              // is []int
+	log(sp0.Elem().String())                   // int
+	sp1, _ := helper.SliceOf(TypeFor[[]int]()) // is [][]int
+	log(sp1.Elem().String())                   // []int
 
 	ints := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
 	if s, err := helper.SliceFrom(&ints); err == nil {

@@ -4,40 +4,57 @@ import (
 	r "reflect"
 )
 
-var chanSet map[string]*ChanType = make(map[string]*ChanType)
-
-type ChanType struct {
+type ChanType = *chanType
+type chanType struct {
 	*typeBase
 }
 
-func (t *ChanType) typeof(tp r.Type) Type {
-	if value, ok := chanSet[tp.String()]; ok {
-		t = value
-		return value
+type ChDir struct{ dir int } // 0 对应 BithDir
+var (
+	RecvDir ChDir = ChDir{1}
+	SendDir ChDir = ChDir{2} // chan<-
+	BothDir ChDir = ChDir{0} // chan
+)
+
+func (d ChDir) toChanDir() r.ChanDir {
+	switch d.dir {
+	case 1:
+		return r.RecvDir
+	case 2:
+		return r.SendDir
+	default:
+		return r.BothDir
 	}
-	t = &ChanType{newType(tp)}
-	chanSet[tp.String()] = t
+}
+func (d ChDir) String() string {
+	return d.toChanDir().String()
+}
+
+func (t ChanType) typeof(tp r.Type) Type {
+	t = &chanType{newType(tp)}
 	return t
 }
 
-func (*ChanType) Kind() r.Kind         { return r.Chan }
-func (t *ChanType) Common() TypeCommon { return TypeCom(t) }
+func (ChanType) Kind() r.Kind         { return r.Chan }
+func (t ChanType) Common() TypeCommon { return TypeCom(t) }
 
-func (t *ChanType) Elem() Type         { return typeof(t.t.Elem()) }
-func (t *ChanType) ChanDir() r.ChanDir { return t.t.ChanDir() }
+func (t ChanType) Elem() Type         { return typeof(t.t.Elem()) }
+func (t ChanType) ChanDir() r.ChanDir { return t.t.ChanDir() }
 
 // ChanOf
 
-func ChanOf(dir r.ChanDir, t r.Type) *ChanType {
-	if t == nil || t.Size() > 1<<16-1 { // 65535
-		return nil
+func ChanOf(dir ChDir, t r.Type) (ChanType, error) {
+	if t == nil {
+		return nil, ErrOutOfRange
 	}
-	ctp := r.ChanOf(dir, t)
-	ct := &ChanType{newType(ctp)}
-	chanSet[ctp.String()] = ct
-	return ct
+	if t.Size() > 1<<16-1 { // 65535
+		return nil, ErrChanElemSize
+	}
+	ctp := r.ChanOf(dir.toChanDir(), t)
+	return &chanType{newType(ctp)}, nil
 }
 
-func ChanFor[E any](dir r.ChanDir) *ChanType {
-	return ChanOf(dir, r.TypeFor[E]())
+func ChanFor[E any](dir ChDir) ChanType {
+	ch, _ := ChanOf(dir, r.TypeFor[E]())
+	return ch
 }

@@ -13,15 +13,15 @@ func TestMapType(t *testing.T) {
 	testMapType(MapFor[[5]int, []int]())
 	testMapType(MapFor[any, []int]())
 
-	testMapType(TypeTo[*MapType](map[any]int{}))
-	testMapType(TypeTo[*MapType](10086))
-	testMapType(MapOf(reflect.TypeFor[any](), reflect.TypeFor[any]()))
-	testMapType(MapOf(reflect.TypeFor[[]int](), reflect.TypeFor[any]()))
-	testMapType(MapOf(reflect.FuncOf(nil, nil, false), reflect.TypeFor[any]()))
+	testMapType(TypeTo[MapType](map[any]int{}))
+	testMapType(TypeTo[MapType](10086))
+	log(MapOf(reflect.TypeFor[any](), reflect.TypeFor[any]()))
+	log(MapOf(reflect.TypeFor[[]int](), reflect.TypeFor[any]()))
+	log(MapOf(reflect.FuncOf(nil, nil, false), reflect.TypeFor[any]()))
 	// m := make(map[any]int)
 }
 
-func testMapType(m *MapType) {
+func testMapType(m MapType) {
 	if m == nil {
 		log("m is nil")
 		return

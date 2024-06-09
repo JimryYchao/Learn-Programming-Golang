@@ -19,36 +19,36 @@ func logf(format string, a ...any) {
 func TestGetType(tt *testing.T) {
 	var tp = reflect.TypeFor[[]int]()
 
-	if st := new(SliceType); TryTypeTo(tp, &st) {
-		fmt.Println(st.String())
+	if st := new(SliceType); TryTypeTo(tp, st) {
+		fmt.Println((*st).String())
 	}
 
 	if n := TypeOf(nil); Is[Nil](n) {
 		fmt.Println(n.String())
 	}
 
-	if t := TypeFor[[]int](); Is[*SliceType](t) {
+	if t := TypeFor[[]int](); Is[SliceType](t) {
 		fmt.Println(t.String())
 	}
 
-	if t := TypeWrap(tp); Is[*SliceType](t) {
+	if t := TypeWrap(tp); Is[SliceType](t) {
 		fmt.Println(t.String())
 	}
 }
 
 func TestTypeOf(t *testing.T) {
 	type IntInline int
-	var st *SliceType
+	var st SliceType
 	if TryTypeTo(reflect.TypeOf(any([]MInt{})), &st) {
 		testTypeCommon(st)
 	}
 	testTypeCommon(TypeOf(mInt(0)))
 
-	testTypeCommon(TypeOf([]MInt{}).(*SliceType))
+	testTypeCommon(TypeOf([]MInt{}).(SliceType))
 	testTypeCommon(TypeWrap(reflect.TypeOf(int(0))))
 	testTypeCommon(TypeWrap(reflect.TypeOf(IntInline(0))))
 	testTypeCommon(TypeFor[struct{ anom int }]())
-	testTypeCommon(TypeFor[[]struct{ anom int }]().(*SliceType))
+	testTypeCommon(TypeFor[[]struct{ anom int }]().(SliceType))
 	testTypeCommon(TypeOf(nil))
 }
 

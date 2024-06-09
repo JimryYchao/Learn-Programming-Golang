@@ -10,14 +10,14 @@ func TestSliceType(t *testing.T) {
 	testSliceType[struct{ V int }]()
 	testSliceType[[5]string]()
 
-	if SliceOf(nil) != nil {
+	if s, _ := SliceOf(nil); s != nil {
 		t.Fatal("SliceOf(nil) is not return nil")
 	}
 
-	log(TypeTo[*SliceType]([]int{}))       // []int
-	log(TypeTo[*SliceType](nil))           // <nil>
-	log(TypeTo[*SliceType](10))            // <nil>
-	log(TypeTo[*SliceType]([][][][]int{})) // [][][][]int
+	log(TypeTo[SliceType]([]int{}))       // []int
+	log(TypeTo[SliceType](nil))           // <nil>
+	log(TypeTo[SliceType](10))            // <nil>
+	log(TypeTo[SliceType]([][][][]int{})) // [][][][]int
 }
 
 func testSliceType[T any]() {

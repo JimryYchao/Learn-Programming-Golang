@@ -8,7 +8,7 @@ import (
 
 type MethodInfo struct {
 	Name   string
-	Type   *FuncType
+	Type   FuncType
 	method *reflect.Method
 }
 
@@ -22,7 +22,7 @@ func (m MethodInfo) Func() *Func {
 }
 
 type MethodSet struct {
-	t   reflect.Type
+	t   Type
 	num int
 	ms  []MethodInfo
 }
@@ -31,17 +31,20 @@ func MethodOf(t Type) *MethodSet {
 	if IsNilType(t) {
 		return nil
 	}
-	mset := &MethodSet{t.Type(), 0, nil}
-	mset.num = mset.t.NumMethod()
+	mset := &MethodSet{t, 0, nil}
+	mset.num = mset.t.Type().NumMethod()
 	return mset
 }
 
 func (s *MethodSet) NumMethod() int {
 	return s.num
 }
+func (s *MethodSet) Receiver() Type {
+	return s.t
+}
 
 func (s *MethodSet) Method(i uint) reflect.Method {
-	var m reflect.Method = s.t.Method(int(i))
+	var m reflect.Method = s.t.Type().Method(int(i))
 	return m
 }
 
@@ -50,7 +53,7 @@ func (s *MethodSet) Methods() []MethodInfo {
 		s.ms = make([]MethodInfo, s.num)
 		for i := range s.num {
 			m := s.Method(uint(i))
-			s.ms[i] = MethodInfo{m.Name, TypeWrap(m.Type).(*FuncType), &m}
+			s.ms[i] = MethodInfo{m.Name, TypeWrap(m.Type).(FuncType), &m}
 		}
 	}
 	return s.ms

@@ -2,6 +2,7 @@ package helper
 
 import (
 	r "reflect"
+	"unsafe"
 )
 
 func f() {
@@ -14,7 +15,34 @@ type Type interface {
 	Type() r.Type
 	String() string
 	Name() string
+	To() toType
 }
+
+type toType interface {
+	ArrayType() ArrayType
+	ChanType() ChanType
+	PointerType() PointerType
+	FuncType() FuncType
+	MapType() MapType
+	StructType() StructType
+	SliceType() SliceType
+}
+
+type to struct {
+	Type
+}
+
+func (t to) ArrayType() ArrayType     { return To[ArrayType](t.Type) }
+func (t to) ChanType() ChanType       { return To[ChanType](t.Type) }
+func (t to) PointerType() PointerType { return To[PointerType](t.Type) }
+func (t to) FuncType() FuncType       { return To[FuncType](t.Type) }
+func (t to) MapType() MapType         { return To[MapType](t.Type) }
+func (t to) StructType() StructType   { return To[StructType](t.Type) }
+func (t to) SliceType() SliceType     { return To[SliceType](t.Type) }
+
+// func (t to) FuncType() *FuncType       { return To[*FuncType](t.Type) }
+
+// func (t to) Pointer() *
 
 // Type 接口转发的底层实现
 type typeBase struct {
@@ -26,6 +54,7 @@ func (c *typeBase) String() string     { return c.t.String() }
 func (c *typeBase) Kind() r.Kind       { return c.t.Kind() }
 func (c *typeBase) Type() r.Type       { return c.t }
 func (c *typeBase) Name() string       { return c.t.Name() }
+func (c *typeBase) To() toType         { return to{typeof(c.t)} }
 
 // Type 的通用方法
 type TypeCommon interface {
@@ -73,15 +102,19 @@ func typeof(tp r.Type) Type {
 	}
 	switch tp.Kind() {
 	case r.Slice:
-		return getType[*SliceType](tp)
+		return getType[SliceType](tp)
 	case r.Map:
-		return getType[*MapType](tp)
+		return getType[MapType](tp)
 	case r.Array:
-		return getType[*ArrayType](tp)
+		return getType[ArrayType](tp)
 	case r.Func:
-		return getType[*FuncType](tp)
+		return getType[FuncType](tp)
 	case r.Chan:
-		return getType[*ChanType](tp)
+		return getType[ChanType](tp)
+	case r.Struct:
+		return getType[StructType](tp)
+	case r.Pointer:
+		return getType[PointerType](tp)
 	default:
 		return &typeBase{tp} // 返回常规 reflect.Type
 	}
@@ -121,8 +154,14 @@ func TypeWrap(tp r.Type) Type {
 
 // 检查包装类型
 func Is[T Type](t Type) bool {
-	_, ok := t.(T)
-	return ok
+	return (*new(T)).Kind() == t.Kind()
+}
+
+func To[T Type](t Type) T {
+	if Is[T](t) {
+		return t.(T)
+	}
+	return *(*T)(unsafe.Pointer(new(T)))
 }
 
 // 附加属性
@@ -133,16 +172,16 @@ type TypeProperty interface {
 }
 
 type typeProper struct {
-	com *TypeCommon
+	com TypeCommon
 }
 
 func PropFor(c TypeCommon) TypeProperty {
-	return typeProper{&c}
+	return typeProper{c}
 }
 
-func (c typeProper) IsDefined() bool   { return (*c.com).Name() != "" }
-func (c typeProper) IsBuildIn() bool   { return (*c.com).Name() != "" && (*c.com).PkgPath() == "" }
-func (c typeProper) IsAnonymous() bool { return (*c.com).Name() == "" && (*c.com).PkgPath() == "" }
+func (c typeProper) IsDefined() bool   { return (c.com).Name() != "" }
+func (c typeProper) IsBuildIn() bool   { return (c.com).Name() != "" && (c.com).PkgPath() == "" }
+func (c typeProper) IsAnonymous() bool { return (c.com).Name() == "" && (c.com).PkgPath() == "" }
 
 // Nil for nil value
 type Nil struct{}
@@ -152,7 +191,7 @@ func (n Nil) Type() r.Type       { return nil }
 func (n Nil) Kind() r.Kind       { return r.Invalid }
 func (n Nil) String() string     { return "<nil>" }
 func (n Nil) Name() string       { return "nil" }
-
+func (c Nil) To() toType         { return nil }
 func IsNilType(t Type) bool {
 	_, ok := t.(Nil)
 	return ok
@@ -169,3 +208,12 @@ func (e *TypeErr) Error() string {
 func newErr(s string) error {
 	return &TypeErr{s}
 }
+
+var ErrTypeNil = newErr("reflect.Type is nil")
+var ErrOutOfRange = newErr("index out of range")
+var ErrChanElemSize = newErr("element size too large")
+var ErrNegative = newErr("negative argument passed to parameter")
+var ErrTooManyArgus = newErr("too many arguments")
+var ErrVaNotSlice = newErr("last arg of variadic func must be slice")
+
+// var ErrTypeNil = newErr("reflect.Type is nil")

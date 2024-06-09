@@ -4,45 +4,43 @@ import (
 	r "reflect"
 )
 
-// SliceType
-var arraySet map[string]*ArrayType = make(map[string]*ArrayType)
+type ArrayType = *arrayType
 
-type ArrayType struct {
+type arrayType struct {
 	*typeBase
 	len int
 }
 
-func (t *ArrayType) typeof(tp r.Type) Type {
-	if value, ok := arraySet[tp.String()]; ok {
-		t = value
-		return value
-	}
-	t = &ArrayType{newType(tp), tp.Len()}
-	arraySet[tp.String()] = t
+func (t ArrayType) typeof(tp r.Type) Type {
+	t = &arrayType{newType(tp), tp.Len()}
 	return t
 }
 
-func (*ArrayType) Kind() r.Kind { return r.Array }
+func (ArrayType) Kind() r.Kind { return r.Array }
 
-func (t *ArrayType) Elem() Type { return typeof(t.t.Elem()) }
+func (t ArrayType) Elem() Type { return typeof(t.t.Elem()) }
 
-func (t *ArrayType) Len() int { return t.len }
+func (t ArrayType) Len() int { return t.len }
 
-func (t *ArrayType) Common() TypeCommon { return TypeCom(t) }
+func (t ArrayType) Common() TypeCommon { return TypeCom(t) }
 
 // ArrayOf
-func ArrayOf(length uint, tp r.Type) *ArrayType {
+func ArrayOf(length int, tp r.Type) (ArrayType, error) {
 	if tp == nil {
-		return nil
+		return nil, ErrTypeNil
 	}
-	at := &ArrayType{newType(r.ArrayOf(int(length), tp)), int(length)}
-	arraySet[tp.String()] = at
-	return at
+	if length < 0 {
+		return nil, ErrNegative
+	}
+	return &arrayType{newType(r.ArrayOf(int(length), tp)), int(length)}, nil
 }
 
-func ArrayFor[T any](length uint) *ArrayType {
-	return ArrayOf(length, r.TypeFor[T]())
+func ArrayFor[T any](length int) ArrayType {
+	a, _ := ArrayOf(length, r.TypeFor[T]())
+	return a
 }
+
+// func ToArrayType(r)
 
 // New Slice
 // func (t *ArrayType) new(len, cap int) (*Slice, error) {

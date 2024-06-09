@@ -7,17 +7,18 @@ import (
 )
 
 func TestChanType(t *testing.T) {
-	testChanType(TypeTo[*ChanType]([]int{}))                                  // ch is nil
-	testChanType(TypeTo[*ChanType](nil))                                      // ch is nil
-	testChanType(TypeTo[*ChanType](*new(chan<- *int)))                        // chan<- *int
-	testChanType(ChanFor[int](reflect.RecvDir))                               // [][][][]int
-	testChanType(ChanFor[any](reflect.BothDir))                               // chan interface {}
-	testChanType(ChanFor[[88888]string](reflect.SendDir))                     // ch is nil
-	testChanType(ChanOf(reflect.SendDir, reflect.TypeFor[bool]()))            // chan<- bool
-	testChanType(ChanOf(reflect.SendDir, reflect.TypeFor[[1<<16 + 1]bool]())) // nil, too large
+	testChanType(TypeTo[ChanType]([]int{}))           // ch is nil
+	testChanType(TypeTo[ChanType](nil))               // ch is nil
+	testChanType(TypeTo[ChanType](*new(chan<- *int))) // chan<- *int
+	testChanType(ChanFor[int](RecvDir))               // [][][][]int
+	testChanType(ChanFor[any](BothDir))               // chan interface {}
+	testChanType(ChanFor[[88888]string](SendDir))     // ch is nil
+	ch, _ := ChanOf(SendDir, reflect.TypeFor[bool]()) // chan<- bool
+	testChanType(ch)
+	log(ChanOf(SendDir, reflect.TypeFor[[1<<16 + 1]bool]())) // nil, too large
 }
 
-func testChanType(ch *ChanType) {
+func testChanType(ch ChanType) {
 	if ch == nil {
 		log("ch is nil")
 		return
