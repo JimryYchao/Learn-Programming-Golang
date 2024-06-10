@@ -4,6 +4,8 @@ import (
 	r "reflect"
 )
 
+//! >>>>>>>>>>>> PointerType <<<<<<<<<<<<
+
 type PointerType = *pointerType
 
 type pointerType struct {

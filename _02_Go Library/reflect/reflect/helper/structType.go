@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+//! >>>>>>>>>>>> Fields <<<<<<<<<<<<
+
 type Fields []Field
 
 func (fs Fields) ToStructFields() []r.StructField {
@@ -26,6 +28,8 @@ func (fs Fields) AddStructField(fields ...r.StructField) Fields {
 	}
 	return fs.Add(newfs...)
 }
+
+//! >>>>>>>>>>>> Field <<<<<<<<<<<<
 
 type Field = *field
 
@@ -110,6 +114,8 @@ func (f Field) String() string {
 	return fmt.Sprintf("%v", f.StructField)
 }
 
+//! >>>>>>>>>>>> StructType <<<<<<<<<<<<
+
 type StructType = *structType
 type structType struct {
 	*typeBase
@@ -131,8 +137,7 @@ func (t StructType) typeof(tp r.Type) Type {
 
 func (StructType) Kind() r.Kind         { return r.Struct }
 func (t StructType) Common() TypeCommon { return toTypeCom(t) }
-
-func (t StructType) NumField() int { return t.num }
+func (t StructType) NumField() int      { return t.num }
 
 func (t StructType) Field(i int) (Field, bool) {
 	if i < 0 || i >= t.num {
@@ -141,9 +146,7 @@ func (t StructType) Field(i int) (Field, bool) {
 	return t.fields[i], true
 }
 
-func (t StructType) Fields() []Field {
-	return t.fields
-}
+func (t StructType) Fields() []Field { return t.fields }
 
 func (t StructType) FieldByName(name string) (Field, bool) {
 	if f, ok := t.t.FieldByName(name); ok {
@@ -167,7 +170,7 @@ func (t StructType) FieldByIndex(index []int) (Field, bool) {
 	var f Type = field.Type()
 	for _, x := range index[1:] {
 		ft := f
-		if p := To[PointerType](ft); p != nil && p.Elem().Kind() == r.Struct {
+		if p := ft.To().PointerType(); p != nil && p.Elem().Kind() == r.Struct {
 			ft = p.Elem()
 		}
 		f = ft
@@ -182,7 +185,6 @@ func (t StructType) FieldByIndex(index []int) (Field, bool) {
 		}
 	}
 	return field, ok
-	// return Field{t.t.FieldByIndex(index)}, true
 }
 
 // StructOf

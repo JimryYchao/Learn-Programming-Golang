@@ -4,10 +4,25 @@ import (
 	r "reflect"
 )
 
+//! >>>>>>>>>>>> ChanType <<<<<<<<<<<<
+
 type ChanType = *chanType
 type chanType struct {
 	*typeBase
 }
+
+func (t ChanType) typeof(tp r.Type) Type {
+	t = &chanType{newType(tp)}
+	return t
+}
+
+func (ChanType) Kind() r.Kind         { return r.Chan }
+func (t ChanType) Common() TypeCommon { return toTypeCom(t) }
+
+func (t ChanType) Elem() Type         { return typeWrap(t.t.Elem()) }
+func (t ChanType) ChanDir() r.ChanDir { return t.t.ChanDir() }
+
+//! >>>>>>>>>>>> ChDir <<<<<<<<<<<<
 
 type ChDir struct{ dir int } // 0 对应 BithDir
 var (
@@ -29,17 +44,6 @@ func (d ChDir) toChanDir() r.ChanDir {
 func (d ChDir) String() string {
 	return d.toChanDir().String()
 }
-
-func (t ChanType) typeof(tp r.Type) Type {
-	t = &chanType{newType(tp)}
-	return t
-}
-
-func (ChanType) Kind() r.Kind         { return r.Chan }
-func (t ChanType) Common() TypeCommon { return toTypeCom(t) }
-
-func (t ChanType) Elem() Type         { return typeWrap(t.t.Elem()) }
-func (t ChanType) ChanDir() r.ChanDir { return t.t.ChanDir() }
 
 // ChanOf
 

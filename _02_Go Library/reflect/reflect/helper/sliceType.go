@@ -4,7 +4,7 @@ import (
 	r "reflect"
 )
 
-// SliceType
+//! >>>>>>>>>>>> SliceType <<<<<<<<<<<<
 
 type SliceType = *sliceType
 
@@ -36,24 +36,24 @@ func SliceFor[T any]() SliceType {
 }
 
 // New Slice
-func (t SliceType) new(len, cap int) (*Slice, error) {
-	if len < 0 {
-		return nil, newErr("len is a negative number")
-	}
-	if cap < len {
-		return nil, newErr("cap is less than len")
-	}
+// func (t SliceType) new(len, cap int) (Slice, error) {
+// 	if len < 0 {
+// 		return nil, newErr("len is a negative number")
+// 	}
+// 	if cap < len {
+// 		return nil, newErr("cap is less than len")
+// 	}
 
-	slice := r.MakeSlice(t.t, len, cap)
-	return &Slice{&slice, nil}, nil
-}
+// 	slice := r.MakeSlice(t.t, len, cap)
+// 	return &vSlice{&slice, nil}, nil
+// }
 
-func (t SliceType) New(len int) (*Slice, error) {
-	return t.NewC(len, len)
-}
-func (t SliceType) NewC(len, cap int) (*Slice, error) {
-	if t != nil {
-		return t.new(len, cap)
-	}
-	return nil, newErr("SliceType is invalid")
-}
+// func (t SliceType) New(len int) (Slice, error) {
+// 	return t.NewC(len, len)
+// }
+// func (t SliceType) NewC(len, cap int) (Slice, error) {
+// 	if t != nil {
+// 		return t.new(len, cap)
+// 	}
+// 	return nil, newErr("SliceType is invalid")
+// }

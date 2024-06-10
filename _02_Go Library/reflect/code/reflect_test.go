@@ -1,7 +1,6 @@
 package gostd
 
 import (
-	"gostd/reflect/helper"
 	. "reflect"
 	"testing"
 	"time"
@@ -206,44 +205,44 @@ pointer:
 ! Zero 返回一个指定类型的零值而非 ValueOf(nil)
 */
 // ? go test -v -run=^$
-func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
-	sp0 := helper.SliceFor[int]()           // is []int
-	log(sp0.Elem().String())                // int
-	sp1 := helper.SliceOf(TypeFor[[]int]()) // is [][]int
-	log(sp1.Elem().String())                // []int
+// func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
+// 	sp0 := helper.SliceFor[int]()              // is []int
+// 	log(sp0.Elem().String())                   // int
+// 	sp1, _ := helper.SliceOf(TypeFor[[]int]()) // is [][]int
+// 	log(sp1.Elem().String())                   // []int
 
-	ints := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
-	if s, err := helper.SliceFrom(&ints); err == nil {
-		log(s.Cap(), s.Len(), s.ElemString(), s) // 10, 10, int, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
-		s.SetIndex(5, 10)
-		log(s)                            // String: [1, 2, 3, 4, 5, 10, 7, 8, 9, 0]
-		logfln("%#v\n", s)                // GoString: []int{1, 2, 3, 4, 5, 10, 7, 8, 9, 0}
-		log(s.Index(5))                   // Index(5): 10
-		log(s.Grow(10), s.Len(), s.Cap()) // <nil> , ok: 10, 20
-		log(s.Interface().([]int))        // Interface : [1 2 3 4 5 10 7 8 9 0]
+// 	ints := []int{1, 2, 3, 4, 5, 6, 7, 8, 9, 0}
+// 	if s, err := helper.SliceFrom(&ints); err == nil {
+// 		log(s.Cap(), s.Len(), s.ElemString(), s) // 10, 10, int, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+// 		s.SetIndex(5, 10)
+// 		log(s)                            // String: [1, 2, 3, 4, 5, 10, 7, 8, 9, 0]
+// 		logfln("%#v\n", s)                // GoString: []int{1, 2, 3, 4, 5, 10, 7, 8, 9, 0}
+// 		log(s.Index(5))                   // Index(5): 10
+// 		log(s.Grow(10), s.Len(), s.Cap()) // <nil> , ok: 10, 20
+// 		log(s.Interface().([]int))        // Interface : [1 2 3 4 5 10 7 8 9 0]
 
-		sij, _ := s.Slice(0, 5)
-		log(sij.Interface())             // Slice(i,j) : [1 2 3 4 5]
-		log(s.Grow(5), s.Len(), s.Cap()) // cap - len > 5
-		sij.SetIndex(0, 20)              // set sij[0] = 20; >> set s[i:j][0] = 20
-		log(s)                           // [20, 2, 3, 4, 5, 10, 7, 8, 9, 0]
+// 		sij, _ := s.Slice(0, 5)
+// 		log(sij.Interface())             // Slice(i,j) : [1 2 3 4 5]
+// 		log(s.Grow(5), s.Len(), s.Cap()) // cap - len > 5
+// 		sij.SetIndex(0, 20)              // set sij[0] = 20; >> set s[i:j][0] = 20
+// 		log(s)                           // [20, 2, 3, 4, 5, 10, 7, 8, 9, 0]
 
-		sijk, _ := s.Slice3(0, 5, 7)
-		log(sijk, sijk.Len(), sijk.Cap()) // [20, 2, 3, 4, 5], 5, 7
+// 		sijk, _ := s.Slice3(0, 5, 7)
+// 		log(sijk, sijk.Len(), sijk.Cap()) // [20, 2, 3, 4, 5], 5, 7
 
-		s, _ = sijk.Append((int)(100), 200, 300)
-		log(s)                                                   //[20, 2, 3, 4, 5, 100, 200, 300]
-		log(s.AppendSlice(s.Value()))                            // [20, 2, 3, 4, 5, 100, 200, 300, 20, 2, 3, 4, 5, 100, 200, 300]
-		log(s.AppendSlice(ValueOf([]int{0, 0, 0, 0, 0, 10086}))) // [20, 2, 3, 4, 5, 100, 200, 300, 0, 0, 0, 0, 0, 10086]
-		s, _ = s.Slice(0, 5)
-		s.Clear()
-		log(s, s.Len(), s.Cap()) // [0, 0, 0, 0, 0], 5, 14
-	}
+// 		s, _ = sijk.Append((int)(100), 200, 300)
+// 		log(s)                                                   //[20, 2, 3, 4, 5, 100, 200, 300]
+// 		log(s.AppendSlice(s.Value()))                            // [20, 2, 3, 4, 5, 100, 200, 300, 20, 2, 3, 4, 5, 100, 200, 300]
+// 		log(s.AppendSlice(ValueOf([]int{0, 0, 0, 0, 0, 10086}))) // [20, 2, 3, 4, 5, 100, 200, 300, 0, 0, 0, 0, 0, 10086]
+// 		s, _ = s.Slice(0, 5)
+// 		s.Clear()
+// 		log(s, s.Len(), s.Cap()) // [0, 0, 0, 0, 0], 5, 14
+// 	}
 
-	s, _ := helper.SliceFrom([]int{1, 2, 3, 4, 5, 6})
-	log(s.ElemString(), s) // int [1, 2, 3, 4, 5, 6]
+// 	s, _ := helper.SliceFrom([]int{1, 2, 3, 4, 5, 6})
+// 	log(s.ElemString(), s) // int [1, 2, 3, 4, 5, 6]
 
-	log(helper.SliceFromValue(ValueOf(0))) // err: s is not a slice: kind=int
+// 	log(helper.SliceFromValue(ValueOf(0))) // err: s is not a slice: kind=int
 
-	log(helper.SliceFromValue(ValueOf([]int{9, 8, 7, 6}))) // [9, 8, 7, 6]
-}
+// 	log(helper.SliceFromValue(ValueOf([]int{9, 8, 7, 6}))) // [9, 8, 7, 6]
+// }

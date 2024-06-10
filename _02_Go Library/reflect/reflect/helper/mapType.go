@@ -5,6 +5,8 @@ import (
 	r "reflect"
 )
 
+//! >>>>>>>>>>>> MapType <<<<<<<<<<<<
+
 type MapType = *mapType
 
 type mapType struct {

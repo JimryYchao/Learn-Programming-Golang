@@ -14,7 +14,7 @@ func TestStruct(t *testing.T) {
 		int
 	}
 
-	s := To[SliceType](TypeOf([]int{}))
+	s := TypeOf([]int{}).To().SliceType()
 	log(s)
 	fields := VisibleFields(TypeOf(s1{}).To().StructType())
 

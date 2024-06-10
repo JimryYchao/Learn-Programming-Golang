@@ -5,106 +5,37 @@ import (
 	"unsafe"
 )
 
-func f() {
-	// TypeCommon()
-}
+//! >>>>>>>>>>>>>> Type <<<<<<<<<<<<<<<<
 
 type Type interface {
 	typeof(r.Type) Type
 	Kind() r.Kind
 	Type() r.Type
-	String() string
 	Name() string
+	String() string
 	To() toType
 }
-
-type toType interface {
-	ArrayType() ArrayType
-	ChanType() ChanType
-	PointerType() PointerType
-	FuncType() FuncType
-	MapType() MapType
-	StructType() StructType
-	SliceType() SliceType
-}
-
-type to struct {
-	Type
-}
-
-func (t to) ArrayType() ArrayType     { return To[ArrayType](t.Type) }
-func (t to) ChanType() ChanType       { return To[ChanType](t.Type) }
-func (t to) PointerType() PointerType { return To[PointerType](t.Type) }
-func (t to) FuncType() FuncType       { return To[FuncType](t.Type) }
-func (t to) MapType() MapType         { return To[MapType](t.Type) }
-func (t to) StructType() StructType   { return To[StructType](t.Type) }
-func (t to) SliceType() SliceType     { return To[SliceType](t.Type) }
-
-// func (t to) FuncType() *FuncType       { return To[*FuncType](t.Type) }
-
-// func (t to) Pointer() *
-
-// Type 接口转发的底层实现
 type typeBase struct {
 	t r.Type
 }
 
-func (c *typeBase) typeof(r.Type) Type { return c }
-func (c *typeBase) String() string     { return c.t.String() }
-func (c *typeBase) Kind() r.Kind       { return c.t.Kind() }
-func (c *typeBase) Type() r.Type       { return c.t }
-func (c *typeBase) Name() string       { return c.t.Name() }
-func (c *typeBase) To() toType         { return to{typeWrap(c.t)} }
-
-// Type 的通用方法
-type TypeCommon interface {
-	Type
-	Size() uintptr
-	Align() int
-	PkgPath() string
-	Implements(r.Type) bool
-	AssignableTo(r.Type) bool
-	ConvertibleTo(r.Type) bool
-	Comparable() bool
-	FieldAlign() int
-}
-type typeCom struct {
-	*typeBase
-}
-
-func TypeCom(c Type) (TypeCommon, error) {
-	if !IsNilType(c) {
-		return &typeCom{&typeBase{c.Type()}}, nil
-	}
-	return nil, ErrTypeNil
-}
-
-func toTypeCom(c Type) TypeCommon {
-	if !IsNilType(c) {
-		return &typeCom{&typeBase{c.Type()}}
-	}
-	return nil
-}
-
-func (c *typeCom) Size() uintptr               { return c.t.Size() }
-func (c *typeCom) Align() int                  { return c.t.Align() }
-func (c *typeCom) PkgPath() string             { return c.t.PkgPath() }
-func (c *typeCom) Implements(u r.Type) bool    { return c.t.Implements(u) }
-func (c *typeCom) AssignableTo(u r.Type) bool  { return c.t.AssignableTo(u) }
-func (c *typeCom) ConvertibleTo(u r.Type) bool { return c.t.ConvertibleTo(u) }
-func (c *typeCom) Comparable() bool            { return c.t.Comparable() }
-func (c *typeCom) FieldAlign() int             { return c.t.FieldAlign() }
+func (b *typeBase) typeof(r.Type) Type { return b }
+func (b *typeBase) Kind() r.Kind       { return b.t.Kind() }
+func (b *typeBase) Type() r.Type       { return b.t }
+func (b *typeBase) Name() string       { return b.t.Name() }
+func (b *typeBase) String() string     { return b.t.String() }
+func (b *typeBase) To() toType         { return totype{typeWrap(b.t)} }
 
 func newType(tp r.Type) *typeBase {
 	return &typeBase{tp}
 }
 
 func getType[T Type](tp r.Type) Type {
-	return T.typeof((*new(T)), tp)
+	return T.typeof(*(*T)(unsafe.Pointer(new(T))), tp)
 }
 
 func typeWrap(tp r.Type) Type {
-	if tp == nil {
+	if tp == nil || tp.Kind() == r.Invalid {
 		return Nil{}
 	}
 	switch tp.Kind() {
@@ -127,23 +58,6 @@ func typeWrap(tp r.Type) Type {
 	}
 }
 
-// 尝试包装为特定的 Type
-func TryTypeTo[T Type](tp r.Type, out *T) bool {
-	if tp.Kind() != (*out).Kind() {
-		return false
-	}
-	*out = (*out).typeof(tp).(T)
-	return true
-}
-
-func TypeTo[T Type](i any) T {
-	t := TypeOf(i)
-	if t.Kind() != (*new(T)).Kind() {
-		return *(new(T))
-	}
-	return (t).(T)
-}
-
 // 从类型构造一个 Type
 func TypeFor[T any]() Type {
 	return typeWrap(r.TypeOf((*T)(nil)).Elem())
@@ -160,18 +74,101 @@ func TypeWrap(tp r.Type) Type {
 }
 
 // 检查包装类型
-func Is[T Type](t Type) bool {
-	return (*new(T)).Kind() == t.Kind()
-}
-
-func To[T Type](t Type) T {
-	if Is[T](t) {
-		return t.(T)
+func IsType[T Type](t Type) bool {
+	if t == nil {
+		return false
 	}
-	return *(*T)(unsafe.Pointer(new(T)))
+	return (*(*T)(unsafe.Pointer(new(T)))).Kind() == t.Kind()
 }
 
-// 附加属性
+// 尝试包装为特定的 Type
+func TryTypeTo[T Type](tp r.Type, out *T) bool {
+	if tp.Kind() != (*out).Kind() {
+		return false
+	}
+	*out = (*out).typeof(tp).(T)
+	return true
+}
+
+//! >>>>>>>>>>>>>> totype <<<<<<<<<<<<<<<<
+
+type toType interface {
+	ArrayType() ArrayType
+	ChanType() ChanType
+	PointerType() PointerType
+	FuncType() FuncType
+	MapType() MapType
+	StructType() StructType
+	SliceType() SliceType
+}
+
+type totype struct {
+	Type
+}
+
+func (t totype) ArrayType() ArrayType     { return toT[ArrayType](t.Type) }
+func (t totype) ChanType() ChanType       { return toT[ChanType](t.Type) }
+func (t totype) PointerType() PointerType { return toT[PointerType](t.Type) }
+func (t totype) FuncType() FuncType       { return toT[FuncType](t.Type) }
+func (t totype) MapType() MapType         { return toT[MapType](t.Type) }
+func (t totype) StructType() StructType   { return toT[StructType](t.Type) }
+func (t totype) SliceType() SliceType     { return toT[SliceType](t.Type) }
+
+func toT[T Type](t Type) T {
+	if t, ok := t.(T); ok {
+		return t
+	} else {
+		return *(*T)(unsafe.Pointer(new(T)))
+	}
+}
+
+func TypeTo[T Type](i any) T {
+	t := TypeOf(i)
+	return toT[T](t)
+}
+
+//! >>>>>>>>>>>>>> TypeCommon <<<<<<<<<<<<<<<<
+
+type TypeCommon interface {
+	Type
+	Size() uintptr
+	Align() int
+	PkgPath() string
+	Implements(r.Type) bool
+	AssignableTo(r.Type) bool
+	ConvertibleTo(r.Type) bool
+	Comparable() bool
+	FieldAlign() int
+}
+type typeCom struct {
+	*typeBase
+}
+
+func (c *typeCom) Size() uintptr               { return c.t.Size() }
+func (c *typeCom) Align() int                  { return c.t.Align() }
+func (c *typeCom) PkgPath() string             { return c.t.PkgPath() }
+func (c *typeCom) Implements(u r.Type) bool    { return c.t.Implements(u) }
+func (c *typeCom) AssignableTo(u r.Type) bool  { return c.t.AssignableTo(u) }
+func (c *typeCom) ConvertibleTo(u r.Type) bool { return c.t.ConvertibleTo(u) }
+func (c *typeCom) Comparable() bool            { return c.t.Comparable() }
+func (c *typeCom) FieldAlign() int             { return c.t.FieldAlign() }
+
+func TypeCom(c Type) (TypeCommon, error) {
+	if !IsNilType(c) {
+		return &typeCom{&typeBase{c.Type()}}, nil
+	}
+	return nil, ErrTypeNil
+}
+
+func toTypeCom(c Type) TypeCommon {
+	if !IsNilType(c) {
+		return &typeCom{&typeBase{c.Type()}}
+	}
+	return nil
+}
+
+//! >>>>>>>>>>>>>> TypeProperty <<<<<<<<<<<<<<<<
+
 type TypeProperty interface {
 	IsDefined() bool
 	IsBuildIn() bool
@@ -190,7 +187,8 @@ func (c typeProper) IsDefined() bool   { return (c.com).Name() != "" }
 func (c typeProper) IsBuildIn() bool   { return (c.com).Name() != "" && (c.com).PkgPath() == "" }
 func (c typeProper) IsAnonymous() bool { return (c.com).Name() == "" && (c.com).PkgPath() == "" }
 
-// Nil for nil value
+//! >>>>>>>>>>>>>> Nil <<<<<<<<<<<<<<<<
+
 type Nil struct{}
 
 func (n Nil) typeof(r.Type) Type { return n }
@@ -203,6 +201,8 @@ func IsNilType(t Type) bool {
 	_, ok := t.(Nil)
 	return ok
 }
+
+//! >>>>>>>>>>>>>> Err <<<<<<<<<<<<<<<<
 
 type TypeErr struct {
 	err string

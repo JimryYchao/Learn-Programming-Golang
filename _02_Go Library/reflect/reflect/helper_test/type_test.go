@@ -23,15 +23,15 @@ func TestGetType(tt *testing.T) {
 		fmt.Println((*st).String())
 	}
 
-	if n := TypeOf(nil); Is[Nil](n) {
+	if n := TypeOf(nil); IsType[Nil](n) {
 		fmt.Println(n.String())
 	}
 
-	if t := TypeFor[[]int](); Is[SliceType](t) {
+	if t := TypeFor[[]int](); IsType[SliceType](t) {
 		fmt.Println(t.String())
 	}
 
-	if t := TypeWrap(tp); Is[SliceType](t) {
+	if t := TypeWrap(tp); IsType[SliceType](t) {
 		fmt.Println(t.String())
 	}
 }

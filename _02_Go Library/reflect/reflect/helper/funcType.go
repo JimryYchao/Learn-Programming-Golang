@@ -4,7 +4,8 @@ import (
 	r "reflect"
 )
 
-// FuncType
+//! >>>>>>>>>>>> FuncType <<<<<<<<<<<<
+
 type FuncType = *funcType
 
 type funcType struct {
@@ -18,8 +19,6 @@ func (t FuncType) typeof(tp r.Type) Type {
 	t = &funcType{newType(tp), (uint)(tp.NumIn()), (uint)(tp.NumOut()), tp.IsVariadic()}
 	return t
 }
-
-// func FuncFor()
 
 func (FuncType) Kind() r.Kind         { return r.Func }
 func (t FuncType) Common() TypeCommon { return toTypeCom(t) }
