@@ -59,6 +59,6 @@ log(x)         // 1.23456
 
 ### Examples
 
-- [reflectHelper](reflectHelper/README.md)
+- [reflectHelper](reflect/helper/doc.go)
 
 ---

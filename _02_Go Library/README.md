@@ -20,6 +20,30 @@
   id="code"/></a><a href="./cmp/code/cmp_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [x] compress 提供一些压缩和解压缩的工具包。 <a href="https://pkg.go.dev/compress" target="_blank"><img src="./_rsc/link-src.drawio.png" id="other"/></a><a href="compress/compress.md"  ><img  src="./_rsc/link-others.drawio.png" /></a>
+ 
+  - [x] bzip2 实现 bzip2 解压缩。        <a href="https://pkg.go.dev/compress/bzip2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="compress/code/bzip2_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+  - [x] flate 实现了 [RFC 1951](https://rfc-editor.org/rfc/rfc1951.html) 中描述的 DEFLATE 压缩数据格式。        <a href="https://pkg.go.dev/compress/flate" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="compress/code/flate_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+    
+  - [x] gzip 包实现了对 gzip 格式压缩文件的读取和写入。        <a href="https://pkg.go.dev/compress/gzip" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="compress/code/gzip_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+  
+  - [x] zlib 实现了对 zlib 格式压缩数据的读取和写入。        <a href="https://pkg.go.dev/compress/zlib" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="compress/code/zlib_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+  
+  - [x] lzw 实现 Lempel-Ziv-Welch 压缩数据格式。      <a href="https://pkg.go.dev/compress/lzw" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="compress/code/lzw_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+
+
 
 - [x] context 定义了 Context 上下文类型，它携带 *deadlines*、*cancellation signals* 和跨 API 边界和进程之间的其他 *request-scoped  values*。       <a href="https://pkg.go.dev/context" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./context/context.md"  ><img  src="./_rsc/link-others.drawio.png" 
