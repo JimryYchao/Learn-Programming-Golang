@@ -42,6 +42,25 @@
   id="code"/></a><a href="compress/code/lzw_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
 
+- [ ] container 提供一些容器数据类型。        <a href="https://pkg.go.dev/container" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="container/container.md"  ><img  src="./_rsc/link-others.drawio.png" /></a>
+
+  - [ ] heap 为实现 `heap.Interface` 的任何类型提供堆操作。        <a href="https://pkg.go.dev/container/heap" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="container/code/heap_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
+  - [ ] list 实现了双向链表。        <a href="https://pkg.go.dev/container/list" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
+  - [ ] ring 实现了循环列表上的操作。        <a href="https://pkg.go.dev/container/ring" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
 
 
 

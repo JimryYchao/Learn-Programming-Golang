@@ -22,7 +22,7 @@ compress
 	Flush 将所有挂起的数据刷新到底层写入器。在 zlib 库的术语中，Flush 相当于 Z_SYNC_FLUSH。
 	Reset 丢弃 writer 的状态，并使其等效于使用 dst writer 和 w 的压缩级别与 dict 重置 Writer 压缩器以重用
 */
-//?
+
 func TestZlibCompress(t *testing.T) {
 	for _, f := range fileNames {
 		zlibCompress(t, f)

@@ -38,7 +38,7 @@ Writer
 	Flush 刷新将任何挂起的压缩数据刷新到底层 io.Writer; 它主要用于压缩网络协议，以确保远程读取器有足够的数据来重建数据包。如果底层写入器返回错误，Flush 将返回该错误。
 	Reset 用于重置 w 的状态。
 */
-//?
+
 func TestGzipCompress(t *testing.T) {
 	for _, f := range fileNames {
 		gzipCompress(t, f)
