@@ -39,14 +39,9 @@ func TestRing(t *testing.T) {
 
 	r2 := r.Unlink(5)
 	for i := range r2.Len() {
-		r2.Value = r2.Value.(int)*(i+1)*i + i
+		r2.Value = math.Pow(float64(r2.Value.(int)), (float64)(i))
 		r2 = r2.Prev()
 	}
-	r2.Do(log)
-
-	r.Link(r2)
-	r.Do(sqrt)
-	r = r.Move(5)
-	r.Link(r2)
+	r = r.Link(r2)
 	r.Do(log)
 }
