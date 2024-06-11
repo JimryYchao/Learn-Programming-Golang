@@ -142,19 +142,19 @@ func (*nestedS) FunE() {}
 
 /*
 ! reflect.Value 是 Go 值（interface）的反射；零值表示没有值。IsValid() 返回 false；Kind() 返回 Invalid
-	Type 返回值的 Type
-	Cap 获取或设置 v 的容量: Array, Map, Chan, Slice, *Array
-	Len 返回 v 的长度: Array, Chan, Map, Slice, String, *Array
-	Clear 清除切片或映射的内容：Map, Slice
-	Index 返回 v 的第 i 个元素: Array, Slice, String
-	Elem 返回接口类型或指针类型包含的值: Interface, Pointer
+	√ Type 返回值的 Type
+	√ Cap 获取或设置 v 的容量: Array, Chan, Slice, *Array
+	√ Len 返回 v 的长度: Array, Chan, Map, Slice, String, *Array
+	√ Clear 清除切片或映射的内容：Map, Slice
+	√ Index 返回 v 的第 i 个元素: Array, Slice, String
+	√ Elem 返回接口类型或指针类型包含的值: Interface, Pointer
 type getter, setter:
-	Addr, CanAddr: S.Field, Slice[i]
-	Set, CanSet, SetZero
+	 Addr, CanAddr: S.Field, Slice[i]
+	√ Set, CanSet, SetZero
 	UnsafeAddr 返回一个指向 v 数据的指针，最好使用 uintptr(Value.Addr().UnsafePointer())
 	Bool, CanBool, SetBool
 	Bytes, SetBytes: []byte, [L]byte
-	String, SetString
+	√String, SetString
 	Call, CallSlice: Func
 	Complex, CanComplex, OverflowComplex, SetComplex
 	Convert, CanConvert
@@ -162,6 +162,8 @@ type getter, setter:
 	Int, CanInt, OverflowInt, SetInt
 	Uint, CanUint, OverflowUint, SetUint
 	Interface, CanInterface
+	√ SetIterKey 将 iter 当前 map 元素的键赋值给 v；等价于 v.Set(iter.Key())
+	√ SetIterValue 将 iter 当前 map 元素的值赋值给 v；等价于 v.Set(iter.Value())
 checkers:
 	Comparable, Equal
 	IsNil : Chan, Slice, Pointer, Func, Interface, Map
@@ -172,11 +174,9 @@ slice:
 	Slice 返回 s[i:j]; T: Array, Slice, String, *Array
 	Slice3 返回 s[i:j:c]; T: Array, Slice, *Array
 map:
-	MapIndex, MapKeys 返回 map[key] 或 []keys
-	MapRange 返回映射 v 的范围迭代器 *MapIter
-	SetIterKey 将 iter 当前 map 元素的键赋值给 v；等价于 v.Set(iter.Key())
-	SetIterValue 将 iter 当前 map 元素的值赋值给 v；等价于 v.Set(iter.Value())
-	SetMapIndex 设置 map[key] = elem; 当 elem 为 zero Value 时删除键 key
+	√ MapIndex, MapKeys 返回 map[key] 或 []keys
+	√ MapRange 返回映射 v 的范围迭代器 *MapIter
+	√ SetMapIndex 设置 map[key] = elem; 当 elem 为 zero Value 时删除键 key
 chan:
 	Close 关闭通道; Chan, <-Chan
 	Recv 阻塞并接受一个值; Chan,<-Chan
@@ -246,3 +246,8 @@ pointer:
 
 // 	log(helper.SliceFromValue(ValueOf([]int{9, 8, 7, 6}))) // [9, 8, 7, 6]
 // }
+
+func Test(t *testing.T) {
+	arr := make(map[int]int, 15)
+	log(len(arr))
+}

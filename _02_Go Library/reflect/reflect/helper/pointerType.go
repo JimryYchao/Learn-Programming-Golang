@@ -9,26 +9,24 @@ import (
 type PointerType = *pointerType
 
 type pointerType struct {
-	*typeBase
+	*tCommon
 }
 
 func (t PointerType) typeof(tp r.Type) Type {
-	t = &pointerType{newType(tp)}
+	t = &pointerType{newTCommon(tp)}
 	return t
 }
 
-func (PointerType) Kind() r.Kind         { return r.Pointer }
-func (t PointerType) Common() TypeCommon { return toTypeCom(t) }
-
-func (t PointerType) Elem() Type { return typeWrap(t.t.Elem()) }
+func (PointerType) Kind() r.Kind { return r.Pointer }
+func (t PointerType) Elem() Type { return typeFrom(t.t.Elem()) }
 
 // PointerTo
 
 func PointerTo(tp r.Type) (PointerType, error) {
 	if tp == nil {
-		return nil, ErrTypeNil
+		return nil, newErr("PointerTo type", ErrArgNil)
 	}
-	return &pointerType{newType(r.PointerTo(tp))}, nil
+	return &pointerType{newTCommon(r.PointerTo(tp))}, nil
 }
 
 func PointerFor[T any]() PointerType {

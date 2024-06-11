@@ -9,29 +9,27 @@ import (
 type ArrayType = *arrayType
 
 type arrayType struct {
-	*typeBase
+	*tCommon
 	len int
 }
 
 func (t ArrayType) typeof(tp r.Type) Type {
-	t = &arrayType{newType(tp), tp.Len()}
+	t = &arrayType{newTCommon(tp), tp.Len()}
 	return t
 }
-func (ArrayType) Kind() r.Kind         { return r.Array }
-func (t ArrayType) Elem() Type         { return typeWrap(t.t.Elem()) }
-func (t ArrayType) Len() int           { return t.len }
-func (t ArrayType) Common() TypeCommon { return toTypeCom(t) }
-func (t ArrayType) To() toType         { return totype{t} }
+func (ArrayType) Kind() r.Kind { return r.Array }
+func (t ArrayType) Elem() Type { return typeFrom(t.t.Elem()) }
+func (t ArrayType) Len() int   { return t.len }
 
 // ArrayOf
 func ArrayOf(length int, tp r.Type) (ArrayType, error) {
 	if tp == nil {
-		return nil, ErrTypeNil
+		return nil, newErr("ArrayOf type", ErrArgNil)
 	}
 	if length < 0 {
-		return nil, ErrNegative
+		return nil, newErr("ArrayOf length", ErrNegative)
 	}
-	return &arrayType{newType(r.ArrayOf(int(length), tp)), int(length)}, nil
+	return &arrayType{newTCommon(r.ArrayOf(int(length), tp)), int(length)}, nil
 }
 
 func ArrayFor[T any](length int) ArrayType {

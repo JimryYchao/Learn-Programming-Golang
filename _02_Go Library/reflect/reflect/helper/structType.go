@@ -39,7 +39,7 @@ type field struct {
 }
 
 func (f Field) Type() Type {
-	return TypeWrap(f.StructField.Type)
+	return TypeFrom(f.StructField.Type)
 }
 
 func (f Field) Get(key string) string {
@@ -118,14 +118,14 @@ func (f Field) String() string {
 
 type StructType = *structType
 type structType struct {
-	*typeBase
+	*tCommon
 	num    int
 	fields []Field
 }
 
 func (t StructType) typeof(tp r.Type) Type {
 	st := structType{}
-	st.typeBase = newType(tp)
+	st.tCommon = newTCommon(tp)
 	st.num = tp.NumField()
 	st.fields = make([]Field, st.num)
 	for i := range st.num {
@@ -135,9 +135,8 @@ func (t StructType) typeof(tp r.Type) Type {
 	return t
 }
 
-func (StructType) Kind() r.Kind         { return r.Struct }
-func (t StructType) Common() TypeCommon { return toTypeCom(t) }
-func (t StructType) NumField() int      { return t.num }
+func (StructType) Kind() r.Kind    { return r.Struct }
+func (t StructType) NumField() int { return t.num }
 
 func (t StructType) Field(i int) (Field, bool) {
 	if i < 0 || i >= t.num {
@@ -170,7 +169,7 @@ func (t StructType) FieldByIndex(index []int) (Field, bool) {
 	var f Type = field.Type()
 	for _, x := range index[1:] {
 		ft := f
-		if p := ft.To().PointerType(); p != nil && p.Elem().Kind() == r.Struct {
+		if p, ok := TypeTo(ft).PointerType(); ok && p.Elem().Kind() == r.Struct {
 			ft = p.Elem()
 		}
 		f = ft
@@ -193,7 +192,7 @@ func StructOf(fields []r.StructField) (st StructType, e error) {
 	defer func() {
 		if err := recover(); err != nil {
 			st = nil
-			e = newErr(fmt.Sprint(err))
+			e = newErr("StructOf", err.(error))
 		}
 	}()
 	st = new(structType)

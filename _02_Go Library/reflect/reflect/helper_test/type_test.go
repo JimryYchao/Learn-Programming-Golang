@@ -19,8 +19,8 @@ func logf(format string, a ...any) {
 func TestGetType(tt *testing.T) {
 	var tp = reflect.TypeFor[[]int]()
 
-	if st := new(SliceType); TryTypeTo(tp, st) {
-		fmt.Println((*st).String())
+	if t := TypeFrom(tp); IsType[SliceType](t) {
+		fmt.Println(t.String())
 	}
 
 	if n := TypeOf(nil); IsType[Nil](n) {
@@ -30,23 +30,18 @@ func TestGetType(tt *testing.T) {
 	if t := TypeFor[[]int](); IsType[SliceType](t) {
 		fmt.Println(t.String())
 	}
-
-	if t := TypeWrap(tp); IsType[SliceType](t) {
-		fmt.Println(t.String())
-	}
 }
 
 func TestTypeOf(t *testing.T) {
 	type IntInline int
-	var st SliceType
-	if TryTypeTo(reflect.TypeOf(any([]MInt{})), &st) {
+	if st := TypeFrom(reflect.TypeOf(any([]MInt{}))); IsType[SliceType](st) {
 		testTypeCommon(st)
 	}
 	testTypeCommon(TypeOf(mInt(0)))
 
 	testTypeCommon(TypeOf([]MInt{}).(SliceType))
-	testTypeCommon(TypeWrap(reflect.TypeOf(int(0))))
-	testTypeCommon(TypeWrap(reflect.TypeOf(IntInline(0))))
+	testTypeCommon(TypeFrom(reflect.TypeOf(int(0))))
+	testTypeCommon(TypeFrom(reflect.TypeOf(IntInline(0))))
 	testTypeCommon(TypeFor[struct{ anom int }]())
 	testTypeCommon(TypeFor[[]struct{ anom int }]().(SliceType))
 	testTypeCommon(TypeOf(nil))
@@ -62,19 +57,14 @@ func testTypeCommon(t Type) {
 	logf("Kind : %s", t.Kind())
 
 	if !IsNilType(t) {
-		t, _ := TypeCom(t)
-		logf("Size : %d", t.Size())
-		logf("Align : %d", t.Align())
-		logf("PkgPath : %s", t.PkgPath())
-		logf("Implements any : %t", t.Implements(reflect.TypeFor[any]()))
-		logf("AssignableTo any : %t", t.AssignableTo(reflect.TypeFor[any]()))
-		logf("ConvertibleTo any : %t", t.ConvertibleTo(reflect.TypeFor[any]()))
-		logf("Comparable : %t", t.Comparable())
-		logf("FieldAlign : %d", t.FieldAlign())
-
-		// Type Property
-		logf("IsDefined : %t", PropFor(t).IsDefined())
-		logf("IsBuildIn : %t", PropFor(t).IsBuildIn())
-		logf("IsAnonymous : %t", PropFor(t).IsAnonymous())
+		if t, ok := t.(TypeCommon); ok {
+			logf("Size : %d", t.Size())
+			logf("Align : %d", t.Align())
+			logf("PkgPath : %s", t.PkgPath())
+			logf("AssignableTo any : %t", t.AssignableTo(reflect.TypeFor[any]()))
+			logf("ConvertibleTo any : %t", t.ConvertibleTo(reflect.TypeFor[any]()))
+			logf("Comparable : %t", t.Comparable())
+			logf("FieldAlign : %d", t.FieldAlign())
+		}
 	}
 }

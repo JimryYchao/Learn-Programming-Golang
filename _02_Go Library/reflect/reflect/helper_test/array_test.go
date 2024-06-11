@@ -14,10 +14,10 @@ func TestArrayType(t *testing.T) {
 		t.Fatal("ArrayOf(nil) is not return nil")
 	}
 
-	log(TypeTo[ArrayType]([20]int{}))       // []int
-	log(TypeTo[ArrayType](nil))             // <nil>
-	log(TypeTo[ArrayType](10))              // <nil>
-	log(TypeTo[ArrayType]([10][][][]int{})) // [10][][][]int
+	log(TypeSpecifyOf[ArrayType]([20]int{}))       // []int
+	log(TypeSpecifyOf[ArrayType](nil))             // <nil>
+	log(TypeSpecifyOf[ArrayType](10))              // <nil>
+	log(TypeSpecifyOf[ArrayType]([10][][][]int{})) // [10][][][]int
 }
 
 func testArrayType[T any](len int) {

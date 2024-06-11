@@ -8,18 +8,17 @@ import (
 
 type ChanType = *chanType
 type chanType struct {
-	*typeBase
+	*tCommon
 }
 
 func (t ChanType) typeof(tp r.Type) Type {
-	t = &chanType{newType(tp)}
+	t = &chanType{newTCommon(tp)}
 	return t
 }
 
-func (ChanType) Kind() r.Kind         { return r.Chan }
-func (t ChanType) Common() TypeCommon { return toTypeCom(t) }
+func (ChanType) Kind() r.Kind { return r.Chan }
 
-func (t ChanType) Elem() Type         { return typeWrap(t.t.Elem()) }
+func (t ChanType) Elem() Type         { return typeFrom(t.t.Elem()) }
 func (t ChanType) ChanDir() r.ChanDir { return t.t.ChanDir() }
 
 //! >>>>>>>>>>>> ChDir <<<<<<<<<<<<
@@ -52,10 +51,10 @@ func ChanOf(dir ChDir, t r.Type) (ChanType, error) {
 		return nil, ErrOutOfRange
 	}
 	if t.Size() > 1<<16-1 { // 65535
-		return nil, ErrChanElemSize
+		return nil, newErr("ChanOf", ErrChanElemSize)
 	}
 	ctp := r.ChanOf(dir.toChanDir(), t)
-	return &chanType{newType(ctp)}, nil
+	return &chanType{newTCommon(ctp)}, nil
 }
 
 func ChanFor[E any](dir ChDir) ChanType {

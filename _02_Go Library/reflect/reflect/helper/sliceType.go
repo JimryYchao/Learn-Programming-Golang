@@ -9,25 +9,23 @@ import (
 type SliceType = *sliceType
 
 type sliceType struct {
-	*typeBase
+	*tCommon
 }
 
 func (t SliceType) typeof(tp r.Type) Type {
-	t = &sliceType{newType(tp)}
+	t = &sliceType{newTCommon(tp)}
 	return t
 }
 
-func (SliceType) Kind() r.Kind         { return r.Slice }
-func (t SliceType) Common() TypeCommon { return toTypeCom(t) }
-
-func (t SliceType) Elem() Type { return typeWrap(t.t.Elem()) }
+func (SliceType) Kind() r.Kind { return r.Slice }
+func (t SliceType) Elem() Type { return typeFrom(t.t.Elem()) }
 
 // SliceOf
 func SliceOf(tp r.Type) (SliceType, error) {
 	if tp == nil {
-		return nil, ErrTypeNil
+		return nil, newErr("SliceOf type", ErrArgNil)
 	}
-	return &sliceType{newType(r.SliceOf(tp))}, nil
+	return &sliceType{newTCommon(r.SliceOf(tp))}, nil
 }
 
 func SliceFor[T any]() SliceType {

@@ -7,9 +7,11 @@ import (
 )
 
 func TestChanType(t *testing.T) {
-	testChanType(TypeTo[ChanType]([]int{}))           // ch is nil
-	testChanType(TypeTo[ChanType](nil))               // ch is nil
-	testChanType(TypeTo[ChanType](*new(chan<- *int))) // chan<- *int
+	log(TypeSpecifyOf[ChanType]([]int{})) // ch is nil
+	log(TypeSpecifyOf[ChanType](nil))     // ch is nil
+	if t, ok := TypeSpecifyOf[ChanType](*new(chan<- *int)); ok {
+		testChanType(t)
+	} // chan<- *int
 	testChanType(ChanFor[int](RecvDir))               // [][][][]int
 	testChanType(ChanFor[any](BothDir))               // chan interface {}
 	testChanType(ChanFor[[88888]string](SendDir))     // ch is nil

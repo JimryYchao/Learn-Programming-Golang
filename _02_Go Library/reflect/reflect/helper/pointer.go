@@ -7,35 +7,37 @@ import (
 //! >>>>>>>>>>>>>> Pointer <<<<<<<<<<<<<<
 
 type Pointer = *vPointer
+type PointerToArray = *vPointerToArray
 
 type vPointer struct {
-	*valueBase
+	*vCommon
 }
 
 func (v Pointer) valueof(rv r.Value) Value {
 	v = &vPointer{newValue(rv)}
 	return v
 }
-func (v Pointer) IsValid() bool { return true }
-func (v Pointer) Kind() r.Kind  { return r.Pointer }
-func (v Pointer) To() toValue   { return tovalue{v} }
-
-func (v Pointer) PointerType() PointerType { return v.Type().To().PointerType() }
-
-// 返回一个 CanSet  pValue
-func (v Pointer) Elem() Value {
-	// switch kind := v.v.Elem().Kind() {
-	// 	case Int,
-	// }
-	return nil
+func (v Pointer) Kind() r.Kind { return r.Pointer }
+func (v Pointer) PointerType() PointerType {
+	t, _ := TypeTo(v.Type()).PointerType()
+	return t
 }
 
-// TODO : MUST *Array
-func (v Pointer) Cap() int { return v.v.Cap() }
-func (v Pointer) Len() int { return v.v.Len() }
+func (v Pointer) Elem() Value    { return valueFrom(v.v.Elem()) }
+func (v Pointer) Interface() any { return v.v.Interface() }
 
-//! >>>>>>>>>>>>>> Pointer Elems <<<<<<<<<<<<<<
+// func (v Pointer)
 
-type ArrayPtr struct {
+// ! >>>>>>>>>>>>>> Pointer Elems <<<<<<<<<<<<<<
+type vPointerToArray struct {
 	Pointer
 }
+
+func (v Pointer) ToArrayPointer() PointerToArray {
+	if v.Elem().Kind() == r.Array {
+		return &vPointerToArray{v}
+	}
+	return nil
+}
+func (p PointerToArray) Cap() int { return p.v.Cap() }
+func (p PointerToArray) Len() int { return p.v.Len() }

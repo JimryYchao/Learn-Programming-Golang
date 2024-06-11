@@ -9,17 +9,26 @@ import (
 type Array = *vArray
 
 type vArray struct {
-	*valueBase
+	*vCommon
+	len int
 }
 
 func (v Array) valueof(rv r.Value) Value {
-	v = &vArray{newValue(rv)}
+	v = &vArray{newValue(rv), rv.Len()}
 	return v
 }
-func (v Array) IsValid() bool { return true }
-func (v Array) Kind() r.Kind  { return r.Array }
-func (v Array) To() toValue   { return tovalue{v} }
+func (v Array) Kind() r.Kind { return r.Array }
+func (v Array) ArrayType() ArrayType {
+	t, _ := TypeTo(v.Type()).ArrayType()
+	return t
+}
 
-func (v Array) ArrayType() ArrayType { return v.Type().To().ArrayType() }
+func (v Array) Cap() int { return v.len }
+func (v Array) Len() int { return v.len }
 
-func (v Array) Cap() int { return v.v.Cap() }
+func (v Array) Index(i int) (Value, error) {
+	if i >= v.Len() {
+		return nil, newErr("Array.Index", ErrOutOfRange)
+	}
+	return valueFrom(v.v.Index(i)), nil
+}

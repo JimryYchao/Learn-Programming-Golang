@@ -9,15 +9,15 @@ import (
 type Func = *vFunc
 
 type vFunc struct {
-	*valueBase
+	*vCommon
 }
 
 func (v Func) valueof(rv r.Value) Value {
 	v = &vFunc{newValue(rv)}
 	return v
 }
-func (v Func) IsValid() bool { return true }
-func (v Func) Kind() r.Kind  { return r.Chan }
-func (v Func) To() toValue   { return tovalue{v} }
-
-func (v Func) FuncType() FuncType { return v.Type().To().FuncType() }
+func (v Func) Kind() r.Kind { return r.Chan }
+func (v Func) FuncType() FuncType {
+	t, _ := TypeTo(v.Type()).FuncType()
+	return t
+}

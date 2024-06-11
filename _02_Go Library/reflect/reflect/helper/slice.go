@@ -9,18 +9,58 @@ import (
 type Slice = *vSlice
 
 type vSlice struct {
-	*valueBase
+	*vCommon
 }
 
 func (v Slice) valueof(rv r.Value) Value {
 	v = &vSlice{newValue(rv)}
 	return v
 }
-func (v Slice) IsValid() bool { return true }
-func (v Slice) Kind() r.Kind  { return r.Slice }
-func (v Slice) To() toValue   { return tovalue{v} }
+func (v Slice) Kind() r.Kind { return r.Slice }
+func (v Slice) SliceType() SliceType {
+	t, _ := TypeTo(v.Type()).SliceType()
+	return t
+}
 
-func (v Slice) SliceType() SliceType { return v.Type().To().SliceType() }
+func (v Slice) Cap() int { return v.v.Cap() }
+func (v Slice) Len() int { return v.v.Len() }
+func (v Slice) Clear()   { v.v.Clear() }
+func (v Slice) Index(i int) (Value, error) {
+	if i < 0 || i >= v.v.Len() {
+		return nil, newErr("Slice.Index", ErrOutOfRange)
+	}
+	return valueFrom(v.v.Index(i)), nil
+}
+func (s Slice) Slice(i, j int) (Slice, error) {
+	if i < 0 || j < i || j > s.Len() {
+		return nil, newErrorf("slice index out of bounds")
+	}
+	r := s.v.Slice(i, j)
+	return &vSlice{newValue(r)}, nil
+}
+
+// ! >>>>>>>>>>>>>> SliceSetter <<<<<<<<<<<<<
+type SliceSetter = *vSliceSetter
+
+type vSliceSetter struct {
+	*vSlice
+	*vSetter
+}
+
+func (v SliceSetter) init(p Pointer) ValueSetter {
+	vp := p.Elem().(Slice)
+	v = &vSliceSetter{vp, &vSetter{&vp.v}}
+	return v
+}
+func (v SliceSetter) kind() r.Kind { return r.Slice }
+
+func (v SliceSetter) SetLen(n int) error {
+	if uint(n) > uint(v.Cap()) {
+		return newErrorf("slice length(%d) out of range in SetLen(%d)", n, v.Cap())
+	}
+	v.v.SetLen(n)
+	return nil
+}
 
 // func (s Slice) String() string {
 // 	sb := strings.Builder{}
@@ -42,13 +82,6 @@ func (v Slice) SliceType() SliceType { return v.Type().To().SliceType() }
 // 	return s.v.Interface()
 // }
 
-// func (s Slice) Slice(i, j int) (Slice, error) {
-// 	if i < 0 || j < i || j > s.Len() {
-// 		return nil, newErr("slice index out of bounds")
-// 	}
-// 	r := s.v.Slice(i, j)
-// 	return &vSlice{newValue(r)}, nil
-// }
 // func (s Slice) Slice3(i, j, k int) (Slice, error) {
 // 	if i < 0 || j < i || k < j || k > s.Cap() {
 // 		return nil, newErr("slice index out of bounds")
@@ -67,19 +100,6 @@ func (v Slice) SliceType() SliceType { return v.Type().To().SliceType() }
 // 	}
 // }
 
-// func (s Slice) Len() int {
-// 	return s.v.Len()
-// }
-// func (s Slice) SetLen(n int) error {
-// 	if uint(n) > uint(s.Cap()) {
-// 		return newErr("slice length out of range in SetLen")
-// 	}
-// 	s.v.SetLen(n)
-// 	return nil
-// }
-// func (s Slice) Cap() int {
-// 	return s.v.Cap()
-// }
 // func (s Slice) SetCap(n int) error {
 // 	if n < s.Len() || n > s.Cap() {
 // 		return newErr("slice capacity out of range in SetCap")
@@ -108,9 +128,6 @@ func (v Slice) SliceType() SliceType { return v.Type().To().SliceType() }
 // }
 // func (s Slice) SetIndex(i int, v any) bool {
 // 	return s.SetIndexValue(i, r.ValueOf(v))
-// }
-// func (s Slice) Clear() {
-// 	s.v.Clear()
 // }
 
 // func (s Slice) Value() r.Value {

@@ -14,13 +14,13 @@ func TestStruct(t *testing.T) {
 		int
 	}
 
-	s := TypeOf([]int{}).To().SliceType()
-	log(s)
-	fields := VisibleFields(TypeOf(s1{}).To().StructType())
-
-	for _, f := range fields {
-		logf("name:%s, tag:%s, tag2:%s", f.Name, f.Tag.Get("tag"), f.Tag.Get("tag2"))
-		logf(f.Get("tag"))
+	log(TypeTo(TypeOf([]int{})).SliceType())
+	if s, ok := TypeTo(TypeOf(s1{})).StructType(); ok {
+		fields := VisibleFields(s)
+		for _, f := range fields {
+			logf("name:%s, tag:%s, tag2:%s", f.Name, f.Tag.Get("tag"), f.Tag.Get("tag2"))
+			logf(f.Get("tag"))
+		}
 	}
 
 	type s2 struct {
@@ -33,19 +33,17 @@ func TestStruct(t *testing.T) {
 		s2
 	}
 
-	testStruct(TypeTo[StructType](s1{}))
-	testStruct(TypeTo[StructType](s2{}))
-	testStruct(TypeTo[StructType](s3{}))
+	testStruct(TypeSpecifyOf[StructType](s1{}))
+	testStruct(TypeSpecifyOf[StructType](s2{}))
+	testStruct(TypeSpecifyOf[StructType](s3{}))
 
-	// sf, ok := TypeTo[StructType](s3{}).Type().FieldByName("")
-	// log(sf, ok)
-
-	f, ok := TypeTo[StructType](s3{}).FieldByIndex([]int{1, 2})
-	log(f, ok)
+	if f, ok := TypeSpecifyOf[StructType](s3{}); ok {
+		log(f.FieldByIndex([]int{1, 2}))
+	}
 }
 
-func testStruct(s StructType) {
-	if s == nil {
+func testStruct(s StructType, ok bool) {
+	if s == nil || !ok {
 		log("struct is a nil")
 		return
 	}

@@ -14,10 +14,10 @@ func TestPointerType(t *testing.T) {
 		t.Fatal("SliceOf(nil) is not return nil")
 	}
 
-	log(TypeTo[PointerType]([]int{}))          // []int
-	log(TypeTo[PointerType](nil))              // <nil>
-	log(TypeTo[PointerType](new(PointerType))) // <nil>
-	log(TypeTo[PointerType](new(int)))         //
+	log(TypeSpecifyOf[PointerType]([]int{}))          // []int
+	log(TypeSpecifyOf[PointerType](nil))              // <nil>
+	log(TypeSpecifyOf[PointerType](new(PointerType))) // <nil>
+	log(TypeSpecifyOf[PointerType](new(int)))         //
 }
 
 func testPointerType[T any]() {

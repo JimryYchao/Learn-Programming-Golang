@@ -55,7 +55,7 @@ func (s MethodSet) Methods() []MethodInfo {
 		s.ms = make([]MethodInfo, s.num)
 		for i := range s.num {
 			m := s.Method(uint(i))
-			s.ms[i] = MethodInfo{m.Name, TypeWrap(m.Type).(FuncType), &m}
+			s.ms[i] = MethodInfo{m.Name, TypeFrom(m.Type).(FuncType), &m}
 		}
 	}
 	return s.ms
