@@ -18,7 +18,7 @@ import (
 ! Valid, ValidString 报告 p 是否完全由有效的 UTF-8 编码 rune 组成
 ! ValidRune 报告 r 是否可以合法地编码为 UTF-8
 */
-//? go test -v -run=^TestUtf8$
+
 func TestUtf8(t *testing.T) {
 	t.Run("AppendRune", func(t *testing.T) {
 		appendrune := func(r rune) {

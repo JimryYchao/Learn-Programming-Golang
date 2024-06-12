@@ -57,7 +57,7 @@ T：Struct
 ! TypeFor 返回表示类型参数 T 的 Type
 ! TypeOf 返回表示 i 的动态类型的反射 Type
 */
-// ? go test -v -run=^TestTypeOf$
+
 func TestTypeOf(t *testing.T) {
 	tp := TypeOf(myInt(0))
 	logfln(`the typeOf(myInt(0)): 
@@ -88,7 +88,6 @@ func TestTypeOf(t *testing.T) {
 	logfln("%s: Elem(%s)", slice.String(), slice.Elem())
 }
 
-// ? go test -v -run=^TestStructOf$
 func TestStructOf(t *testing.T) {
 	var fieldInfo func(Type)
 	fieldInfo = func(tp Type) {
@@ -204,7 +203,7 @@ pointer:
 ! ValueOf 返回一个新的 Value；它被初始化为存储在接口 i 中的具体值；ValueOf(nil) 返回零值，代表空
 ! Zero 返回一个指定类型的零值而非 ValueOf(nil)
 */
-// ? go test -v -run=^$
+
 // func TestSliceType(t *testing.T) { // 从 Value 包装一个 non-panic 的 Slice
 // 	sp0 := helper.SliceFor[int]()              // is []int
 // 	log(sp0.Elem().String())                   // int
@@ -246,8 +245,3 @@ pointer:
 
 // 	log(helper.SliceFromValue(ValueOf([]int{9, 8, 7, 6}))) // [9, 8, 7, 6]
 // }
-
-func Test(t *testing.T) {
-	arr := make(map[int]int, 15)
-	log(len(arr))
-}

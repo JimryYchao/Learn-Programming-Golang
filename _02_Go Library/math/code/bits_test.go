@@ -10,7 +10,7 @@ import (
 ! Add, Add32, Add64 返回 x，y 和 carry 的和：sum = x + y + carry。
 	carry 进位输入必须为 0 或 1。carryOut 输出保证为 0 或 1
 */
-//? go test -v -run=^TestAdd$
+
 func TestAdd(t *testing.T) {
 	add := func(n1, n2 []uint32) {
 		d1, carry := bits.Add32(n1[1], n2[1], 0)
@@ -31,7 +31,7 @@ func TestAdd(t *testing.T) {
 ! Sub, Sub32, Sub64 返回 x,y 和 borrow 的差值：diff = x - y - borrow。
 	borrow 输入必须为 0 或 1; 否则行为未定义。borrowOut 为 0 或 1。
 */
-//? go test -v -run=^TestSub$
+
 func TestSub(t *testing.T) {
 	sub := func(n1, n2 []uint32) {
 		d1, carry := bits.Sub32(n1[1], n2[1], 0)
@@ -53,7 +53,7 @@ func TestSub(t *testing.T) {
 	被除数位的上半部分在参数 hi 中，下半部分在参数 lo 中。
 	Div 在 y == 0（被零除）或 y <= hi（商溢出）时 panic。
 */
-//? go test -v -run=^TestDiv$
+
 func TestDiv(t *testing.T) {
 	div := func(n1, n2 []uint32) {
 		quo, rem := bits.Div32(n1[0], n1[1], n2[1])
@@ -73,7 +73,7 @@ func TestDiv(t *testing.T) {
 ! Mul, Mul32, Mul64 返回 x 和 y 的全宽乘积：(hi，lo) = x * y
 	其中乘积位的上半部分返回到 hi，下半部分返回到 lo。
 */
-//? go test -v -run=^TestMul$
+
 func TestMul(t *testing.T) {
 	mul := func(n1, n2 []uint32) {
 		hi, lo := bits.Mul32(n1[1], n2[1])
@@ -93,7 +93,7 @@ func TestMul(t *testing.T) {
 ! Rem, Rem32, Rem64 返回 (hi，lo)/y 的余数。
 	y == 0（被零除）时会 panic，但与 Div 不同的是，它不会在商溢出时 panic
 */
-//? go test -v -run=^TestRem$
+
 func TestRem(t *testing.T) {
 	rem := func(n1, n2 []uint32) {
 		rem := bits.Rem32(n1[0], n1[1], n2[1])
@@ -117,7 +117,7 @@ func TestRem(t *testing.T) {
 ! ReverseBytes, ReverseBytes16, ReverseBytes32, ReverseBytes64 返回 x 的反转字节值
 ! RotateLeft, RotateLeft8, RotateLeft16, RotateLeft32, RotateLeft64 返回左旋转 (k mod UintSize) 位的 x 的值。要将 x 向右旋转 k 位，调用 RotateLeft(x，-k)
 */
-// ? go test -v -run=^TestBitsFunctions$
+
 func TestBitsFunctions(t *testing.T) {
 	logfln("LeadingZeros8(%08b) = %d", 1<<4, bits.LeadingZeros8(1<<4))     // 3
 	logfln("TrailingZeros8(%08b) = %d", 1<<4, bits.TrailingZeros8(1<<4))   // 4

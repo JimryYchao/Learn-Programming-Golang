@@ -7,8 +7,6 @@ import (
 	"unicode"
 )
 
-//? go test -v -run=^$
-
 /*
 ! In 报告 r 是否是给定的 `RangeTable` ranges 之一的成员;
 ! Is 报告 r 是否在指定的 rangeTab 表中: IsXxx(r) ==> Is(tab, r)
@@ -36,7 +34,7 @@ import (
 ! unicode.SpecialCase 表示语言特定的大小写映射 []CaseRange
 	ToLower, ToTitle, ToUpper
 */
-//?
+
 func TestIsXxx(tt *testing.T) {
 	// constant with mixed type runes
 	const mixed = "\b5Ὂg̀9! ℃ᾭG৩"

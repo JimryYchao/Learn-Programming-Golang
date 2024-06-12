@@ -22,3 +22,10 @@
 
 ---
 <a id="exam" ><a>
+
+### Examples
+
+- [`flate` 模拟网络传输压缩数据。](examples/flate_netconnect.go)
+
+- [`gzip` 网络压缩传输](examples/gzip_httpSend.go)
+---

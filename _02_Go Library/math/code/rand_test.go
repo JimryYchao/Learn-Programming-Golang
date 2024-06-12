@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-// go test -v -run=^TestRand$
 func TestRand(t *testing.T) {
 	answers := []string{
 		"It is certain",
@@ -50,7 +49,7 @@ func TestRand(t *testing.T) {
 	Read 生成 len(p) 随机字节并将它们写入 p。它总是返回 len(p) 和 nil 错误。Read 不应与任何其他 Rand 方法并发调用。
 	Shuffle 伪随机化元素的顺序。n 是元素的个数。如果 n < 0，则 Panic。swap 交换索引为 i 和 j 的元素。
 */
-//? go test -v -run=^TestRandFunctions$
+
 func TestRandFunctions(t *testing.T) {
 	// Create and seed the generator.
 	// Typically a non-fixed seed should be used, such as time.Now().UnixNano().
@@ -99,7 +98,7 @@ func TestRandFunctions(t *testing.T) {
 	Uint64 返回一个从 Zipf 对象描述的 Zipf 分布中提取的值。
 ! NewZipf 返回 Zipf 变量生成器。生成器生成值 k ∈ [0, imax]，使得 P(k) 与 (v + k)^(-s) 成比例。要求：s > 1 且 v >= 1
 */
-//? go test -v -run
+
 func TestZipf(t *testing.T) {
 	z := rand.NewZipf(rand.New(rand.NewSource(int64(time.Now().Nanosecond()))), 1.25, 10, 1<<8)
 	for range 10 {

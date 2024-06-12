@@ -8,7 +8,8 @@
 ---
 
 - [x] bufio 包装了 `io.Reader` 和 `io.Writer` 并提供了缓冲和一些文本 I/O 帮助。<a href="https://pkg.go.dev/bufio" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="./bufio/code/bufio_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  id="code"/></a><a href="./bufio/code/bufio_test.go"   ><img src="./_rsc/link-code.drawio.png"   
+  id="exam"/></a><a href="bufio/bufio.md#exam"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
 
 - [x] bytes 实现了操作字节切片的函数。它类似于 strings 包的功能。       <a href="https://pkg.go.dev/bytes" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./bytes/code/bytes_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
@@ -23,10 +24,12 @@
   id="code"/></a><a href="compress/code/bzip2_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
   - [x] flate 实现了 [RFC 1951](https://rfc-editor.org/rfc/rfc1951.html) 中描述的 DEFLATE 压缩数据格式。        <a href="https://pkg.go.dev/compress/flate" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="compress/code/flate_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
-    
+  id="code"/></a><a href="compress/code/flate_test.go"   ><img src="./_rsc/link-code.drawio.png"   
+  id="exam"/></a><a href="compress/examples/flate_netconnect.go"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
+  
   - [x] gzip 包实现了对 gzip 格式压缩文件的读取和写入。        <a href="https://pkg.go.dev/compress/gzip" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="compress/code/gzip_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  id="code"/></a><a href="compress/code/gzip_test.go"   ><img src="./_rsc/link-code.drawio.png"  
+  id="exam"/></a><a href="compress/examples/gzip_httpSend.go"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
   
   - [x] zlib 实现了对 zlib 格式压缩数据的读取和写入。        <a href="https://pkg.go.dev/compress/zlib" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="compress/code/zlib_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
@@ -51,6 +54,13 @@
   id="other"/></a><a href="./context/context.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./context/code/context_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   id="exam"/></a><a href="./context/context.md#exam"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
+
+- [ ] crypto 包含一些通用的加密常量和算法。        <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
 
 - [x] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./embed/embed.md"  ><img  src="./_rsc/link-others.drawio.png" 
@@ -127,7 +137,8 @@
 
 - [x] strconv 实现了基本数据类型的字符串表示形式之间的转换。        <a href="https://pkg.go.dev/strconv" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./strconv/strconv.md"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="./strconv/code/strconv_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  id="code"/></a><a href="./strconv/code/strconv_test.go"   ><img src="./_rsc/link-code.drawio.png"
+  id="exam"/></a><a href="strconv/strconv.md#exam"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
 
 
 
@@ -137,13 +148,14 @@
 - [x] sync 提供基本的同步原语。        <a href="https://pkg.go.dev/sync" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./sync/code/sync_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   id="exam"/></a><a href="./sync/sync.md#exam"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
+
   - [x] atomic 提供了用于实现同步算法的低级原子内存原语。        <a href="https://pkg.go.dev/sync/atomic" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./sync/atomic.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./sync/code/atomic_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [ ] syscall 包含一个到低级操作系统原语的接口。参见 [sys](../_03_Go%20thrid-party/sys/sys.md)       <a href="https://pkg.go.dev/syscall" target="_blank"><img src="./_rsc/link-src.drawio.png" /></a>
 
-  - 
+  - [ ] TODO
 
 
 - [x] testing 为 Go 包提供自动化测试支持。<a href="https://pkg.go.dev/testing" target="_blank"><img src="./_rsc/link-src.drawio.png" 

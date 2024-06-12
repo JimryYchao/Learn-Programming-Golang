@@ -27,7 +27,6 @@ import (
 		Pointer 可以转换为 uintptr 类型
 ! Add 将 len 添加到 ptr 并返回更新后的指针 `Pointer(uintptr(ptr) + uintptr(len))`
 */
-//? go test -v -run=^$
 
 func TestAlignof(t *testing.T) {
 	logfln("bool:%d, uintptr:%d, ptr:%d, byte:%d, rune:%d, any:%d, interface:%d, func:%d, A1:%d, A2:%d, A3:%d",

@@ -43,7 +43,7 @@ import (
 	MarshalJSON & UnmarshalJSON 实现 encoding/json.Marshaler & Unmarshaler
 ! Jacobi 返回 Jacobi 符号 (x/y)，+1、-1 或 0。y 参数必须是奇数
 */
-//? go test -v -run=^TestBigInt$
+
 func TestBigInt(t *testing.T) {
 	var i = big.NewInt(0)
 	i = set(i.Set, big.NewInt(1))
@@ -111,7 +111,7 @@ func set[T, U any](fn func(t T) *U, t T) *U {
 	MarshalText & UnmarshalText
 ! ParseFloat 相当于 `Float.Parse`
 */
-// ? go test -v -run-^TestBigFloat$
+
 func TestBigFloat(t *testing.T) {
 	f := big.NewFloat(1.234567891011121314)
 	logfln("prec: %d, value: %x", f.Prec(), f)
@@ -141,7 +141,7 @@ func TestBigFloat(t *testing.T) {
 	GobDecode & GobEncode
 	MarshalText % UnmarshalText
 */
-//? go test -v -run=^TestBigRat$
+
 func TestBigRat(t *testing.T) {
 	r := big.NewRat(1, 3)
 	log(r.FloatString(53), r.RatString(), r.String())

@@ -14,7 +14,7 @@ import (
 ! Parses:
 	ParseBool, ParseComplex, ParseFloat, ParseInt, ParseUint
 */
-//? go test -v -run=^TestParse$
+
 func TestParse(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -134,7 +134,7 @@ func TestParse(t *testing.T) {
 	FormatBool, FormatComplex, FormatFloat, FormatInt, FormatUint
 ! FormatComplex, FormatFloat 的 fmt 参数可以是 "b", "e", "E", "f", "g", "G", "x", "X"; prec 表示有效位数的最大值（删除尾随零），-1 表示使用最少的数字
 */
-//? go test -v -run=^TestFormat$
+
 func TestFormat(t *testing.T) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
@@ -168,7 +168,7 @@ func TestFormat(t *testing.T) {
 ! IsGraphic 报告 r 是否被 Unicode 定义为图形。这些字符包括字母、标记、数字、标点符号、符号和空格，来自类别 L、M、N、P、S 和 Z。
 ! CanBackquote 报告字符串 s 是否可以不加修改地表示为不包含除 \t 以外的控制字符的单行反引号字符串
 */
-//? go test -v -run=^$
+
 func TestQuote(t *testing.T) {
 	t.Run("Quote", func(t *testing.T) {
 		for _, q := range quotes {
@@ -212,7 +212,7 @@ func TestQuote(t *testing.T) {
 	若 `quote` 为 '\'' 或 '\"' 则允许解释 \' 或 \"
 	设置为其他值，则表示不解释任何转义字符，仅解释 ' 或 "
 */
-//? go test -v -run=^$
+
 func TestUnquote(t *testing.T) {
 	t.Run("Unquote", func(t *testing.T) {
 		for _, q := range quotes {
@@ -246,7 +246,7 @@ func TestUnquote(t *testing.T) {
 	AppendQuoteRune, AppendQuoteRuneToASCII, AppendQuoteRuneToGraphic
 Appends 和 Quote 类似，但是附加到目标切片上
 */
-//? go test -v -run=^$
+
 func Test(t *testing.T) {
 	b := []byte("quote (ascii):")
 	b = AppendQuoteToASCII(b, `"Fran & Freddie's Diner, 你好"`)

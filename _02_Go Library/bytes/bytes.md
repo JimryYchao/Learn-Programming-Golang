@@ -10,8 +10,7 @@
 </div>
 
 
-包 `bytes` 实现了操作字节切片的函数。它类似于 strings 包的功能
-
+包 `bytes` 实现了操作字节切片的函数。它类似于 strings 包的功能。
 
 ---
 <a id="exam" ><a>

@@ -12,8 +12,6 @@ import (
 	"time"
 )
 
-//? go test -v -run=^$
-
 /*
 ! sync.Locker 表示一个可以锁定 Lock 和解锁 Unlock 的对象。
 ! sync.Mutex 是一种互斥锁。Mutex 的零值是未锁定的 Mutex。Mutex 在第一次使用后不能复制。
@@ -30,7 +28,7 @@ import (
 	RUnlock 撤消单个 RLock 调用; 它不影响其他并发 reader。如果 rw 没有被 RLock 时调用，则这是一个运行时 panic
 	RLocker 返回一个 Locker 接口值，该接口对象通过调用 rw.RLock 和 rw.RUnlock 实现 Lock 和 Unlock
 */
-//? go test -v -run=^TestLocker$
+
 func TestLocker(t *testing.T) {
 	hammerMutex := func(m *Mutex, loops int, cdone chan bool, n *int) {
 		for i := 0; i < loops; i++ {
@@ -114,7 +112,7 @@ func TestLocker(t *testing.T) {
 ! OnceValue, OnceValues 返回一个只调用 f 一次的函数，并返回 f 返回的值。返回的函数可以并发调用。每次调用时都出现相同的返回值
 ! sync.Once 是一个只执行一个操作的对象；Do 之后不能复制 Once
 */
-//? go test -v -run=^TestOnce$
+
 func TestOnce(t *testing.T) {
 	t.Run("OnceFunc", func(t *testing.T) {
 
@@ -176,7 +174,7 @@ Cond.methods
 		与其他系统不同，Wait 不能返回，除非被 Broadcast 或 Signal 唤醒。
 		由于 c.L 在 Wait 等待时未被锁定，因此调用方通常不能假定 Wait 返回时条件为 true。相反，调用者应该在循环中等待：
 */
-//? go test -v -run=^TestCondSignal$
+
 func TestCondSignal(t *testing.T) {
 	m := Mutex{}
 	c := NewCond(&m)
@@ -221,7 +219,6 @@ func TestCondSignal(t *testing.T) {
 	c.Signal()
 }
 
-// ? go test -v -run=^TestCondBroadcast$
 func TestCondBroadcast(t *testing.T) {
 	m := Mutex{}
 	c := NewCond(&m)
@@ -254,7 +251,7 @@ func TestCondBroadcast(t *testing.T) {
 	主 goroutine 调用 `Add`` 来设置要等待的 goroutine 的数量。然后每个 goroutine 运行并在完成时调用 `Done`。
 	同时，`Wait` 可以用来阻塞主 goroutine，直到所有的 goroutine 都完成。首次使用后不得复制 WaitGroup
 */
-//? go test -v -run=^TestWaitGroup$
+
 func TestWaitGroup(t *testing.T) {
 	var wg WaitGroup
 	var urls = []string{
@@ -293,7 +290,7 @@ func TestWaitGroup(t *testing.T) {
 	Store 存储设置 key 的 value。
 	Swap 交换键的值，并返回先前的值（如果有），没有键时则是 Store。loaded 的结果报告 key 是否存在。
 */
-//? go test -v -run=^$
+
 func TestMap(t *testing.T) {
 	var m Map
 	var wg WaitGroup
@@ -362,7 +359,7 @@ Pool-functions
 	Get 从池中选择任意项，将其从池中删除，并将其返回给调用方。如果 Get 返回 nil，而 p.New 不为 nil，那么 Get 返回 p.New 调用的结果。
 	Put 将 x 添加到池中。
 */
-//? go test -v -run=^$
+
 func TestPool(t *testing.T) {
 	var bufPool = examples.NewSyncPool(func() any {
 		log("create a pool")

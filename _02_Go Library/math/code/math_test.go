@@ -41,7 +41,7 @@ Gamma:
 	Gamma 返回 x 的 Gamma 函数。
 	Lgamma返回Gamma（x）的自然对数和符号（-1或+1）。
 */
-//? go test -v -run=^TestRound$
+
 func TestRound(t *testing.T) {
 	fmt.Printf("%.1f\n", math.Round(10.5)) // 11
 
@@ -52,7 +52,6 @@ func TestRound(t *testing.T) {
 	fmt.Printf("%.1f\n", math.RoundToEven(12.5)) // 12.0
 }
 
-// ? go test -v -run=^TestFloat2Bits$
 func TestFloat2Bits(t *testing.T) {
 	var fs = []float64{1.25, float64(+0), -0, math.Inf(1), math.Inf(-1), math.NaN(), 0.1, 0.1111111111, 0.333333333333, 123456.789, 1.0}
 	var bits = []uint64{

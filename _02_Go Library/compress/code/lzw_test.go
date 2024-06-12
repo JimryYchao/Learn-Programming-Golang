@@ -19,6 +19,7 @@ import (
 	MSB 表示最高有效位优先，在 TIFF 和 PDF 文件格式中使用
 */
 
+// ? Compress
 func TestLzwCompress(t *testing.T) {
 	for _, f := range fileNames {
 		lzwCompress(t, f)
@@ -42,6 +43,7 @@ func lzwCompress(t *testing.T, file string) {
 	}
 }
 
+// ? Decompress
 func TestLzwDeCompress(t *testing.T) {
 	lzwDeCompress(t, "compress.pdf.lzw")
 	lzwDeCompress(t, "Isaac.Newton-Opticks.txt.lzw")

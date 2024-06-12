@@ -17,7 +17,7 @@ import (
 	自定义函数可以选择退出程序；例如，命令行错误处理退出策略设置为 ExitOnError 时，退出就会发生
 ! PrintDefaults 默认在标准错误流上打印 flag 使用情况的信息；除非另有配置
 */
-//? go test -v -run=^TestFlagUsage$
+
 func TestFlagUsage(t *testing.T) {
 	t.Run("Usage", func(t *testing.T) {
 		flag.Usage()
@@ -57,7 +57,7 @@ func TestFlagUsage(t *testing.T) {
 	给定 "a `name` to show"，它返回 ("name"，"a name to show"）。如果没有反引号，则名称是对标志值类型的推测
 	如果标志为布尔值，则 name 为空字符串。
 */
-//? go test -v -run=^TestFlagFuncs$
+
 func TestFlagFuncs(t *testing.T) {
 	var fs = flag.NewFlagSet("userFlagSet", flag.ContinueOnError)
 	args := setFlags(fs)
@@ -101,7 +101,7 @@ non-top functions
 ! flag.Getter 是一个接口，允许检索 Value 的内容。提供一个 Get 方法
 	这个包提供的所有 Value 类型都满足 Getter 接口，除了 Func 使用的类型。
 */
-//? go test -v -run=^TestSetFlagSet$
+
 func TestSetFlagSet(t *testing.T) {
 	fs := flag.NewFlagSet("myFlags", flag.ContinueOnError)
 	names := setFlags(fs)

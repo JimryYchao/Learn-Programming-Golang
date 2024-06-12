@@ -15,9 +15,8 @@ import (
 ! io.Reader 包装基本的 `Read` 方法；`Read` 返回读取的字节数
 ! MultiReader 串联一组 Readers，这些 Readers 在内部按顺序 Read
 */
-// ? go test -v -run=^TestReader$
+
 func TestReader(t *testing.T) {
-	beforeTest(t)
 	r := newReader("some io.Reader stream to be read")
 	if c, err := r.Read(buf); err == nil && c > 0 {
 		logf(READ_BYTES, c, buf)
@@ -27,11 +26,8 @@ func TestReader(t *testing.T) {
 	// output: some io.Reader stream to be read
 }
 
-// ? go test -v -run=^TestMultiReader&
 func TestMultiReader(t *testing.T) {
-	t.Helper()
 	t.Run("MultiReader", func(t *testing.T) {
-		beforeTest(t)
 		r1 := newReader("first reader ")
 		r2 := newReader("second reader ")
 		r3 := newReader("third reader")
@@ -41,7 +37,6 @@ func TestMultiReader(t *testing.T) {
 		// output: first reader second reader third reader
 	})
 	t.Run("MultiReaderAsWriterTo", func(t *testing.T) {
-		beforeTest(t)
 		mr := io.MultiReader(strings.NewReader("Hello "),
 			io.MultiReader(strings.NewReader(""),
 				strings.NewReader("World")))
@@ -53,9 +48,7 @@ func TestMultiReader(t *testing.T) {
 }
 
 // ! LimitReader 包装一个限制读取字节数的 Reader *LimitedReader
-// ? go test -v -run=^TestLimitReader$
 func TestLimitReader(t *testing.T) {
-	beforeTest(t)
 	lr := io.LimitReader(newReader("some io.Reader stream to be read"), 4) // 限制读取字节数
 	readToStdout(lr)
 	lr2 := io.LimitReader(newReader(hello), -1)
@@ -64,28 +57,22 @@ func TestLimitReader(t *testing.T) {
 }
 
 // ! TeeReader 返回一个关联 w 和 r 的 Reader，从 r 读取的内容会相应的写入 w
-// ? go test -v -run=^TestTeeReader$
 func TestTeeReader(t *testing.T) {
-	t.Helper()
-	t.Run("TestTeeReader", func(t *testing.T) {
-		beforeTest(t)
-		r := newReader("some io.Reader stream to be read\n")
-		tr := io.TeeReader(r, os.Stdout) // 关联 tr 到 Stdout
+	r := newReader("some io.Reader stream to be read\n")
+	tr := io.TeeReader(r, os.Stdout) // 关联 tr 到 Stdout
 
-		// 从 tr 的任何读取都会复制到 stdout
-		if _, err := io.ReadAll(tr); err != nil {
-			t.Fatal(err)
-		}
-	})
+	// 从 tr 的任何读取都会复制到 stdout
+	if _, err := io.ReadAll(tr); err != nil {
+		t.Fatal(err)
+	}
 }
 
 /* Writer
 ! io.Writer 包装基本的 `Write` 方法；`Write` 将最多 `len(p)` 字节写入到底层数据流。
 ! MultiWriter 串联一组 Writer，这些 Writers 在内部按顺序 Write
 */
-//? go test -v -run=^TestWriter$
+
 func TestWriter(t *testing.T) {
-	beforeTest(t)
 	//? os.Stdout
 	var w io.Writer = newStdoutWriter()
 	w.Write([]byte("Writing to os.Stdout\n"))
@@ -101,10 +88,8 @@ func TestWriter(t *testing.T) {
 	// `Writing to bytes.Buffer`
 }
 
-// ? go test -v -run=^TestMultiWriter$
 func TestMultiWriter(t *testing.T) {
 	t.Run("MultiWriter", func(t *testing.T) {
-		beforeTest(t)
 		w1 := newBytesBuffer(5)
 		w2 := &strings.Builder{}
 		w3 := os.Stdout
@@ -121,7 +106,6 @@ func TestMultiWriter(t *testing.T) {
 		// strings.Builder : Hello World
 	})
 	t.Run("MultiWriterAsStringWriter", func(t *testing.T) {
-		beforeTest(t)
 		w1 := newBytesBuffer(5)
 		w2 := &strings.Builder{}
 		w3 := os.Stdout
@@ -143,11 +127,9 @@ func TestMultiWriter(t *testing.T) {
 ! io.Closer 包装基本的 Close 方法。首次调用后的 `Close()` 行为未定义。特定的实现可以记录它们自己的行为。
 ! NopCloser 返回一个 `io.ReadCloser`，它带有一个无操作的 `Close` 方法，包装了提供的 `Reader r`。如果 `r` 实现了 `WriterTo`，则返回的 `ReadCloser` 将通过转发对 `r` 的调用来实现 `WriterTo`。
 */
-//? go test -v -run=^TestCloser$
+
 func TestCloser(t *testing.T) {
-	t.Helper()
 	t.Run("Close", func(t *testing.T) {
-		beforeTest(t)
 		tmpfile, err := os.CreateTemp(t.TempDir(), "tmpFile")
 		if err != nil || tmpfile == nil {
 			t.Fatalf("CreateTemp(%s) failed: %v", "tmpFile", err)
@@ -159,7 +141,6 @@ func TestCloser(t *testing.T) {
 	})
 
 	t.Run("NopCloser", func(t *testing.T) {
-		beforeTest(t)
 		tmpfile, _ := os.CreateTemp(t.TempDir(), "tmpFile")
 		readCloser := io.NopCloser(tmpfile)
 		checkErr(tmpfile.Close())    // Closer 正常关闭
@@ -173,9 +154,8 @@ func TestCloser(t *testing.T) {
 		SeekEnd 		相对于末尾
 		SeekCurrent 	相对于当前偏移量
 */
-//? go test -v -run=^TestSeek$
+
 func TestSeek(t *testing.T) {
-	beforeTest(t)
 	file, err := os.OpenFile("./seek.file", os.O_CREATE, 0644)
 	if err != nil {
 		t.Fatal(err)
@@ -206,14 +186,10 @@ func TestSeek(t *testing.T) {
 ! CopyBuffer 等效于 Copy。不能提供 0 长度的 `buf`，传递 `nil` 时将内部创建一个 `buf`。
 ! CopyN 将最多 `n` 个字节从 `src` 复制到 `dst`）。
 */
-// ? go test -v -run=^TestCopyFunctions$
+
 func TestCopyFunctions(t *testing.T) {
-	t.Helper()
 	var wb *bytes.Buffer = newBytesBuffer(128)
-
 	t.Run("Copy", func(t *testing.T) {
-		beforeTest(t)
-
 		//? Copy
 		wb.Reset() // 从 Reader 到 Writer 复制
 		if c, err := io.Copy(wb, newReader(hello)); err != nil {
@@ -233,7 +209,6 @@ func TestCopyFunctions(t *testing.T) {
 	})
 
 	t.Run("CopyBuffer", func(t *testing.T) {
-		beforeTest(t)
 		//? CopyBuffer
 		wb.Reset() // `CopyBuffer(dst, src, nil)` same as `Copy(dst, src)`
 		if c, err := io.CopyBuffer(wb, newReader(hello), buf); err != nil {
@@ -257,7 +232,6 @@ func TestCopyFunctions(t *testing.T) {
 	})
 
 	t.Run("CopyN", func(t *testing.T) {
-		beforeTest(t)
 		copyN := func(_case string, n int64) {
 			wb.Reset()
 			c, err := io.CopyN(wb, newReader(hello), n)
@@ -283,9 +257,8 @@ func TestCopyFunctions(t *testing.T) {
 	CloseWithError	关闭写入端；管道的后续读取将返回错误 `(0, err)` 或 `(0, EOF) // err == nil`。
 	Write 			将数据写入管道，阻塞直到一个或多个读取端消耗了所有数据或读取端关闭（返回 `ErrClosedPipe`）。如果读取端因错误而关闭，则返回该错误。
 */
-//? go test -v -run=^TestPipe$
+
 func TestPipe(t *testing.T) {
-	t.Helper()
 	checkWrite := func(w io.Writer, data []byte, c chan int) {
 		if _, err := w.Write(data); err != nil {
 			checkErr(err)
@@ -306,7 +279,6 @@ func TestPipe(t *testing.T) {
 	}
 
 	t.Run("A single r/w pair", func(t *testing.T) {
-		beforeTest(t)
 		c := make(chan int)
 		pr, pw := io.Pipe()
 		var buf = make([]byte, 64)
@@ -322,7 +294,6 @@ func TestPipe(t *testing.T) {
 	})
 
 	t.Run("A sequence of r/w pairs", func(t *testing.T) {
-		beforeTest(t)
 		c := make(chan int)
 		pr, pw := io.Pipe()
 
@@ -340,7 +311,6 @@ func TestPipe(t *testing.T) {
 	})
 
 	t.Run("A large write and multiple reads", func(t *testing.T) {
-		beforeTest(t)
 		c := make(chan struct {
 			n   int
 			err error
@@ -375,7 +345,6 @@ func TestPipe(t *testing.T) {
 	})
 
 	t.Run("close writer", func(t *testing.T) {
-		beforeTest(t)
 		pr, pw := io.Pipe()
 		// PipeWriter
 		go func() {
@@ -395,7 +364,6 @@ func TestPipe(t *testing.T) {
 	})
 
 	t.Run("close reader", func(t *testing.T) {
-		beforeTest(t)
 		pr, pw := io.Pipe()
 		// PipeReader
 		go func() {
@@ -416,7 +384,6 @@ func TestPipe(t *testing.T) {
 	})
 
 	t.Run("close with error", func(t *testing.T) {
-		beforeTest(t)
 		pr, pw := io.Pipe()
 		var uerr = errors.New("user error")
 		go func() {
@@ -435,11 +402,10 @@ func TestPipe(t *testing.T) {
 	Size 返回片段的字节大小。
 ! NewSectionReader 包装一个 `ReaderAt` 并返回一个 `io.SectionReader`，它从 `off` 偏移开始读取，并在最多 `n` 个字节处停止。
 */
-//? go test -v -run=^TestReadAt$
+
 func TestReadAt(t *testing.T) {
 	t.Helper()
 	t.Run("ReadAt", func(t *testing.T) {
-		beforeTest(t)
 		var ra io.ReaderAt = strings.NewReader(content)
 		readAt := func(_case string, lenbuf int64, offset int64) {
 			buf := make([]byte, lenbuf)
@@ -455,7 +421,6 @@ func TestReadAt(t *testing.T) {
 	})
 
 	t.Run("SectionReader", func(t *testing.T) {
-		beforeTest(t)
 		readSec := func(_case string, offset, n int64) {
 			sr := io.NewSectionReader(strings.NewReader(content), offset, n)
 			logCase(_case)
@@ -482,9 +447,8 @@ func readFile(fname string) {
 ! io.OffsetWriter 将基础偏移量处的写入映射到基础写入器中的偏移量 base+off。
 ! NewOffsetWriter 返回一个 `OffsetWriter`，它从 `off` 偏移开始 `WriterAt` 写入。
 */
-// ? go test -v -run=^TestWriteAt$
+
 func TestWriteAt(t *testing.T) {
-	t.Helper()
 	fname := "./hello.file"
 	if f, err := os.Open(fname); err == nil {
 		f.Close()
@@ -499,7 +463,6 @@ func TestWriteAt(t *testing.T) {
 	f.Close()
 
 	t.Run("WriteAt", func(t *testing.T) {
-		beforeTest(t)
 		if fwrAt, err := os.OpenFile(fname, os.O_RDWR, 0644); err != nil {
 			t.Fatal(err)
 		} else {
@@ -513,7 +476,6 @@ func TestWriteAt(t *testing.T) {
 	})
 
 	t.Run("OffsetWriter", func(t *testing.T) {
-		beforeTest(t)
 		if f, err := os.OpenFile(fname, os.O_RDWR, 0644); err != nil {
 			t.Fatal(err)
 		} else {
@@ -535,9 +497,8 @@ func TestWriteAt(t *testing.T) {
 ! io.ReaderFrom 包装 `ReadFrom` 方法。`ReadFrom` 从 `r` 读取数据并返回值读取的字节数 `n`。
 ! io.WriterTo 包装 `WriteTo` 方法。`WriteTo` 将数据写入 `Writer`。
 */
-//? go test -v -run=^TestReadFromAndWriteTo$
+
 func TestReadFromAndWriteTo(t *testing.T) {
-	beforeTest(t)
 	file, err := os.OpenFile("./writeTo.file", os.O_CREATE, 0644)
 	if err != nil {
 		t.Fatal(err)
@@ -564,9 +525,8 @@ func TestReadFromAndWriteTo(t *testing.T) {
 ! io.ByteScanner 将 `UnreadByte` 方法添加到 `ByteReader`。它导致下次调用 `ReadByte` 将返回最后读取的字节。
 ! io.ByteWriter 包装 `WriteByte` 方法。
 */
-//? go test -v -run=^TestBytesReadWriter$
+
 func TestBytesReadWriter(t *testing.T) {
-	beforeTest(t)
 	brw := bytes.NewBuffer([]byte(hello))
 	// read bytes
 	for {
@@ -598,9 +558,8 @@ func TestBytesReadWriter(t *testing.T) {
 ! io.RuneReader 包装 `ReadRune` 方法。`ReadRune` 读取单个编码的 Unicode 字符，并返回该字符及其字节大小。
 ! io.RuneScanner 将 `UnreadRune` 方法添加到 `RuneReader`。`UnreadRune` 导致下一次调用 `ReadRune` 返回最后读取的字符。
 */
-//? go test -v -run=^TestRuneRead$
+
 func TestRuneRead(t *testing.T) {
-	beforeTest(t)
 	sr := strings.NewReader("Hello, 你好")
 	for r, size, err := sr.ReadRune(); err == nil; r, size, err = sr.ReadRune() {
 		logf("Read rune : %c of %d bytes", r, size)
@@ -611,9 +570,8 @@ func TestRuneRead(t *testing.T) {
 ! io.StringWriter 包装 `WriteString` 方法。
 ! WriteString 将字符串 `s` 的内容写入 `w`。如果 `w` 实现了 `StringWriter`，则直接调用 `StringWriter.WriteString`。
 */
-//? go test -v -run=^TestStringWriter$
+
 func TestStringWriter(t *testing.T) {
-	beforeTest(t)
 	var sw io.StringWriter = os.Stdout
 	sw.WriteString(hello + "\n")                           // Hello World
 	io.WriteString(os.Stdout, strings.ToLower(hello)+"\n") // hello world
@@ -624,9 +582,8 @@ func TestStringWriter(t *testing.T) {
 ! ReadAtLeast 从 `Reader` 读取到 `buf`，直到它至少读取了 `min` 字节。
 ! ReadFull 将最多 `len(buf)` 字节从 `Reader` 精确读取到 `buf`。
 */
-// ? go test -v -run=^TestReadFunctions$
+
 func TestReadFunctions(t *testing.T) {
-	t.Helper()
 	content := "some io.Reader stream to be read"
 	logBuf := func(buf []byte, err error, n int) {
 		if n < 0 {
@@ -638,7 +595,6 @@ func TestReadFunctions(t *testing.T) {
 	}
 
 	t.Run("ReadAll", func(t *testing.T) {
-		beforeTest(t)
 		buff, err := io.ReadAll(newReader(content))
 		logBuf(buff, err, -1)
 		// output :
@@ -646,7 +602,6 @@ func TestReadFunctions(t *testing.T) {
 	})
 
 	t.Run("ReadAtLeast", func(t *testing.T) {
-		beforeTest(t)
 		readAtLeast := func(_case string, min, lenbuf int) {
 			buff := make([]byte, lenbuf)
 			logCase(_case)
@@ -662,7 +617,6 @@ func TestReadFunctions(t *testing.T) {
 	})
 
 	t.Run("ReadFull", func(t *testing.T) {
-		beforeTest(t)
 		readFull := func(_case string, lenbuf int) {
 			buff := make([]byte, lenbuf)
 			logCase(_case)

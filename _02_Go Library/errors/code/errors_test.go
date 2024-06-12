@@ -19,7 +19,6 @@ func TestErrors(t *testing.T) {
 	var err1, err2, nilerr error = errors.New("Err1"), errors.New("Err2"), nil
 
 	t.Run("Join err", func(t *testing.T) {
-		beforeTest(t)
 		errs := errors.Join(err1, err2, nilerr)
 		checkErr(errs)
 		errs = errors.Join(errs, errors.New("Join new Err3"))
@@ -27,7 +26,6 @@ func TestErrors(t *testing.T) {
 	})
 
 	t.Run("Unwrap", func(t *testing.T) {
-		beforeTest(t)
 		mErr := newMError(&fs.PathError{"Op", "Path", errors.New("test PathError")})
 		checkErr(mErr)
 		// errors.Unwrap use PathError.Unwrap
@@ -35,7 +33,6 @@ func TestErrors(t *testing.T) {
 	})
 
 	t.Run("As & Is", func(t *testing.T) {
-		beforeTest(t)
 		var perr error = &fs.PathError{"Op", "Path", errors.New("test PathError")}
 
 		joins := errors.Join(newMError(errors.New("test MError")), err1, err2, perr)

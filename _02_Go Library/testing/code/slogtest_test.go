@@ -9,7 +9,6 @@ import (
 	"testing/slogtest"
 )
 
-//? go test -v -run=^$
 /*
 ! TestHandler 测试一个 slog.Handler, 当发现任何错误时, 将它们组合成一个 joinError 返回.
 	TestHandler 将给定的 Handler 安装到 slog.Logger 上, 并对 Logger 的输出方法进行多次调用, Handler 的级别应至少为 InfoLevel
@@ -19,7 +18,7 @@ import (
 	如果 Handler 输出 JSON，则使用 `map[string]any` 调用 encoding/json.Unmarshal 将创建正确的数据结构。
 	如果 Handler 故意丢弃了一个被测试检查过的属性，那么 results 函数应该检查它是否不存在，并将它添加到它返回的 map 中。
 */
-//? go test -v -run=^$
+
 func TestTestHandler(t *testing.T) {
 	var buf bytes.Buffer
 	h := slog.NewJSONHandler(&buf, nil)
@@ -52,7 +51,7 @@ func TestTestHandler(t *testing.T) {
 	对于每个子测试用例,它首先调用 newHandler 函数来构造一个 slog.Handler; 然后运行测试用例; 最后使用 result 获取结果
 	测试用例失败, 它将调用 t.Error
 */
-//? go test -v -run=^$
+
 func TestRun(t *testing.T) {
 	var buf bytes.Buffer
 

@@ -9,7 +9,6 @@ import (
 //go:embed img.png
 var img []byte
 
-// ? go test -v -run=^TestEmbedImg$
 func TestEmbedImg(t *testing.T) {
 	log(len(img))
 }
@@ -17,17 +16,24 @@ func TestEmbedImg(t *testing.T) {
 //go:embed hello.txt
 var hello string
 
-// ? go test -v -run=^TestEmbedToString$
 func TestEmbedToString(t *testing.T) {
 	log(hello)
 }
 
-//go:embed \\
+//go:embed code.go hello.txt
 var embedfs embed.FS
 
-// ? go test -v -run=^TestEmbedFS$
+//go:embed \\
+var emAll embed.FS
+
 func TestEmbedFS(t *testing.T) {
 	if dirs, err := fs.ReadDir(embedfs, "."); err == nil {
+		for _, d := range dirs {
+			log(d.Name())
+		}
+	}
+	log(" ")
+	if dirs, err := fs.ReadDir(emAll, "."); err == nil {
 		for _, d := range dirs {
 			log(d.Name())
 		}

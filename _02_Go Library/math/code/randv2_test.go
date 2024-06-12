@@ -35,7 +35,7 @@ func NewSource() *Src {
 	Read 生成 len(p) 随机字节并将它们写入 p。它总是返回 len(p) 和 nil 错误。Read 不应与任何其他 Rand 方法并发调用。
 	Shuffle 伪随机化元素的顺序。n 是元素的个数。如果 n < 0，则 Panic。swap 交换索引为 i 和 j 的元素。
 */
-//? go test -v -run=^TestRandFunctions$
+
 func TestRandv2Functions(t *testing.T) {
 	// Create and seed the generator.
 	// Typically a non-fixed seed should be used, such as time.Now().UnixNano().
@@ -84,7 +84,7 @@ func TestRandv2Functions(t *testing.T) {
 	Seed 重置 ChaCha8, 等效于 NewChaCha8(seed)
 	Uint64 返回均匀分布的随机 uint64 值
 */
-//? go test -v -run-^TestChaCha8$
+
 func TestChaCha8(t *testing.T) {
 	cc8 := rand.NewChaCha8([32]byte{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 21, 22, 23, 24, 25, 36, 37, 38, 39, 40, 11, 13, 15, 17, 19, 20, 30, 40, 50, 66, 67, 68})
 	for range 10 {
@@ -98,7 +98,7 @@ func TestChaCha8(t *testing.T) {
 	Seed 重置 PCG, 等效于 NewPCG(seed1, seed2)
 	Uint64 返回均匀分布的随机 uint64 值。
 */
-//? go test -v -run-^TestPCG$
+
 func TestPCG(t *testing.T) {
 	pcg := rand.NewPCG(0, math.MaxUint64)
 	for range 10 {
@@ -111,7 +111,7 @@ func TestPCG(t *testing.T) {
 	Uint64 返回一个从 Zipf 对象描述的 Zipf 分布中提取的值。
 ! NewZipf 返回 Zipf 变量生成器。生成器生成值 k ∈ [0, imax]，使得 P(k) 与 (v + k)^(-s) 成比例。要求：s > 1 且 v >= 1
 */
-//? go test -v -run-^TestPCG$
+
 func TestV2_Zipf(t *testing.T) {
 	pcg := rand.NewPCG(0, math.MaxUint64)
 	for range 10 {

@@ -13,3 +13,9 @@
    
 ---
 <a id="exam" ><a>
+
+### Examples
+
+- [Custom Scan File](examples/customScanFile_test.go)
+
+---

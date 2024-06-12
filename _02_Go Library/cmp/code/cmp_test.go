@@ -28,28 +28,28 @@ func TestCmp(t *testing.T) {
 				y int
 			}{test.x.(int), test.y.(int)}
 			f("Compare", T, cmp.Compare)
-			f("Less", T, cmp.Less)
+			f("   Less", T, cmp.Less)
 		case string:
 			T := struct {
 				x string
 				y string
 			}{test.x.(string), test.y.(string)}
 			f("Compare", T, cmp.Compare)
-			f("Less", T, cmp.Less)
+			f("   Less", T, cmp.Less)
 		case float64:
 			T := struct {
 				x float64
 				y float64
 			}{test.x.(float64), test.y.(float64)}
 			f("Compare", T, cmp.Compare)
-			f("Less", T, cmp.Less)
+			f("   Less", T, cmp.Less)
 		case uintptr:
 			T := struct {
 				x uintptr
 				y uintptr
 			}{test.x.(uintptr), test.y.(uintptr)}
 			f("Compare", T, cmp.Compare)
-			f("Less", T, cmp.Less)
+			f("   Less", T, cmp.Less)
 		}
 	}
 }
@@ -59,7 +59,7 @@ var nonnilptr uintptr = uintptr(unsafe.Pointer(&negzero))
 var nilptr uintptr = uintptr(unsafe.Pointer(nil))
 
 func f[T cmp.Ordered, R rt](_case string, t struct{ x, y T }, fn func(x, y T) R) {
-	logfln("%s(%v,%v) = %v", _case, t.x, t.y, fn(t.x, t.y))
+	logfln("%s(%v, %v) = %v", _case, t.x, t.y, fn(t.x, t.y))
 }
 
 var tests = []struct {

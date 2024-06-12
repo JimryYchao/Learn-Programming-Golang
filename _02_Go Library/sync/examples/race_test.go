@@ -29,7 +29,6 @@ func toChanTimed(t *time.Timer, ch chan int) {
 	}
 }
 
-// ? go test -v -race -run=^TestWrongRace$
 func TestWrongRace(t *testing.T) {
 	s := SharedInt{}
 	var wg sync.WaitGroup

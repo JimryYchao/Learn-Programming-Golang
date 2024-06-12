@@ -41,3 +41,9 @@ q := strconv.QuoteToASCII("Hello, 世界")
 
 ---
 <a id="exam" ><a>
+
+### Examples
+
+- [file StringWriter](code/stringWriter.go)
+
+---

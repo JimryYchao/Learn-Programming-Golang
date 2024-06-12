@@ -38,7 +38,7 @@ import (
 ! Data 返回在给定位置区域 loc 的 Time
 ! Now 返回当前的本地时间
 */
-//? go test -v -run=^$
+
 func TestTime(t *testing.T) {
 	log := func(name string, v any) {
 		logfln("%s: %v", name, v)
@@ -82,7 +82,7 @@ func TestTime(t *testing.T) {
 ! Unix, UnixMicro, UnixMilli 返回自 1970/1/1 开始的本地位置的 time
 ! time.Unix, UnixMilli, UnixMicro, UnixNano 返回自 1970/1/1 的秒数, 毫秒数, 微秒数, 纳秒收集
 */
-//?
+
 func TestTimeUnix(t *testing.T) {
 	unix := func(sec, nsec int64) {
 		logfln("Unix(%d, %d) = %v", sec, nsec, time.Unix(sec, nsec).UTC().Format(time.UnixDate))
@@ -103,7 +103,7 @@ func TestTimeUnix(t *testing.T) {
 ! LoadLocation 返回具有给定名称的 Location。"" 或 "UTC" 返回 time.UTC；"Local" 返回 time.Local；给定的名称参考 IANA Time Zone database
 ! LoadLocationFromTZData 返回一个 Location，其给定名称是从 IANA 时区数据库格式化的数据中初始化的。数据应该是标准 IANA 时区文件的格式
 */
-//? go test -v -run=^TestTimeLocation$
+
 func TestTimeLocation(t *testing.T) {
 	location, _ := time.LoadLocation("America/Los_Angeles")
 	now := time.Now()
@@ -125,7 +125,7 @@ func TestTimeLocation(t *testing.T) {
 ! Until 返回自 time.Now 到 t 持续时间
 ! Since 返回自 t 到 time.Now 经过的时间
 */
-//? go test -v -run=^TestDuration$
+
 func TestDuration(t *testing.T) {
 	start := time.Now()
 	defer func() {
@@ -154,7 +154,7 @@ func TestDuration(t *testing.T) {
 ! AfterFunc 等待持续时间结束，并在自己的例程中调用 f；timer.Stop 来取消调用，timer.C 不可用
 ! After 等待时间结束，然后发送当前的时间。它相当于 NewTimer(d).C；底层的 timer 不会被 GC 收集
 */
-//? go test -v -run=^TestTimer$
+
 func TestTimer(t *testing.T) {
 	log(time.Now())
 	t.Run("Sleep", func(t *testing.T) {
@@ -227,7 +227,7 @@ func TestTimer(t *testing.T) {
 ! NewTicker 构造一个 Ticker
 ! Tick 包装一个 NewTicker(d).C；底层的 ticker 不会被 GC 收集，因此如果没有关闭 C 的方法，ticker 将泄露
 */
-//?
+
 func TestTicker(t *testing.T) {
 	ticker := examples.TickFunc(100*time.Millisecond, func() {
 		log("do something")
@@ -258,7 +258,7 @@ func TestTicker(t *testing.T) {
 ! ParseInLocation 类似于 Parse；但若没有时区信息时，将依照给定 location 进行解释
 ! ParseDuration 解析一段持续时间的字符串
 */
-//? go test -v -run=^TestTimeFormat$
+
 func TestTimeFormat(t *testing.T) {
 	format := func(t time.Time, layouts []struct {
 		name   string
@@ -272,7 +272,6 @@ func TestTimeFormat(t *testing.T) {
 	format(time.Now(), layouts)
 }
 
-// ? go test -v -run=^TestParse$
 func TestParse(t *testing.T) {
 	parse := func(tm string, layouts []struct {
 		name   string
@@ -292,7 +291,6 @@ func TestParse(t *testing.T) {
 	}
 }
 
-// ? go test -v -run=^TestParseLocation$
 func TestParseLocation(t *testing.T) {
 	parse := func(tm string, loc *time.Location, layouts []struct {
 		name   string
@@ -316,7 +314,6 @@ func TestParseLocation(t *testing.T) {
 	}
 }
 
-// ? go test -v -run=^TestParseDuration$
 func TestParseDuration(t *testing.T) {
 	for _, s := range parseDuration {
 		if d, err := time.ParseDuration(s); err == nil {

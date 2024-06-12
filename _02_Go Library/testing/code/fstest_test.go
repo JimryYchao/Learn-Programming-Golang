@@ -21,7 +21,7 @@ import (
 	Sys		info.Sys
 ! TestFS 测试文件系统的实现，它在 fsys 中遍历整个文件树，打开并检查每个文件是否正确；fsys 的内容不能与 TestFS 同时更改。
 */
-//? go test -v -run=^TestMapFS$
+
 func TestMapFS(t *testing.T) {
 	fsys, paths := getTmpMapFS(t, 3)
 

@@ -23,7 +23,6 @@ import (
 ! quick.Generator 包装 Generate，表示可以生成自己类型的随机值。
 */
 
-// ? go test -v -run=^$
 func TestQuickCheck(t *testing.T) {
 	c := &quick.Config{MaxCount: 100000, Rand: rand.New(rand.NewSource(int64(time.Now().Nanosecond())))}
 	logfln("Check: %s", quick.Check(IsNonInf, c))

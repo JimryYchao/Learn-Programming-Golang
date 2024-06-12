@@ -20,7 +20,6 @@ func checkBool(b bool) {
 }
 
 // strings functions
-// ? go test -v -run=^TestStringFunctions$
 func TestStringFunctions(t *testing.T) {
 	// ! Clone 返回一个原字符串对象的副本
 	t.Run("Clone", func(t *testing.T) {
@@ -115,7 +114,6 @@ func TestStringFunctions(t *testing.T) {
 }
 
 // ! Contains-like 类函数报告在字符串中是否包含符合给定要求的子串
-// ? go test -v -run=^TestContainsLikes$
 func TestContainsLikes(t *testing.T) {
 	//! Contains 报告 s 中是否包含子串 substr
 	checkBool(strings.Contains(content, "hello")) // true
@@ -128,7 +126,6 @@ func TestContainsLikes(t *testing.T) {
 }
 
 // ! Cut-likes 类函数在给定子串的周围剪切切片 s，并返回是否找到给定子串
-// ? go test -v -run=^TestCutLikes$
 func TestCutLikes(t *testing.T) {
 	// ! Cut 在 sep 的第一个实例周围剪切 s
 	t.Run("Cut", func(t *testing.T) {
@@ -170,7 +167,6 @@ func TestCutLikes(t *testing.T) {
 }
 
 // ! Index-like 返回符合给定条件的首个实例的索引位置，不满足时返回 -1。相应的 LastIndex-like 函数返回最后一个实例的索引位置
-// ? go test -v -run=^TestIndexLikes$
 func TestIndexLikes(t *testing.T) {
 	// ! Index 返回 s 中 substr 的第一个实例的索引;
 	log(strings.Index("chicken", "ken")) // 4
@@ -185,7 +181,6 @@ func TestIndexLikes(t *testing.T) {
 }
 
 // ! Split-like 字符串切片
-// ? go test -v -run=^TestSplitLikes$
 func TestSplitLikes(t *testing.T) {
 	// ! Split 切片所有由 sep 分隔的子字符串
 	logfln("%q\n", strings.Split("a,b,c,,,", ",")) // ["a" "b" "c" "" "" ""]
@@ -198,7 +193,6 @@ func TestSplitLikes(t *testing.T) {
 }
 
 // ! Trim-like 删除满足给定条件的字符串片段
-// ? go test -v -run=^TestTrimLikes$
 func TestTrimLikes(t *testing.T) {
 	// ! Trim 删除 cutset 中所有的前导和尾随 Unicode 码位；TrimLeft 只删除前导部分；TrimRight 只删除尾随部分；
 	// ! TrimFunc 删除了所有满足 f(c) 的前导和尾随 Unicode 码位 c；TrimLeftFunc 只删除前导部分，TrimRightFunc 只删除尾随部分
@@ -211,9 +205,7 @@ func TestTrimLikes(t *testing.T) {
 }
 
 // ! strings.Builder 使用 Builder.Write 方法高效地构建字符串。以最大限度地减少内存复制。
-// ? go test -v -run=^TestStringBuilder$
 func TestStringBuilder(t *testing.T) {
-	beforeTest(t)
 	sb := strings.Builder{}
 
 	if sb.Cap() < 32 {
@@ -232,9 +224,7 @@ func TestStringBuilder(t *testing.T) {
 }
 
 // ! strings.Reader 实现 io.Reader,io.ReaderAt,io.ByteReader,io.ByteScanner,io.RuneReader,io.RuneScanner,io.Seeker,io.WriterTo接口以从 s 中读取
-// ? go test -v -run=^TestStringReader$
 func TestStringReader(t *testing.T) {
-	beforeTest(t)
 	sr := strings.NewReader("Hello World")
 	for sr.Len() > 0 {
 		if b, err := sr.ReadByte(); err == nil {
@@ -246,9 +236,7 @@ func TestStringReader(t *testing.T) {
 }
 
 // ! strings.Replacer 用替换项替换字符串列表。它对于多个 goroutine 并发使用是安全的。
-// ? go test -v -run=^TestStringReplacer$
 func TestStringReplacer(t *testing.T) {
-	beforeTest(t)
 	r := strings.NewReplacer("<", "&lt;", ">", "&gt;")
 	log(r.Replace("This is <b>HTML</b>!"))
 

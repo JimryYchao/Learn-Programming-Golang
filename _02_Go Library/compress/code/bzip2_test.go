@@ -9,7 +9,6 @@ import (
 )
 
 // ! NewReader 从 r 返回一个 Bzip2 解压缩 reader
-// ? go test -v -run=^TestBzip2$
 func TestBzip2(t *testing.T) {
 	decompress(t, "e.txt.bz2", "e.txt")
 	decompress(t, "Isaac.Newton-Opticks.txt.bz2", "Isaac.Newton-Opticks.txt")
@@ -27,9 +26,14 @@ func decompress(t *testing.T, file string, uncpName string) {
 	if err != nil || wr == nil {
 		t.Fatal(err)
 	}
+	defer wr.Close()
 
-	if _, err := io.Copy(wr, bzr); err != nil {
+	if n, err := io.Copy(wr, bzr); err != nil {
+		os.Remove("testdata/" + uncpName)
 		t.Fatal(err)
+	} else {
+		_logfln("decompress %d bytes to %s", n, uncpName)
+		// decompress 100003 bytes to e.txt
+		// decompress 567198 bytes to Isaac.Newton-Opticks.txt
 	}
-	wr.Close()
 }

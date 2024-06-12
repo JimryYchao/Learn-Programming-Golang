@@ -13,17 +13,9 @@ import (
 ! CompareAndSwapT: CompareAndSwapInt32, CompareAndSwapInt64, CompareAndSwapPointer, CompareAndSwapUint32, CompareAndSwapUint64, CompareAndSwapUintptr
 ! LoadT: LoadInt32, LoadInt64, LoadPointer, LoadUint32, LoadUint64, LoadUintptr
 ! StoreT: StoreInt32, StoreInt64, StorePointer, StoreUint32, StoreUint64, StoreUintptr
+! atomic.Bool, Int32, Pointer, Uint32, Uint64, Uintptr, Value
 */
-/* atomic types
-! atomic.Bool
-! atomic.Int32
-! atomic.Pointer
-! atomic.Uint32
-! atomic.Uint64
-! atomic.Uintptr
-! atomic.Value
-*/
-//? go test -v -run=^TestAtomicValue$
+
 func TestAtomicValue(t *testing.T) {
 	var config atomic.Value // holds current server configuration
 	// Create initial config value and store into config.

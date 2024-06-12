@@ -19,7 +19,7 @@ import (
 	Polar 返回 c 的极坐标和相位角
 	Rect 构造具有极坐标 r,θ 的复数
 */
-//? go test -v -run=^TestPolar$
+
 func TestPolar(t *testing.T) {
 	r, theta := cmplx.Polar(2i)
 	fmt.Printf("r: %f, θ: %f*π", r, theta/math.Pi)

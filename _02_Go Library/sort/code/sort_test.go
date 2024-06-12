@@ -17,7 +17,7 @@ import (
 ! IsSorted 报告 Interface 是否已排序
 ! Reverse 返回 Interface 的降序, 调用 Sort(Reverse(Interface))
 */
-//? go test -v -run=^TestSort$
+
 func TestSort(t *testing.T) {
 	log(people)
 
@@ -37,7 +37,6 @@ var people = People{
 	{"Jenny", 26},
 }
 
-// ? go test -v -run=^TestSortKeys$
 func TestSortKeys(t *testing.T) {
 	var planets = []Planet{
 		{"Mercury", 0.055, 0.4},
@@ -73,7 +72,6 @@ func TestSortKeys(t *testing.T) {
 	fmt.Println("By decreasing distance:", planets)
 }
 
-// ? go test -v -run=^TestSortMulKeys$
 func TestSortMulKeys(t *testing.T) {
 	var changes = []Change{
 		{"gri", "Go", 100},
@@ -122,7 +120,6 @@ func TestSortMulKeys(t *testing.T) {
 	fmt.Println("reverse:", changes)
 }
 
-// ? go test -v -run=^TestSortWrapper$
 func TestSortWrapper(t *testing.T) {
 	s := Organs{
 		{"brain", 1340},
@@ -158,7 +155,7 @@ func TestSortWrapper(t *testing.T) {
 	cmp 要求对 i 之前满足 cmp(i0) > 0, 之后的元素 <= 0
 ! Search 在 [0,n) 中二分查找使得 f(i) 为真的最小索引；f 要求对 i 之前的元素返回 false，之后的元素都返回 true
 */
-//? go test -v -run=^TestSeachers$
+
 func TestSeachers(t *testing.T) {
 	people := people
 	sort.Sort(people)
@@ -195,7 +192,7 @@ func TestSeachers(t *testing.T) {
 	x.SearchT 使用 Search(x)
 ! SearchT: SearchFloat64s, SearchInts, SearchStrings 查找升序切片中元素 x 索引；不存在时返回 x 可以插入位置的索引
 */
-//? go test -v -run=^TestSortSlices$
+
 func TestSortSlices(t *testing.T) {
 	ints := []int{3, 4, 5, 8, 7, 1, 7, 4, 8, 8, 41, 7, 48}
 	sort.Ints(ints)
@@ -214,7 +211,6 @@ func TestSortSlices(t *testing.T) {
 	find(41)
 }
 
-// ? go test -v -run=^TestFloat64Slice$
 func TestFloat64Slice(t *testing.T) {
 	floats := sort.Float64Slice([]float64{0, 1, -10, 1.1, .2, 12.3, 6.5, 3.3})
 	sort.Sort(sort.Reverse(floats))

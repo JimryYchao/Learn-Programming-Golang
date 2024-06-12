@@ -21,7 +21,7 @@ var content = "this is a content for iotest."
 ! TestReader 测试从 r 中读取返回预期的 content 内容
 ! TimeoutReader 在第二次读取时返回无数据的错误 ErrTimeout。后续读取调用成功。
 */
-//? go test -v -run=^TestReaders$
+
 func TestReaders(t *testing.T) {
 	buf := make([]byte, 128)
 	read := func(mess string, reader io.Reader) {
@@ -56,7 +56,7 @@ func TestReaders(t *testing.T) {
 ! NewWriteLogger （using log.Printf）写入到标准错误，打印前缀和写入的十六进制数据。
 ! TruncateWriter 写入 w，但在 n 字节后停止。后续调入不再写入。
 */
-//? go test -v -run=^TestWriters$
+
 func TestWriters(t *testing.T) {
 	iotest.NewWriteLogger("TEST", &bytes.Buffer{}).Write([]byte(content))
 

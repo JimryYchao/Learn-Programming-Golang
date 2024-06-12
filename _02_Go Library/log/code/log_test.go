@@ -10,16 +10,6 @@ import (
 	"time"
 )
 
-// ! log Functions
-
-func TestLogFatal(t *testing.T) {
-
-}
-
-func TestLogPanic(t *testing.T) {
-
-}
-
 /* standard Logger
 ! New 创建一个新的 `log.Logger` 并关联一个 `io.Writer out`。`prefix` 出现在每个生成日志行的开头。`flag` 定义日志记录的属性。
 	Ldata : 2009/01/23
@@ -33,10 +23,9 @@ func TestLogPanic(t *testing.T) {
 ! log.Logger 表示一个活动的日志记录对象，它生成到 io.Writer 的输出行。每个日志记录操作都调用 `Writer` 的 Write() 方法。Logger 可以同时在多个 goroutine 中使用；它保证了对 Writer 的序列化访问。
 ! Default 返回一个包级输出函数使用的标准日志 Logger。
 */
-//? go test -v -run=^TestStdLogger$
+
 func TestStdLogger(t *testing.T) {
 	t.Run("std logger", func(t *testing.T) {
-		beforeTest(t)
 		t.Cleanup(func() {
 			// reset std logger
 			log.SetFlags(log.LstdFlags)
@@ -57,11 +46,9 @@ func TestStdLogger(t *testing.T) {
 		log.Print("Hello, 世界")
 
 		log.Output(-100, "print")
-
 	})
 
 	t.Run("parallel logger", func(t *testing.T) {
-		beforeTest(t)
 		compCh := make(chan bool)
 		var ngorte atomic.Int32
 		logInGoroutine := func(logger *log.Logger, n int) {
@@ -88,9 +75,7 @@ func TestStdLogger(t *testing.T) {
 	})
 }
 
-// ? go test -v -run=^TestLogToFile$
 func TestLogToFile(t *testing.T) {
-	beforeTest(t)
 	lf, err := os.OpenFile("files/logfile", os.O_CREATE|os.O_RDWR, 0777)
 	if err != nil {
 		checkErr(err)

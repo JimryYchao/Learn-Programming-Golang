@@ -10,9 +10,8 @@ import (
 )
 
 // ! Verbs tests
-// ? go test -v -run="TestFormatVerbs"
+
 func TestFormatVerbs(t *testing.T) {
-	beforeTest(t)
 	var compCh = make(chan C)
 	h := newCheckVerbs(t, compCh)
 
@@ -67,9 +66,8 @@ func TestFormatVerbs(t *testing.T) {
 ! Print-like 函数在两个非字符串参数之间添加一个空格。对每个参数使用 `%v`。
 ! Println-like 函数在操作数之间空格，并追加一个换行符。
 */
-// ? go test -v -run=^TestPrinters$
+
 func TestPrinters(t *testing.T) {
-	beforeTest(t)
 	printErrNew := func(mess string) error {
 		return fmt.Errorf("printer error: %s", mess)
 	}
@@ -102,6 +100,19 @@ func TestPrinters(t *testing.T) {
 	Flag 报告标志 `c` 是否被设置
 ! fmt.Stringer 提供 `String` 方法以定义实现接口值的 “native” 格式。String 返回值打印到任何接受字符串格式或打印到非 format printer（如 `Print`）。
 */
+
+func TestFmtCustom(t *testing.T) {
+	var compCh = make(chan C)
+	h := newCheckVerbs(t, compCh)
+
+	vs := []any{F(1), G(2), FG{F(3), G(4)}, SF(5)}
+
+	go h.checkVerbs(t, true, "Formatter", compCh, vs, "%T", "%v", "%.v", "%3.2v", "%.2v", "%3v", "%+v", "%q", "%x", "%a", "%A")
+
+	go h.checkVerbs(t, true, "GoString", compCh, vs, "%#v", "%#q", "%#x")
+
+	go h.checkVerbs(t, true, "Stringer", compCh, vs, "%s", "%#s", "%1.1s")
+}
 
 type (
 	F  int
@@ -147,32 +158,16 @@ func (n SF) String() string {
 	return fmt.Sprintf("String(%d)", int(n))
 }
 
-// ? go test -v -run=^TestFmtCustom$
-func TestFmtCustom(t *testing.T) {
-	beforeTest(t)
-	var compCh = make(chan C)
-	h := newCheckVerbs(t, compCh)
-
-	vs := []any{F(1), G(2), FG{F(3), G(4)}, SF(5)}
-
-	go h.checkVerbs(t, true, "Formatter", compCh, vs, "%T", "%v", "%.v", "%3.2v", "%.2v", "%3v", "%+v", "%q", "%x", "%a", "%A")
-
-	go h.checkVerbs(t, true, "GoString", compCh, vs, "%#v", "%#q", "%#x")
-
-	go h.checkVerbs(t, true, "Stringer", compCh, vs, "%s", "%#s", "%1.1s")
-}
-
 /* Scanners
 ! Scanf-like 根据格式字符串解析参数。
 ! Scan-like 将输入的换行符视为空格。
 ! Scanln-like 在扫描到换行符或 EOF 后停止。
 	Scanners 的 verbs 中不包括 %T、%p、#、+；除了 %c 其他 verbs 的实现将忽略任何的前导空格；%s
 */
-//? go test -v -run=^TestScanners$
+
 func TestScanners(t *testing.T) {
 	var text string = "5 true gophers\naaaaa"
 	t.Run("Scan-like", func(t *testing.T) {
-		beforeTest(t)
 		var (
 			b     bool
 			n     int
@@ -183,7 +178,6 @@ func TestScanners(t *testing.T) {
 		}
 	})
 	t.Run("Scanln-like", func(t *testing.T) {
-		beforeTest(t)
 		var (
 			b bool
 			n int
@@ -195,7 +189,6 @@ func TestScanners(t *testing.T) {
 	})
 
 	t.Run("Scanf-like", func(t *testing.T) {
-		beforeTest(t)
 		var (
 			r rune
 			b bool
@@ -210,6 +203,13 @@ func TestScanners(t *testing.T) {
 
 // ! fmt.Scanner 提供 `Scan` 方法，该方法扫描输入以获得值的表示并将结果存储在接收器（有效指针）中。对于实现 `fmt.Scanner` 的任何参数 arg，`Scan`，`Scanf` 或 `Scanln` 方法都会调用它的 arg.Scan。
 // ! fmt.ScanState 表示传递给自定义 Scanner.Scan 的参数 state。Scanners 可以执行一次运行扫描或要求 ScanState 发现下一个空格分隔的令牌。
+
+func TestScanInts(t *testing.T) {
+	var r RecursiveInt
+	if c, err := fmt.Sscan(string(makeInts(100)), &r); err == nil {
+		fmt.Print(c, &r)
+	}
+}
 
 // RecursiveInt 接受一个形如 %d.%d.%d.... 的字符串并将其解析为一个链表。
 type RecursiveInt struct {
@@ -252,12 +252,4 @@ func (r *RecursiveInt) Scan(state fmt.ScanState, verb rune) (err error) {
 	}
 	r.next = next
 	return
-}
-
-// ? go test -v- run=^TestScanInts$
-func TestScanInts(t *testing.T) {
-	var r RecursiveInt
-	if c, err := fmt.Sscan(string(makeInts(100)), &r); err == nil {
-		fmt.Print(c, &r)
-	}
 }

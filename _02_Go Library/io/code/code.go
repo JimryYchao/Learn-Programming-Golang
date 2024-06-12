@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"strings"
-	"testing"
 )
 
 var (
@@ -20,16 +19,6 @@ var (
 	content     = "some io.Reader stream to be read"
 )
 
-func beforeTest[TBF testing.TB](t TBF) {
-	clear(buf)
-	if !testing.Verbose() {
-		return
-	}
-	fmt.Printf(EnterTest, t.Name())
-	t.Cleanup(func() {
-		fmt.Printf(EndTest, t.Name())
-	})
-}
 func logCase(_case string) {
 	logf("case : %s", _case)
 }

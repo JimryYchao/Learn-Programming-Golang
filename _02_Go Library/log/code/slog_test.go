@@ -49,9 +49,8 @@ var contentWith = content + " with "
 ! SetLogLoggerLevel 设置 slog.defaultLogger 和桥接到 log.defaultLogger 的日志级别。默认级别为 slog.LevelInfo。
 ! slog.Level 表示日志事件的重要程度或严重级别，默认为 Info:0
 */
-// ? go test -v -run=^TestSlogTopFunctions$
+
 func TestSlogTopFunctions(t *testing.T) {
-	beforeTest(t)
 	logAll(slog.Default(), "before set level")
 	old := slog.SetLogLoggerLevel(slog.LevelWarn)
 	t.Cleanup(func() {
@@ -65,9 +64,7 @@ func TestSlogTopFunctions(t *testing.T) {
 	logAll(slog.Default(), "log with attrs", "a1", "v1", "a2", "v2")
 }
 
-// ? go test -v -run=^TestNewLogger$
 func TestNewLogger(t *testing.T) {
-	beforeTest(t)
 	lgr := slog.New(&wrappingHandler{slog.Default().Handler(), slog.LevelInfo})
 	lgr.Debug("not printed")
 	lgr.Info("new a logger with a wrappingHandler")
@@ -82,9 +79,7 @@ func TestNewLogger(t *testing.T) {
 	// 2024/05/26 15:46:02 DEBUG set handler-level to DEBUG
 }
 
-// ? go test -v -run=^TestWithLogger$
 func TestWithLogger(t *testing.T) {
-	beforeTest(t)
 	lgr := slog.With("author", "Ychao")
 	lgr.Info("create a logger by slog.With")
 	args := []any{"a", 1, slog.Int64("b", 2), slog.Group("group", "c", 3, "d", 4)}
@@ -97,9 +92,7 @@ func TestWithLogger(t *testing.T) {
 	// 2024/05/26 03:53:40 INFO this is a message with  author=Ychao class.a=1 class.b=2 class.group.c=3 class.group.d=4
 }
 
-// ? go test -v -run=^TestSetDefault$
 func TestSetDefault(t *testing.T) {
-	beforeTest(t)
 	log.Print("log.Print before SetDefault")
 	slog.Debug("not printed")
 	slog.Info("printed")
@@ -113,9 +106,7 @@ func TestSetDefault(t *testing.T) {
 	// {"time":"2024-05-26T16:03:02.1233064+08:00","level":"INFO","msg":"log.Print after SetDefault"}
 }
 
-// ? go test -v -run=^TestLogToFile$
 func TestSLogToFile(t *testing.T) {
-	beforeTest(t)
 	logfile, _ := os.OpenFile("files/logfile.txt", os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0777)
 	defer logfile.Close()
 	mLogger := slog.NewLogLogger(slog.Default().Handler(), slog.LevelDebug) // 关联一个 handler 和 level
@@ -140,9 +131,8 @@ func TestSLogToFile(t *testing.T) {
 	- 对于 nil 和其他类型，包括命名类型，返回 KindAny
 ! GroupValue 用于组合一组 Attrs 为一个 Value
 */
-//? go test -v -run=^TestLogAttrs$
+
 func TestLogAttrs(t *testing.T) {
-	beforeTest(t)
 	slog.Log(context.Background(), slog.LevelInfo+1, "hello", "a1", "v1", "a2", "v2", slog.Int("a", 1), slog.String("b", "two"), slog.Group("group", "c", 3, "d", "four"))
 	// 2024/05/26 02:43:30 INFO+1 hello a=1 b=two group.c=3 group.d=four
 	slog.LogAttrs(context.Background(), slog.LevelDebug+3, "world", slog.Any("any", time.Now()), slog.String("Hello", "World"))
@@ -150,7 +140,6 @@ func TestLogAttrs(t *testing.T) {
 }
 
 // ! slog.LogValuer 是可以将自己转换为用于 logging 值的任何 Go 值。这种机制可以用来推迟昂贵的操作。
-// ? go test -v -run=^TestLogValuer$
 func TestLogValuer(t *testing.T) {
 	n := Name{"Jimry", "Ychao"}
 	lgr := slog.New(slog.NewJSONHandler(os.Stdout, nil))
@@ -190,10 +179,9 @@ func (n Name) LogValue() slog.Value {
 ! JSONHandler 将 record 作为行形式的 JSON 对象写入 io.Writer。NewJSONHandler 创建 JSONHandler。
 ! TextHandler 将 record 作为空格分隔的 key=value 序列写入 io.Writer。NewTextHandler 创建 TextHandler。
 */
-//? go test -v -run=^TestSlogHandlers$
+
 func TestSlogHandlers(t *testing.T) {
 	t.Run("JSONHandler", func(t *testing.T) {
-		beforeTest(t)
 		jsonSlgr := slog.New(slog.NewJSONHandler(os.Stdout, nil))
 		jsonSlgr.Info("create a slogger with a JSONHandler")
 		jsonSlgr.Info(contentWith, "a", 1, slog.Int64("b", 2),
@@ -215,7 +203,6 @@ func TestSlogHandlers(t *testing.T) {
 	})
 
 	t.Run("TextHandler", func(t *testing.T) {
-		beforeTest(t)
 		txtSlgr := slog.New(slog.NewTextHandler(os.Stdout, nil))
 		txtSlgr.Info("create a slogger with a JSONHandler")
 		txtSlgr.Info(contentWith, "a", 1, slog.Int64("b", 2),
@@ -244,9 +231,8 @@ func TestSlogHandlers(t *testing.T) {
 	`ReplaceAttr fn` 在重写 record 的每个非 group 属性之前被调用，内置键 time,level,source,msg 默认被传递。
 ! slog.Leveler 提供一个 Level 值。Level 和 LevelVar 实现了该接口，可以通过 `LevelVar.Set` 方法动态更改 [Handler] 的级别。
 */
-// ? go test -v -run=^TestLevelVar$
+
 func TestLevelVar(t *testing.T) {
-	beforeTest(t)
 	le := &slog.LevelVar{} // 0 : Info
 	lgr := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{AddSource: true, Level: le}))
 	logAll(lgr, "print test")
@@ -258,9 +244,7 @@ func TestLevelVar(t *testing.T) {
 }
 
 // ! NewLogLogger 构造一个关联给定 handler 和 level 的 log.Logger
-// ? go test -v -run=^TestLogLogger$
 func TestLogLogger(t *testing.T) {
-	beforeTest(t)
 	lgr := slog.NewLogLogger(slog.Default().Handler(), slog.LevelDebug)
 
 	lgr.Print("not printed")
@@ -287,5 +271,3 @@ func TestLogLogger(t *testing.T) {
 	NumAttrs 返回 record 中的属性数目
 ! NewRecord 从给定的参数创建一个 Record。使用 Record.AddAttrs 向记录添加属性。NewRecord 用于记录期望支持 Handler 作为后端的 API。
 */
-
-// TODO ??

@@ -7,5 +7,4 @@ package gostd
 		`tag` 为空时使用 os.Args[0]
 		`network` 为空时，Dial 将连接到本地系统日志服务器。
 		`network`, `raddr` 参阅 [net.Dial]
-
 */

@@ -43,9 +43,8 @@ var (
 
 ! FormatFileInfo 返回 `FileInfo` 格式化的字符串。
 */
-//? go test -v -run=^$
+
 func TestValidPath(t *testing.T) {
-	beforeTest(t)
 	paths := []string{".", "x", "x/y", "", "..", "/", "x/", "/x", "x/y/", "/x/y",
 		"./", "./x", "x/.", "x/./y", "../", "../x", "x/..", "x/../y", "x//y", `x\`, `x\y`, `x:y`, `\x`}
 
@@ -55,9 +54,7 @@ func TestValidPath(t *testing.T) {
 	}
 }
 
-// ? go test -v -run=^TestOpenFile$
 func TestOpenFile(t *testing.T) {
-	beforeTest(t)
 	if fs.ValidPath(dirPath) { // check path format
 		if file, err := os.DirFS(dirPath).Open(fileName); err == nil {
 			file.Read(buf) // read file
@@ -73,9 +70,7 @@ func TestOpenFile(t *testing.T) {
 	}
 }
 
-// ? go test -v -run=^TestOpenFileWithErr$
 func TestOpenFileWithErr(t *testing.T) {
-	beforeTest(t)
 	var perr *fs.PathError
 	_, err := os.DirFS(t.TempDir()).Open("non-existent")
 	if errors.As(err, &perr) {
@@ -83,19 +78,14 @@ func TestOpenFileWithErr(t *testing.T) {
 	}
 }
 
-// ? go test -v -run=^TestFSOpenFile$
 func TestFileInfo(t *testing.T) {
-	beforeTest(t)
 	file, _ := os.DirFS(".").Open(fileName)
 	defer file.Close()
 	info, _ := file.Stat()
 	logf("Info of file : %s", fs.FormatFileInfo(info))
 }
 
-// ? go test -v -run=^TestFileMode$
 func TestFileMode(t *testing.T) {
-	beforeTest(t)
-
 	sys, _ := getTmpFsys(t, 3)
 	entries, _ := fs.ReadDir(sys, ".")
 	for _, e := range entries {
@@ -115,9 +105,8 @@ func TestFileMode(t *testing.T) {
 	Info 返回描述该条目的 `FileInfo`。
 ! FormatDirEntry 返回 `DirEntry` 格式化的字符串。
 */
-// ? go test -v -run=^TestFS_ReadDirFS$
+
 func TestFS_ReadDirFS(t *testing.T) {
-	beforeTest(t)
 	if fsys, err := getTmpFsys(t, 3); err != nil {
 		t.Fatal(err)
 	} else {
@@ -128,9 +117,7 @@ func TestFS_ReadDirFS(t *testing.T) {
 	}
 }
 
-// ? go test -v -run=^TestReadDirOnly$
 func TestReadDirOnly(t *testing.T) {
-	beforeTest(t)
 	fsys, err := getTmpFsys(t, 3)
 	if err != nil {
 		t.Fatal(err)
@@ -182,9 +169,8 @@ func mkTmpDir(dir string, n int) (string, error) {
 	ReadFile 读取 `name` 文件并返回其内容，读取结束的 `io.EOF` 不被视为错误。
 ! ReadFile 从文件系统 `fsys` 中读取指定 `name` 的文件并返回其内容。
 */
-//? go test -v -run=^TestReadFile$
+
 func TestReadFile(t *testing.T) {
-	beforeTest(t)
 	fsys, _ := getTmpFsys(t, 3)
 	dtris, _ := fs.ReadDir(fsys, ".")
 	for _, d := range dtris {
@@ -205,9 +191,8 @@ func TestReadFile(t *testing.T) {
 ! Stat 从文件系统 `fsys` 中返回描述 `name` 文件的 `FileInfo`。
 ! FileInfoToDirEntry 从 `FileInfo` 返回 `DirEntry`。
 */
-// ? go test -v -run=^TestStatFS$
+
 func TestStatFS(t *testing.T) {
-	beforeTest(t)
 	fsys := os.DirFS(".")
 	if statfs, ok := fsys.(fs.StatFS); ok {
 		info, err := fs.Stat(statfs, "fs_testing.file")
@@ -223,7 +208,7 @@ func TestStatFS(t *testing.T) {
 ! fs.SubFS 是一个具有 `Sub` 方法的文件系统。
 ! Sub 返回一个对应于 `fsys` 系统下目录 `dir` 的子树文件系统。`Sub` 返回一个内置的 `SubFS`。
 */
-//? go test -v -run=^TestCheckFs$
+
 func TestCheckFs(t *testing.T) {
 	// 检查一个文件系统下的所有内容
 	fsys, _ := getTmpFsys(t, 5)
@@ -331,9 +316,8 @@ func createTreeFromFS(fsys fs.FS, name string) (*dirTree, error) {
 ! fs.GlobFs 是一个带有 `Glob` 方法的文件系统。
 ! Glob 返回指定文件系统 `fsys` 中所有匹配 `pattern` 的文件名称。
 */
-// ? go test -v -run=^TestGlob$
+
 func TestGlob(t *testing.T) {
-	beforeTest(t)
 	fsys := os.DirFS(".")
 	if _, ok := fsys.(fs.GlobFS); ok {
 		logf("os.DirFS return a fs.GlobFS")
@@ -363,9 +347,8 @@ func TestGlob(t *testing.T) {
 ! WalkDir 遍历以 `root` 为根的文件树，为树中的每个文件或目录（包括 `root`）调用 `WalkDirFunc fn`。
 ! fs.WalkDirFunc 是 `WalkDir` 调用的函数类型，用于访问每个文件或目录。`type WalkDirFunc func(path string, d DirEntry, err error) error`
 */
-//? go test -v -run=^TestWalkDir$
+
 func TestWalkDir(t *testing.T) {
-	beforeTest(t)
 	fsys, _ := getTmpFsys(t, 3)
 	walkHelper := func(path string, d fs.DirEntry, err error) error {
 		fmt.Printf("walk to %s, ", d.Name())
