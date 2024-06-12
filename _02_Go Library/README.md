@@ -1,4 +1,4 @@
-### Go Standard library Directories      <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
+### Go Standard libraries     <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
 
 - 官网链接 <img src="./_rsc/link-src.drawio.png"/> 
 - 补充说明  <img  src="./_rsc/link-others.drawio.png"/>
@@ -55,11 +55,31 @@
   id="code"/></a><a href="./context/code/context_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   id="exam"/></a><a href="./context/context.md#exam"   ><img src="./_rsc/link-exam.drawio.png"  /></a>
 
-- [ ] crypto 包含一些通用的加密常量和算法。        <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+- [x] crypto 包含一些通用的加密常量和算法。        <a href="https://pkg.go.dev/crypto" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="crypto/crypto.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="crypto/code/crypto_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
+
+  - [x] aes 实现 AES 加密。        <a href="https://pkg.go.dev/crypto/aes" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/aes_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="./context/context.md#exam"   ><img src="./_rsc/link-exam.drawio.png"    /></a>
+
+  - [x] cipher 实现了标准的分组密码模式，这些模式可以封装在低级分组密码的实现中。        <a href="https://pkg.go.dev/crypto/cipher" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/cipher_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [x] des 实现 Data Encryption Standard (DES) 和 Triple Data Encryption Algorithm (TDEA)。        <a href="https://pkg.go.dev/crypto/des" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/des_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ] ecdh 实现了基于 NIST 曲线和 Curve25519 的 Elliptic Curve Diffie-Hellman (ECDH)。       <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ] ecdsa 实现了在 FIPS 186-4 和 SEC 1 2.0 中定义的椭圆曲线数字签名算法。      <a href="https://pkg.go.dev/crypto/ecdsa" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdsa_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+
 
 
 - [x] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed" target="_blank"><img src="./_rsc/link-src.drawio.png" 
@@ -205,3 +225,8 @@
   /></a>
 
 --> 
+
+
+
+---
+### Go supplemental libraries       <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
