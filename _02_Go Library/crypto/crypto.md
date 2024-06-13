@@ -51,8 +51,23 @@ const (
 
 包 `elliptic` 实现了素数域上的标准 NIST P-224、P-256、P-384 和 P-521 椭圆曲线。除了使用 `crypto/ecdsa` 所需的 P224、P256、P384 和 P521 值之外，不推荐直接使用此包。大多数其他用途应该迁移到更有效和更安全的 `crypto/ecdh`，或者迁移到第三方模块以实现更低级别的功能。
 
+包 `hmac` 实现 Keyed-Hash Message Authentication Code (HMAC)。HMAC 是使用密钥对消息进行签名的加密哈希。
 
+- 接收器应小心使用 `Equal` 比较 MAC，以避免 timing side-channels：
+  
+	```go
+	// ValidMAC reports whether messageMAC is a valid HMAC tag for message.
+	func ValidMAC(message, messageMAC, key []byte) bool {
+		mac := hmac.New(sha256.New, key)
+		mac.Write(message)
+		expectedMAC := mac.Sum(nil)
+		return hmac.Equal(messageMAC, expectedMAC)
+	}
+	```
 
+包 `md5` 实现了 [RFC 1321](https://www.rfc-editor.org/rfc/rfc1321.html) 中定义的 MD5 哈希算法。MD5 在密码学上被破坏，不应用于安全应用程序。
+
+包 `rand` 实现了一个加密安全的随机数生成器。
 
 ---
 <a id="exam" ><a>

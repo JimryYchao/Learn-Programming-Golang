@@ -2,7 +2,7 @@ package gostd
 
 import (
 	"crypto"
-	md5 "crypto/MD5"
+	md5 "crypto/md5"
 	"testing"
 )
 
@@ -32,8 +32,8 @@ import (
 
 func TestHash(t *testing.T) {
 	if crypto.MD5.Available() {
-		md5hash := crypto.MD5.New()
-		logfln("Register Hash Func: %s, Size:%d", md5hash, md5hash.Size())
+		md5Hash := crypto.MD5
+		logfln("Register Hash Func: %s, Size:%d", md5Hash, md5Hash.Size())
 	}
 	// fs := os.DirFS("../")
 	for _, msg := range msgs {

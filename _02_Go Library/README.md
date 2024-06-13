@@ -88,8 +88,8 @@
   - [x] md5 实现了 [RFC 1321](https://www.rfc-editor.org/rfc/rfc1321.html) 中定义的 MD5 哈希算法。         <a href="https://pkg.go.dev/crypto/md5" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/md5_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [ ] rand 实现了一个加密安全的随机数生成器。       <a href="https://pkg.go.dev/crypto/rand" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/rand_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
     - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
