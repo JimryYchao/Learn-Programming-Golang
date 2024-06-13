@@ -13,6 +13,8 @@ func TestSha1Sum(t *testing.T) {
 	io.WriteString(h, "His money is twice tainted:")
 	io.WriteString(h, " 'taint yours and 'taint mine.")
 	logfln("%x", h.Sum(nil))
+
+	logfln("%x", sha1.Sum([]byte("His money is twice tainted: 'taint yours and 'taint mine.")))
 }
 
 func TestSha1File(t *testing.T) {

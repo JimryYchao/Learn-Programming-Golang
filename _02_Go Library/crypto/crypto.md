@@ -78,5 +78,10 @@ const (
 
 包 `sha1` 实现了 [RFC 3174](https://www.rfc-editor.org/rfc/rfc3174.html) 中定义的 SHA-1 哈希算法。SHA-1 在密码学上被破坏，不应用于安全应用程序。
 
+包 `sha256` 实现了 FIPS 180-4 中定义的 SHA224 和 SHA256 哈希算法。
+
+包 `sha512` 实现了 FIPS 180-4 中定义的 SHA-384、SHA-512、SHA-512/224 和 SHA-512/256 哈希算法。
+
+
 ---
 <a id="exam" ><a>

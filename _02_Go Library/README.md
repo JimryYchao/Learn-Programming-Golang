@@ -97,11 +97,22 @@
   - [x] rsa 实现了 PKCS #1 和 [RFC 8017](https://www.rfc-editor.org/rfc/rfc8017.html) 中指定的 RSA 加密。       <a href="https://pkg.go.dev/crypto/rsa" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/rsa_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ] sha1 实现了 [RFC 3174](https://www.rfc-editor.org/rfc/rfc3174.html) 中定义的 SHA-1 哈希算法。        <a href="https://pkg.go.dev/crypto/sha1" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] sha1 实现了 [RFC 3174](https://www.rfc-editor.org/rfc/rfc3174.html) 中定义的 SHA-1 哈希算法。        <a href="https://pkg.go.dev/crypto/sha1" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/sha1_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [x] sha256 实现了 FIPS 180-4 中定义的 SHA224 和 SHA256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha256" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/sha256_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [x] sha512 实现了 FIPS 180-4 中定义的 SHA-384、SHA-512、SHA-512/224 和 SHA-512/256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha512" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/sha512_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [x] sha256 实现了 FIPS 180-4 中定义的 SHA224 和 SHA256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha256" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/sha256_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [x] sha256 实现了 FIPS 180-4 中定义的 SHA224 和 SHA256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha256" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/sha256_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+
 
 - [x] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./embed/embed.md"  ><img  src="./_rsc/link-others.drawio.png" 

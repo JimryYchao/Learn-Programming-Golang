@@ -79,12 +79,6 @@ func TestMD5Files(t *testing.T) {
 }
 
 func hmach_md5File(t *testing.T, f io.Reader) (sum []byte) {
-	defer func() {
-		e := recover()
-		if e != nil {
-			t.Fatal(e)
-		}
-	}()
 	hmach := hmac.New(md5.New, []byte("Hello World"))
 	if _, err := io.Copy(hmach, f); err != nil {
 		t.Fatal(err)
@@ -92,16 +86,11 @@ func hmach_md5File(t *testing.T, f io.Reader) (sum []byte) {
 	return hmach.Sum(nil)
 }
 
-func md5File(t *testing.T, f io.Reader) (sum []byte) {
-	defer func() {
-		e := recover()
-		if e != nil {
-			t.Fatal(e)
-		}
-	}()
-	h := md5.New()
-	if _, err := io.Copy(h, f); err != nil {
+func md5File(t *testing.T, f io.Reader) []byte {
+	d, err := io.ReadAll(f)
+	if err != nil {
 		t.Fatal(err)
 	}
-	return h.Sum(nil)
+	sum := md5.Sum(d)
+	return sum[:]
 }
