@@ -106,13 +106,17 @@
   - [x] sha512 实现了 FIPS 180-4 中定义的 SHA-384、SHA-512、SHA-512/224 和 SHA-512/256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha512" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/sha512_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [x] sha256 实现了 FIPS 180-4 中定义的 SHA224 和 SHA256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha256" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/sha256_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [x] subtle 实现了在加密代码中经常有用但需要仔细考虑才能正确使用的函数。        <a href="https://pkg.go.dev/crypto/subtle" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/subtle_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [x] sha256 实现了 FIPS 180-4 中定义的 SHA224 和 SHA256 哈希算法。        <a href="https://pkg.go.dev/crypto/sha256" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/sha256_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [ ] tls 部分实现了 [RFC 5246](https://www.rfc-editor.org/rfc/rfc5246.html) 中指定的 TLS 1.2 和 [RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html) 中指定的 TLS 1.3。      <a href="https://pkg.go.dev/crypto/tls" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/tls_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
+  - [ ] x509 实现了 X.509 标准的一个子集。        <a href="https://pkg.go.dev/crypto/x509" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/x509_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
+  - [ ] x509/pkix 包含用于 ASN.1 解析和序列化 X.509 证书、CRL 和 OCSP 的共享低级结构。        <a href="https://pkg.go.dev/crypto/x509/pkix" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/pkix_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./embed/embed.md"  ><img  src="./_rsc/link-others.drawio.png" 

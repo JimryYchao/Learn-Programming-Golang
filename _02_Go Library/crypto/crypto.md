@@ -82,6 +82,13 @@ const (
 
 包 `sha512` 实现了 FIPS 180-4 中定义的 SHA-384、SHA-512、SHA-512/224 和 SHA-512/256 哈希算法。
 
+包 `subtle` 实现了在加密代码中经常有用但需要仔细考虑才能正确使用的函数。
+
+包 `tls` 部分实现了 [RFC 5246](https://www.rfc-editor.org/rfc/rfc5246.html) 中指定的 TLS 1.2 和 [RFC 8446](https://www.rfc-editor.org/rfc/rfc8446.html) 中指定的 TLS 1.3。
+
+包 `x509` 实现了 X.509 标准的一个子集。它允许解析和生成证书、证书签名请求、证书撤销列表以及编码的公钥和私钥。它提供了一个证书验证器，以及一个链构建器。
+
+包 `x509/pkix` 包含用于 ASN.1 解析和序列化 X.509 证书、CRL 和 OCSP 的共享低级结构。
 
 ---
 <a id="exam" ><a>
