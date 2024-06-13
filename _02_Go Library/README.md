@@ -70,13 +70,28 @@
   - [x] des 实现 Data Encryption Standard (DES) 和 Triple Data Encryption Algorithm (TDEA)。        <a href="https://pkg.go.dev/crypto/des" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/des_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ] ecdh 实现了基于 NIST 曲线和 Curve25519 的 Elliptic Curve Diffie-Hellman (ECDH)。       <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] ecdh 实现了基于 NIST 曲线和 Curve25519 的 Elliptic Curve Diffie-Hellman (ECDH)。       <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ] ecdsa 实现了在 FIPS 186-4 和 SEC 1 2.0 中定义的椭圆曲线数字签名算法。      <a href="https://pkg.go.dev/crypto/ecdsa" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] ecdsa 实现了在 FIPS 186-4 和 SEC 1 2.0 中定义的椭圆曲线数字签名算法。      <a href="https://pkg.go.dev/crypto/ecdsa" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdsa_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] ed25519 实现了 [Ed25519](https://ed25519.cr.yp.to/) 签名算法。        <a href="https://pkg.go.dev/crypto/ed25519" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ed25519_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 
