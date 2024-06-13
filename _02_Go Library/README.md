@@ -88,14 +88,20 @@
   - [x] md5 实现了 [RFC 1321](https://www.rfc-editor.org/rfc/rfc1321.html) 中定义的 MD5 哈希算法。         <a href="https://pkg.go.dev/crypto/md5" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/md5_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ] rand 实现了一个加密安全的随机数生成器。       <a href="https://pkg.go.dev/crypto/rand" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] rand 实现了一个加密安全的随机数生成器。       <a href="https://pkg.go.dev/crypto/rand" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/rand_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] rc4 实现了 RC4加密。        <a href="https://pkg.go.dev/crypto/rc4" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/rc4_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ]  rsa 实现了 PKCS #1 和 [RFC 8017](https://www.rfc-editor.org/rfc/rfc8017.html) 中指定的 RSA 加密。       <a href="https://pkg.go.dev/crypto/rsa" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/rsa_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-
-
+  - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./embed/embed.md"  ><img  src="./_rsc/link-others.drawio.png" 

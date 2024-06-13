@@ -69,5 +69,9 @@ const (
 
 包 `rand` 实现了一个加密安全的随机数生成器。
 
+包 `rc4` 实现了 RC4 加密。RC4 在密码学上被破坏，不应用于安全应用程序。
+
+包 `rsa` 实现了 PKCS #1 和 [RFC 8017](https://www.rfc-editor.org/rfc/rfc8017.html) 中指定的 RSA 加密。
+
 ---
 <a id="exam" ><a>
