@@ -118,6 +118,30 @@
   - [ ] x509/pkix 包含用于 ASN.1 解析和序列化 X.509 证书、CRL 和 OCSP 的共享低级结构。        <a href="https://pkg.go.dev/crypto/x509/pkix" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/pkix_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
+- [x] debug 包含一些有关调试的包。       <a href="https://pkg.go.dev/debug" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="debug/debug.md"  ><img  src="./_rsc/link-others.drawio.png"   /></a>
+
+  - [x] buildinfo 提供了访问 Go 二进制文件中嵌入的关于如何构建它的信息。       <a href="https://pkg.go.dev/debug/buildinfo" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/buildinfo_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ] dwarf 提供对从可执行文件加载的 DWARF 调试信息的访问       <a href="https://pkg.go.dev/debug/dwarf" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/dwarf_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  
+  - [ ] elf 实现了对 ELF 对象文件的访问。       <a href="https://pkg.go.dev/debug/elf" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/elf_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+ 
+  - [ ] gosym 包实现了对由 gc 编译器生成的 Go 二进制文件中嵌入的 Go 符号和行号表的访问。       <a href="https://pkg.go.dev/debug/gosym" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/gosym_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>  
+ 
+  - [ ] macho 实现对 Mach-O 对象文件的访问。       <a href="https://pkg.go.dev/debug/macho" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/macho_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+ 
+  - [ ] pe 实现对 PE（Microsoft Windows 可移植可执行文件）文件的访问。       <a href="https://pkg.go.dev/debug/pe" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/pe_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+ 
+  - [ ] plan9obj 实现了对 Plan9 a.out 对象文件的访问。       <a href="https://pkg.go.dev/debug/plan9obj" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="debug/code/plan9obj_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
 - [x] embed 提供了对嵌入在运行的 Go 程序中的文件的访问。      <a href="https://pkg.go.dev/embed" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./embed/embed.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./embed/code/embed_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
