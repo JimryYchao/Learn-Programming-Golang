@@ -200,6 +200,12 @@
       - [x] rand/v2 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand/v2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
+- [ ] plugin 实现 Go 插件的加载和 symbol 符号解析。        <a href="https://pkg.go.dev/plugin" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="plugin/plugin.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="plugin/code/plugin_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+  
 <!-- TODO -------------------------------------------------------------------------------------------------------------------->
 
 - [x] reflect 实现运行时反射，允许程序操作具有任意类型的对象。        <a href="https://pkg.go.dev/reflect" target="_blank"><img src="./_rsc/link-src.drawio.png" 
