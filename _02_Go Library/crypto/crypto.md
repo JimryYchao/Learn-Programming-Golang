@@ -76,5 +76,7 @@ const (
 - 使用 RSA 加密和签名的原始规范是 PKCS #1，默认情况下，术语 “RSA 加密” 和 “RSA 签名” 指 PKCS #1 v1.5。然而，该规范有缺陷，新的设计应该使用 v2，通常仅由 `OAEP` 和 `PSS` 调用。
 - 当不需要更抽象的接口时，可以使用 v1.5/OAEP 进行加密/解密，并使用 v1.5/PSS 进行签名/验证。如果需要对公钥原语进行抽象，`PrivateKey` 类型实现了 `crypto` 包中的 `Decrypter` 和 `Signer` 接口。
 
+包 `sha1` 实现了 [RFC 3174](https://www.rfc-editor.org/rfc/rfc3174.html) 中定义的 SHA-1 哈希算法。SHA-1 在密码学上被破坏，不应用于安全应用程序。
+
 ---
 <a id="exam" ><a>
