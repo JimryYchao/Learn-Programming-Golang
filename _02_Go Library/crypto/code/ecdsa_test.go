@@ -18,7 +18,7 @@ import (
 	PublicKey, Public() 返回与 PrivateKey 对应的公钥
 	Sign 对 digest 进行签名, opts 参数目前不适用; 仅与 crypto.Signer 接口保持一致
 ! ecdsa.PublicKey 表示与 ECDSA 私钥对应的公钥
-	ECDH 将 k 作为 ecdh.PublicKey 返回; 如果根据 ecdh.Curve.NewPublicKey 的定义密钥无效，或者如果 crypto/ecdh 不支持Curve，则返回错误。
+	ECDH 将 k 作为 ecdh.PublicKey 返回; 如果根据 ecdh.Curve.NewPublicKey 的定义密钥无效，或者如果 crypto/ecdh 不支持 Curve，则返回错误。
 	PrivateKey.Equal, PublicKey.Equal 报告 p 和 x 是否具有相同的值。
 */
 

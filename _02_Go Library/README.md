@@ -79,8 +79,8 @@
   - [x] ed25519 实现了 [Ed25519](https://ed25519.cr.yp.to/) 签名算法。        <a href="https://pkg.go.dev/crypto/ed25519" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ed25519_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [x] elliptic 实现了素数域上的标准 NIST P-224、P-256、P-384 和 P-521 椭圆曲线。        <a href="https://pkg.go.dev/crypto/elliptic" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/elliptic_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
     - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
