@@ -82,11 +82,11 @@
   - [x] elliptic 实现了素数域上的标准 NIST P-224、P-256、P-384 和 P-521 椭圆曲线。        <a href="https://pkg.go.dev/crypto/elliptic" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/elliptic_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [x] hmac 实现了 Keyed-Hash Message Authentication Code (HMAC)。       <a href="https://pkg.go.dev/crypto/hmac" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/hmac_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-    - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+  - [x] md5 实现了 [RFC 1321](https://www.rfc-editor.org/rfc/rfc1321.html) 中定义的 MD5 哈希算法。         <a href="https://pkg.go.dev/crypto/md5" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="crypto/code/md5_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
     - [ ]         <a href="https://pkg.go.dev/crypto/ecdh" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="crypto/code/ecdh_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
