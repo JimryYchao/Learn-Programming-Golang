@@ -162,6 +162,9 @@
   id="other"/></a><a href="./fmt/fmt.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="./fmt/code/fmt_test.go"><img src="./_rsc/link-code.drawio.png"   /></a>
 
+- [x] index/suffixarray 使用内存中的后缀数组，在对数时间内实现子字符串搜索        <a href="https://pkg.go.dev/index/suffixarray" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="index/code/suffixarray_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] io 提供 I/O 原语的基本接口。       <a href="https://pkg.go.dev/io" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./io/code/io_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
