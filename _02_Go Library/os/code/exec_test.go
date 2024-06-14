@@ -124,7 +124,7 @@ func TestGitPush(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if err = exec.Command(git, `commit`, `-m="go exec git commit"`).Run(); err != nil {
+	if err = exec.Command(git, `commit`, `-m`, `go exec git commit`).Run(); err != nil {
 		t.Fatal(err)
 	}
 
