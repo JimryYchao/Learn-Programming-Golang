@@ -200,7 +200,14 @@
       - [x] rand/v2 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand/v2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-- [ ] plugin 实现 Go 插件的加载和 symbol 符号解析。        <a href="https://pkg.go.dev/plugin" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+- [x] path 实现用于操作斜杠分隔路径的实用程序例程。        <a href="https://pkg.go.dev/path" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="path/code/path_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [x] filepath 实现了用于以与目标操作系统定义的文件路径兼容的方式，操作文件名路径的实用程序例程。        <a href="https://pkg.go.dev/path/filepath" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="path/code/filepath_test.go"   ><img src="./_rsc/link-code.drawio.png" 
+  /></a>
+
+- [x] plugin 实现 Go 插件的加载和 symbol 符号解析。        <a href="https://pkg.go.dev/plugin" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="plugin/plugin.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="plugin/code/plugin_test.go"   ><img src="./_rsc/link-code.drawio.png" 
   /></a>
