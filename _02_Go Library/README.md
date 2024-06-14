@@ -206,6 +206,12 @@
       - [x] rand/v2 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand/v2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
+- [ ] os        <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
 - [x] path 实现用于操作斜杠分隔路径的实用程序例程。        <a href="https://pkg.go.dev/path" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="path/code/path_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 

@@ -26,3 +26,7 @@ func TestS(t *testing.T) {
 	// fmt.Print(r, r.Type(), r.Kind(), r.Interface().(reflect.Value).Type())
 
 }
+
+func main() {
+
+}
