@@ -147,8 +147,12 @@
   id="code"/></a><a href="./embed/code/embed_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] errors 实现一些函数来处理错误。       <a href="https://pkg.go.dev/errors" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="./errors/code/errors_test.go"   ><img src="./_rsc/link-code.drawio.png" 
-  /></a>
+  id="code"/></a><a href="./errors/code/errors_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+- [x] expvar 提供了一个公共变量的标准化接口。        <a href="https://pkg.go.dev/expvar" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="expvar/expvar.md"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="expvar/code/expvar_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
 
 - [x] flag 实现命令行标志解析。     <a href="https://pkg.go.dev/flag" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="./flag/flag.md"  ><img  src="./_rsc/link-others.drawio.png" 
@@ -160,8 +164,7 @@
 
 
 - [x] io 提供 I/O 原语的基本接口。       <a href="https://pkg.go.dev/io" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="./io/code/io_test.go"   ><img src="./_rsc/link-code.drawio.png" 
-  /></a>
+  id="code"/></a><a href="./io/code/io_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
   - [x] fs 定义了文件系统的基本接口。<a href="https://pkg.go.dev/io/fs" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./io/code/fs_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
@@ -204,13 +207,11 @@
   id="code"/></a><a href="path/code/path_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
   - [x] filepath 实现了用于以与目标操作系统定义的文件路径兼容的方式，操作文件名路径的实用程序例程。        <a href="https://pkg.go.dev/path/filepath" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="code"/></a><a href="path/code/filepath_test.go"   ><img src="./_rsc/link-code.drawio.png" 
-  /></a>
+  id="code"/></a><a href="path/code/filepath_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] plugin 实现 Go 插件的加载和 symbol 符号解析。        <a href="https://pkg.go.dev/plugin" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="plugin/plugin.md"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="plugin/code/plugin_test.go"   ><img src="./_rsc/link-code.drawio.png" 
-  /></a>
+  id="code"/></a><a href="plugin/code/plugin_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
   
 <!-- TODO -------------------------------------------------------------------------------------------------------------------->
