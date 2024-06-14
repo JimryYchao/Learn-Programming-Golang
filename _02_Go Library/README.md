@@ -206,6 +206,19 @@
       - [x] rand/v2 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand/v2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
+- [ ] mime 实现 MIME 规范的一部分。        <a href="https://pkg.go.dev/mime" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="mime/code/mime_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ] multipart 实现 RFC 2046 中定义的 MIME 多分部分析        <a href="https://pkg.go.dev/mime/multipart" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="mime/code/multipart_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
+
+  - [ ]         <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
+  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
+  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
+  /></a>
+
+
 - [x] os 为操作系统功能提供独立于平台的接口。        <a href="https://pkg.go.dev/os" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="os/code/os_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
