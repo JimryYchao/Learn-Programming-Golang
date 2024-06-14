@@ -213,19 +213,12 @@
   id="other"/></a><a href="os/exec.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="os/code/exec_test.go"   ><img src="./_rsc/link-code.drawio.png" /></a>
 
-  - [ ] signal 实现对输入信号的访问。        <a href="https://pkg.go.dev/os/signal" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] signal 实现对输入信号的访问。        <a href="https://pkg.go.dev/os/signal" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="other"/></a><a href="os/signal.md"  ><img  src="./_rsc/link-others.drawio.png" 
   id="code"/></a><a href="os/code/signal_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ]         <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
-  /></a>
-
-
-
-
+  - [x] user 允许按 name 或 id 查找用户帐户。        <a href="https://pkg.go.dev/os/user" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="os/code/user_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] path 实现用于操作斜杠分隔路径的实用程序例程。        <a href="https://pkg.go.dev/path" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="path/code/path_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
