@@ -12,5 +12,9 @@
 
 包 `mime` 实现 MIME 规范的一部分。
 
+包 `multipart` 实现 RFC 2046 中定义的 MIME 多分部分析。
+
+包 `quotedprintable` 实现 RFC 2045 指定的 quoted-printable 编码。
+
 ---
 <a id="exam" ><a>

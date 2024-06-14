@@ -212,12 +212,8 @@
   - [ ] multipart 实现 RFC 2046 中定义的 MIME 多分部分析        <a href="https://pkg.go.dev/mime/multipart" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="mime/code/multipart_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ]         <a href="https://pkg.go.dev/#" target="_blank"><img src="./_rsc/link-src.drawio.png" 
-  id="other"/></a><a href="#"  ><img  src="./_rsc/link-others.drawio.png" 
-  id="code"/></a><a href="#"   ><img src="./_rsc/link-code.drawio.png" 
-  id="exam"/></a><a href="#exam"   ><img src="./_rsc/link-exam.drawio.png"
-  /></a>
-
+  - [ ] quotedprintable 实现 RFC 2045 指定的 quoted-printable 编码。        <a href="https://pkg.go.dev/mime/quotedprintable" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  id="code"/></a><a href="mime/code/quotedprintable_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] os 为操作系统功能提供独立于平台的接口。        <a href="https://pkg.go.dev/os" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="os/code/os_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
