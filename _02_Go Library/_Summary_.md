@@ -23,7 +23,6 @@ encoding/hex
 encoding/json	        
 encoding/pem	           
 encoding/xml	           
-expvar	        
 go	
 go/ast	    
 go/build   
@@ -55,9 +54,6 @@ image/gif
 image/jpeg	    
 image/png	        
 index/suffixarray 
-mime	    
-mime/multipart	            
-mime/quotedprintable 	
 net	                    
 net/http	                
 net/http/cgi	                    
@@ -74,10 +70,6 @@ net/jsonrpc
 net/smtp	                
 net/textproto	    
 net/url	            
-os	            
-os/exec	        
-os/signal	        
-os/user	        
 regexp	        
 regexp/syntax	       
 runtime	        

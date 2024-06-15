@@ -206,13 +206,13 @@
       - [x] rand/v2 实现了适合模拟等任务的伪随机数生成器。       <a href="https://pkg.go.dev/math/rand/v2" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="./math/code/randv2_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-- [ ] mime 实现 MIME 规范的一部分。        <a href="https://pkg.go.dev/mime" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+- [x] mime 实现 MIME 规范的一部分。        <a href="https://pkg.go.dev/mime" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="mime/code/mime_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ] multipart 实现 RFC 2046 中定义的 MIME 多分部分析        <a href="https://pkg.go.dev/mime/multipart" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] multipart 实现 RFC 2046 中定义的 MIME 多分部分析        <a href="https://pkg.go.dev/mime/multipart" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="mime/code/multipart_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
-  - [ ] quotedprintable 实现 RFC 2045 指定的 quoted-printable 编码。        <a href="https://pkg.go.dev/mime/quotedprintable" target="_blank"><img src="./_rsc/link-src.drawio.png" 
+  - [x] quotedprintable 实现 RFC 2045 指定的 quoted-printable 编码。        <a href="https://pkg.go.dev/mime/quotedprintable" target="_blank"><img src="./_rsc/link-src.drawio.png" 
   id="code"/></a><a href="mime/code/quotedprintable_test.go"   ><img src="./_rsc/link-code.drawio.png"   /></a>
 
 - [x] os 为操作系统功能提供独立于平台的接口。        <a href="https://pkg.go.dev/os" target="_blank"><img src="./_rsc/link-src.drawio.png" 
@@ -330,3 +330,6 @@
 
 ---
 ### Go supplemental libraries       <a href="https://pkg.go.dev/std" target="_blank"><img src="./_rsc/link-src.drawio.png"/></a>
+
+
+---
